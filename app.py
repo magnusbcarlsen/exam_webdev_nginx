@@ -42,7 +42,7 @@ def _(error):
     return template('error.html')
 
 ##############################
-@app.post('/a0eb0d13-3292-439b-941c-063361315db6')
+@app.post('/a0eb0d133292439b941c063361315db6')
 def git_update():
   repo = git.Repo('./exam_webdev')
   origin = repo.remotes.origin

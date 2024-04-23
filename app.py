@@ -3,6 +3,7 @@ import sqlite3
 from icecream import ic
 import bcrypt
 import json
+import git
 import x
 
 ##############################
@@ -40,6 +41,14 @@ def _():
 def _(error):
     return template('error.html')
 
+##############################
+@app.post('/a0eb0d13-3292-439b-941c-063361315db6')
+def git_update():
+  repo = git.Repo('./exam_webdev')
+  origin = repo.remotes.origin
+  repo.create_head('main', origin.refs.main).set_tracking_branch(origin.refs.main).checkout()
+  origin.pull()
+  return ""
 
 ##############################
 try:

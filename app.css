@@ -627,6 +627,11 @@ video {
   border-width: 1px;
 }
 
+.bg-dragon-fruit {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 74 132 / var(--tw-bg-opacity));
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;

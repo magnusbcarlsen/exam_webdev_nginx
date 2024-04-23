@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/app.css" />
+		<script src="../mixhtml.js" defer></script>
+		<title>{{ get("title", "Company") }}</title>
+	</head>
+	<body class="w-full h-screen overflow-x-hidden">
+		<div id="toast"></div>
+
+		<nav
+			class="grid grid-cols-[1fr_20fr_5fr] gap-4 w-full h-16 items-center px-2"
+		>
+			<a
+				href="/"
+				class="{{ get('active_home', '') }} 
+            flex items-center h-12 px-4 font-bold text-2xl text-white bg-dragon-fruit rounded-md"
+			>
+				bottlesite
+			</a>
+
+			<form>
+				<input type="text" placeholder="Where?" />
+			</form>
+
+			<div class="flex gap-4 ml-auto">
+				<a href="/signup" class="{{ get('active_login', '') }}">
+					Your property
+				</a>
+				<a href="/login" class="{{ get('active_login', '') }}"> Login </a>
+			</div>
+		</nav>
+	</body>
+</html>

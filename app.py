@@ -31,6 +31,10 @@ def _():
 def _():
     return template('index.html')
 ##############################
+@get("/login")
+def _():
+    return template("login.html")
+##############################
 # Serve 404 Not Found
 @error(404)
 def _(error):

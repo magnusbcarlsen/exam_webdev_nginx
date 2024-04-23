@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, redirect, response, run, static_file, template
+from bottle import default_app, error, get, post, redirect, response, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt

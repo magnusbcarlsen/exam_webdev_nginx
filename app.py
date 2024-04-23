@@ -42,8 +42,8 @@ def _(error):
 
 
 ##############################
-# try:
-#     import production
-#     application = default_app()
-# except:
-run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)
+try:
+    import production
+    application = default_app()
+except:
+    run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)

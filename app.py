@@ -47,6 +47,9 @@ def _(error):
     return template('error.html')
 
 ##############################
+import routes.signup
+import routes.verify
+##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():
   repo = git.Repo('./exam_webdev')

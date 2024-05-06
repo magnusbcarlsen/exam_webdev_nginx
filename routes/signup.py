@@ -28,7 +28,7 @@ def _():
         return """
                 <template mix-target="#message" mix-replace>
                 <div id="message">
-                fisse
+                Sample text
                 </div>
 
                 </template>

@@ -52,15 +52,8 @@ def git_update():
   return ""
 
 ##############################
-print('\n')
-print(os.environ)
-print('\n')
+
 if 'PYTHONANYWHERE_DOMAIN' in os.environ:
-    print('\n')
-    print("FOUND")
-    print('\n')
-try:
-    import production
     application = default_app()
-except:
+else:
     run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)

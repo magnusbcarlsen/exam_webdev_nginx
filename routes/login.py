@@ -1,22 +1,29 @@
 from bottle import post, response, request
+from icecream import ic
 import x
 
 ##############################
 @post("/login")
 def _():
   try:
-    # TODO: Validate the email and password
     user_email = x.validate_user_email()
     user_password = x.validate_user_password()
     db = x.db()
-    sql = db.execute('SELECT * FROM users WHERE user_email = ? AND user_password = ?', (user_email, user_password))
-    user = sql.fetchone()
+    q = db.execute('SELECT * FROM users WHERE user_email = ? AND user_password = ?', (user_email, user_password))
+    user = q.fetchone()
+    ic(user['user_is_verified'])
     if user:
-        response.set_cookie("name", user['user_name'], secret="my_secret", httponly=True)
-        return """
-            <template mix-redirect="/admin">
-            </template>
-        """
+        if '1' in user['user_is_verified']:
+            response.set_cookie("user", user, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
+            return """
+                <template mix-redirect="/" is_logged=True>
+                </template>
+            """
+        else:
+            return """
+                <template mix-redirect="/not_verified" is_logged=False>
+                </template>
+            """
     else:
         return """
             <template mix-target="#error" mix-replace>

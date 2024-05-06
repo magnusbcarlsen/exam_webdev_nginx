@@ -27,14 +27,14 @@
       class="w-full border"
       type="text"
       placeholder="first name"
-      mix-check="{{x.validate_user_name}}"
+      mix-check="{{x.USER_NAME_REGEX}}"
     />
     <input
       name="user_last_name"
       class="w-full border"
       type="text"
       placeholder="last name"
-      mix-check="{{x.validate_last_name}}"
+      mix-check="{{x.USER_LAST_NAME_REGEX}}"
     />
     <input
       name="user_password"
@@ -42,35 +42,39 @@
       type="password"
       placeholder="password"
       value=""
-      mix-check="{{x.validate_password}}"
+      mix-check="{{x.USER_PASSWORD_REGEX}}"
     />
     <div
       id="role"
       class="flex flex-col items-start gap-3 w-1/4"
     >
       <div class="flex w-full justify-between items-center">
-        <label for="user_role_customer">
+        <label for="user_role">
           <span>Customer:</span>
         </label>
         <input
+          required
           class="accent-dragon-fruit w-5"
           type="radio"
           name="user_role"
           value="0"
           id="user_role_customer"
+          mix-check="{{x.USER_ROLE_REGEX}}"
         />
       </div>
 
       <div class="flex w-full justify-between items-center">
-        <label for="user_role_owner">
+        <label for="user_role">
           <span>Partner:</span>
         </label>
         <input
+          required
           class="accent-dragon-fruit w-5"
           type="radio"
           name="user_role"
           value="1"
           id="user_role_partner"
+          mix-check="{{x.USER_ROLE_REGEX}}"
         />
       </div>
     </div>
@@ -82,4 +86,5 @@
       Create user
     </button>
   </form>
+  <div id="message"></div>
 </main>

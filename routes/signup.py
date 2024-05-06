@@ -9,8 +9,8 @@ def _():
     try:
         # TODO: Get forms data, validate and parse into database
 
-        random_id = uuid.uuid4()
-        user_pk = str(random_id).replace("-", "")
+        random_id = uuid.uuid4().hex
+        user_pk = random_id
         user_email = x.validate_email()
         user_username = x.validate_user_username()
         user_name = x.validate_user_name()

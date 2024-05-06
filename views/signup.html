@@ -1,0 +1,78 @@
+%include("_header")
+<!--  -->
+%import x
+<main>
+  <form
+    id="frm_signup"
+    class="flex flex-col gap-2 w-full mx-4 md:w-1/2"
+  >
+    <input
+      name="user_email"
+      class="w-full border"
+      type="text"
+      placeholder="email"
+      value=""
+      mix-check="{{x.validate_email}}"
+    />
+    <input
+      name="user_username"
+      class="w-full border"
+      type="text"
+      placeholder="username"
+      mix-check="{{x.validate_user_username}}"
+    />
+    <input
+      name="user_name"
+      class="w-full border"
+      type="text"
+      placeholder="first name"
+      mix-check="{{x.validate_user_name}}"
+    />
+    <input
+      name="user_last_name"
+      class="w-full border"
+      type="text"
+      placeholder="last name"
+      mix-check="{{x.validate_last_name}}"
+    />
+    <input
+      name="user_password"
+      class="w-full border"
+      type="password"
+      placeholder="password"
+      value=""
+      mix-check="{{x.validate_password}}"
+    />
+    <div
+      id="role"
+      class="flex flex-col items-start gap-3 w-1/4"
+    >
+      <div class="flex w-full justify-between items-center">
+        <label for="user_role_customer">
+          <span>Customer:</span>
+        </label>
+        <input
+          class="accent-dragon-fruit w-5"
+          type="radio"
+          name="user_role"
+          value="0"
+          id="user_role_customer"
+        />
+      </div>
+
+      <div class="flex w-full justify-between items-center">
+        <label for="user_role_owner">
+          <span>Partner:</span>
+        </label>
+        <input
+          class="accent-dragon-fruit w-5"
+          type="radio"
+          name="user_role"
+          value="1"
+          id="user_role_partner"
+        />
+      </div>
+    </div>
+    <button class="w-full bg-dragon-fruit text-white">Create user</button>
+  </form>
+</main>

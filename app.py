@@ -36,6 +36,10 @@ def _():
 def _():
     return template("login.html")
 ##############################
+@get("/signup")
+def _():
+    return template("signup.html")
+##############################
 # Serve 404 Not Found
 @error(404)
 def _(error):
@@ -56,3 +60,6 @@ try:
     application = default_app()
 except:
     run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)
+
+
+##############################

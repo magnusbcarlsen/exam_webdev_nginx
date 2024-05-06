@@ -46,13 +46,13 @@ def validate_user_id():
 
 ##############################
 
-EMAIL_MAX = 100
-EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+USER_EMAIL_MAX = 100
+USER_EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
 
 def validate_email():
     error = f"email invalid"
     user_email = request.forms.get("user_email", "").strip()
-    if not re.match(EMAIL_REGEX, user_email): raise Exception(error, 400)
+    if not re.match(USER_EMAIL_REGEX, user_email): raise Exception(error, 400)
     return user_email
 
 ##############################
@@ -83,7 +83,7 @@ def validate_user_name():
 LAST_NAME_MIN = 2
 LAST_NAME_MAX = 20
 
-def last_name():
+def validate_last_name():
   error = f"last_name {LAST_NAME_MIN} to {LAST_NAME_MAX} characters"
   user_last_name = request.forms.get("user_last_name").strip()
   if not re.match(USER_USERNAME_REGEX, user_last_name): raise Exception(error, 400)

@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response, run, static_file, template
+from bottle import default_app, error, get, post, redirect, response,request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -43,6 +43,10 @@ def _():
 def _():
     return template("login.html")
 ##############################
+@get("/signup")
+def _():
+    return template("signup.html")
+##############################
 # Serve 404 Not Found
 @error(404)
 def _(error):
@@ -51,6 +55,9 @@ def _(error):
 import routes.login
 import routes.logout
 import routes.not_verified
+##############################
+import routes.signup
+import routes.verify
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():

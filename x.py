@@ -2,6 +2,10 @@ from bottle import request, response
 import os
 import re
 import sqlite3
+import pathlib
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
 
@@ -83,7 +87,7 @@ def validate_user_email():
 
 USER_USERNAME_MIN = 2
 USER_USERNAME_MAX = 20
-USER_USERNAME_REGEX = "^[a-z]{2,20}$"
+USER_USERNAME_REGEX = "^[a-zA-Z0-9_.-]*$"
 
 def validate_user_username():
     error = f"username {USER_USERNAME_MIN} to {USER_USERNAME_MAX} lowercase english letters"
@@ -100,7 +104,7 @@ def validate_user_name():
     error = f"name {USER_NAME_MIN} to {USER_NAME_MAX} characters"
     user_name = request.forms.get("user_name", "").strip()
     if not re.match(USER_USERNAME_REGEX, user_name): raise Exception(error, 400)
-    return request.forms.name
+    return user_name
 
 ##############################
 
@@ -128,9 +132,65 @@ def validate_user_password():
 
 ##############################
 
+USER_ROLE_REGEX = "^[0-1]$"
+
+def validate_role():
+    user_role = request.forms.get("user_role", "")
+    if not re.match(USER_ROLE_REGEX, user_role): raise Exception(400, "Invalid Role")
+    return user_role
+
+##############################
+
 def confirm_password():
   error = f"password and confirm_password do not match"
   user_password = request.forms.get("user_password", "").strip()
   user_confirm_password = request.forms.get("user_confirm_password", "").strip()
   if user_password != user_confirm_password: raise Exception(error, 400)
   return user_confirm_password
+
+##############################
+
+
+def send_mail(to_email, from_email,email_subject, email_body):
+
+    try:
+        
+        message = MIMEMultipart()
+        message["To"] = to_email
+        message["From"] = from_email
+        message["Subject"] = email_subject
+
+
+        messageText = MIMEText(email_body, 'html')
+        message.attach(messageText)
+
+
+        email = 'jachobwesth@gmail.com'
+        password = 'xlcsplckzsaeinre'
+
+
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.ehlo('Gmail')
+        server.starttls()
+        server.login(email,password)
+        server.sendmail(from_email,to_email,message.as_string())
+        server.quit()
+    except Exception as ex:
+        print(ex)
+        return "error"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

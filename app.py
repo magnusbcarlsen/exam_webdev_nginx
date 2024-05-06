@@ -23,6 +23,10 @@ def _():
 def _():
     return static_file('favicon.ico', '.')
 ##############################
+@get ("/images/<property_images>")
+def _(property_images): 
+    return static_file(property_images, "images")
+
 # Serve notfound GIF
 @get('/images/notfound.gif')
 def _():
@@ -31,7 +35,20 @@ def _():
 # Serve index-page
 @get('/')
 def _():
-    return template('index.html')
+    try:
+        db = x.db()
+        q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3")
+        properties = q.fetchall()
+        ic(properties)
+        print(properties)
+        return template('index.html', properties=properties)
+    except Exception as ex:
+        ic(ex)
+        return "No no noo, more lemon pledge"
+    finally: 
+        if "db" in locals(): db.close()
+
+
 ##############################
 @get("/login")
 def _():
@@ -45,6 +62,9 @@ def _():
 @error(404)
 def _(error):
     return template('error.html')
+
+##############################
+import routes.get_more_properties
 
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')

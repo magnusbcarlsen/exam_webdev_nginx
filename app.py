@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response, run, static_file, template
+from bottle import default_app, error, get, post, redirect, response,request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -36,6 +36,10 @@ def _():
 @get("/login")
 def _():
     return template("login.html")
+##############################
+@get("/signup")
+def _():
+    return template("signup.html")
 ##############################
 # Serve 404 Not Found
 @error(404)

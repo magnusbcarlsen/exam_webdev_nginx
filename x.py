@@ -13,7 +13,7 @@ def dict_factory(cursor, row):
 ##############################
 
 def db():
-    db = sqlite3.connect(os.getcwd()+"/company.db")  
+    db = sqlite3.connect(os.getcwd()+"/database/company.db")  
     db.row_factory = dict_factory
     return db
 
@@ -46,20 +46,20 @@ def validate_user_id():
 
 ##############################
 
-EMAIL_MAX = 100
-EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+USER_EMAIL_MAX = 100
+USER_EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
 
 def validate_email():
     error = f"email invalid"
     user_email = request.forms.get("user_email", "").strip()
-    if not re.match(EMAIL_REGEX, user_email): raise Exception(error, 400)
+    if not re.match(USER_EMAIL_REGEX, user_email): raise Exception(error, 400)
     return user_email
 
 ##############################
 
 USER_USERNAME_MIN = 2
 USER_USERNAME_MAX = 20
-USER_USERNAME_REGEX = "^[a-z]{2,20}$"
+USER_USERNAME_REGEX = "^[a-zA-Z0-9_.-]*$"
 
 def validate_user_username():
     error = f"username {USER_USERNAME_MIN} to {USER_USERNAME_MAX} lowercase english letters"
@@ -71,20 +71,20 @@ def validate_user_username():
 
 USER_NAME_MIN = 2
 USER_NAME_MAX = 20
-USER_REGEX = "^.{2,20}$"
+USER_NAME_REGEX = "^.{2,20}$"
 def validate_user_name():
     error = f"name {USER_NAME_MIN} to {USER_NAME_MAX} characters"
     user_name = request.forms.get("user_name", "").strip()
     if not re.match(USER_USERNAME_REGEX, user_name): raise Exception(error, 400)
-    return request.forms.name
+    return user_name
 
 ##############################
 
-LAST_NAME_MIN = 2
-LAST_NAME_MAX = 20
-
-def last_name():
-  error = f"last_name {LAST_NAME_MIN} to {LAST_NAME_MAX} characters"
+USER_LAST_NAME_MIN = 2
+USER_LAST_NAME_MAX = 20
+USER_LAST_NAME_REGEX = "^.{2,20}$"
+def validate_last_name():
+  error = f"last_name {USER_LAST_NAME_MIN} to {USER_LAST_NAME_MAX} characters"
   user_last_name = request.forms.get("user_last_name").strip()
   if not re.match(USER_USERNAME_REGEX, user_last_name): raise Exception(error, 400)
   return user_last_name
@@ -100,6 +100,15 @@ def validate_password():
     user_password = request.forms.get("user_password", "").strip()
     if not re.match(USER_PASSWORD_REGEX, user_password): raise Exception(error, 400)
     return user_password
+
+##############################
+
+USER_ROLE_REGEX = "^[0-1]$"
+
+def validate_role():
+    user_role = request.forms.get("user_role", "")
+    if not re.match(USER_ROLE_REGEX, user_role): raise Exception(400, "Invalid Role")
+    return user_role
 
 ##############################
 

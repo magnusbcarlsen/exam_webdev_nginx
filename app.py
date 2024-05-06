@@ -40,7 +40,8 @@ def _():
 @error(404)
 def _(error):
     return template('error.html')
-
+############################## admin
+import routes.login
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():

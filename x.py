@@ -55,8 +55,6 @@ def validate_email():
     return user_email
 
 ##############################
-USER_USERNAME_OR_EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$|^[a-z]{2,20}$"
-##############################
 
 USER_USERNAME_MIN = 2
 USER_USERNAME_MAX = 20
@@ -72,7 +70,7 @@ def validate_user_username():
 
 USER_NAME_MIN = 2
 USER_NAME_MAX = 20
-USER_REGEX = "^.{2,20}$"
+USER_NAME_REGEX = "^.{2,20}$"
 def validate_user_name():
     error = f"name {USER_NAME_MIN} to {USER_NAME_MAX} characters"
     user_name = request.forms.get("user_name", "").strip()
@@ -81,10 +79,11 @@ def validate_user_name():
 
 ##############################
 
-LAST_NAME_MIN = 2
-LAST_NAME_MAX = 20
+USER_LAST_NAME_MIN = 2
+USER_LAST_NAME_MAX = 20
+USER_LAST_NAME_REGEX = "^.{2,20}$"
 
-def last_name():
+def validate_user_last_name():
   error = f"last_name {LAST_NAME_MIN} to {LAST_NAME_MAX} characters"
   user_last_name = request.forms.get("user_last_name").strip()
   if not re.match(USER_USERNAME_REGEX, user_last_name): raise Exception(error, 400)

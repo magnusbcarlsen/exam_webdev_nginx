@@ -554,6 +554,10 @@ video {
   --tw-contain-style:  ;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;

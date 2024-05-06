@@ -1,26 +1,20 @@
 from bottle import post, response, request
-from icecream import ic
 import x
 
 ##############################
 @post("/login")
 def _():
   try:
-    # TODO: check for if input is an email or username, then validate accordingly
-    
-    x.validate_user_email()
-    x.validate_user_password()
-
-    user_username_or_email = request.forms.get("user_username_or_email")
-    user_password = request.forms.get("user_password")
+    # TODO: Validate the email and password
+    user_email = x.validate_user_email()
+    user_password = x.validate_user_password()
     db = x.db()
-    sql = db.execute('SELECT * FROM users WHERE (user_email = ? OR user_username = ?) AND user_password = ?', (user_username_or_email, user_username_or_email, user_password))
+    sql = db.execute('SELECT * FROM users WHERE user_email = ? AND user_password = ?', (user_email, user_password))
     user = sql.fetchone()
-    ic(user);
     if user:
-        response.set_cookie("name", user['user_username'], secret="my_secret", httponly=True)
+        response.set_cookie("name", user['user_name'], secret="my_secret", httponly=True)
         return """
-            <template mix-redirect="/">
+            <template mix-redirect="/admin">
             </template>
         """
     else:
@@ -34,13 +28,13 @@ def _():
     if "user_password" in ex.args[1]:
         return """
             <template mix-target="#error" mix-replace>
-                <div id="error">User password is invalid</div>
+                <div id="error">User password invalid</div>
             </template>
         """
-    if "user_email" or "user_username" in ex.args[1]:
+    if "user_email" in ex.args[1]:
         return """
             <template mix-target="#error" mix-replace>
-                <div id="error">User email or username is invalid</div>
+                <div id="error">User email invalid</div>
             </template>
         """
 

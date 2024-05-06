@@ -5,3 +5,5 @@ package-lock.json
 arangodb
 lib
 .env
+app.css
+database/company.db

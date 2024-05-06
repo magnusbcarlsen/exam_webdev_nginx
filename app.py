@@ -31,7 +31,13 @@ def _():
 # Serve index-page
 @get('/')
 def _():
-    return template('index.html')
+    is_logged = False
+    try:    
+        x.validate_user_logged()
+        is_logged = True
+    except:
+        pass
+    return template('index.html', is_logged=is_logged)
 ##############################
 @get("/login")
 def _():
@@ -40,9 +46,11 @@ def _():
 # Serve 404 Not Found
 @error(404)
 def _(error):
-    return template('error.html')
+    return template('error.html', is_logged=x.is_user_logged_in())
 ############################## admin
 import routes.login
+import routes.logout
+import routes.not_verified
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():

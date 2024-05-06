@@ -1,4 +1,4 @@
-from bottle import post, request
+from bottle import post, request, template
 from icecream import ic
 import x
 import bcrypt
@@ -24,12 +24,14 @@ def _():
         db = x.db()
         q = db.execute("INSERT INTO users(user_pk, user_email, user_username, user_name, user_last_name, user_password, user_role_fk) VALUES(?,?,?,?,?,?,?)", (user_pk, user_email, user_username, user_name, user_last_name, user_password_hashed, user_role_fk))
         db.commit()
+        x.send_mail(user_email, user_email, "Verify your account", template("email_verification", key=user_pk))
 
-        return """
+        return f"""
                 <template mix-target="#message" mix-replace>
-                <div id="message">
-                Sample text
-                </div>
+                    <div id="message">
+                        <p>Thank you for signing up {user_username}!</p>
+                        <p>We have sent you an email to ({user_email}) to verify your account</p>
+                    </div>
 
                 </template>
                 """

@@ -2,6 +2,10 @@ from bottle import request, response
 import os
 import re
 import sqlite3
+import pathlib
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
 
@@ -122,6 +126,33 @@ def confirm_password():
 ##############################
 
 
+def send_mail(to_email, from_email,email_subject, email_body):
+
+    try:
+        
+        message = MIMEMultipart()
+        message["To"] = to_email
+        message["From"] = from_email
+        message["Subject"] = email_subject
+
+
+        messageText = MIMEText(email_body, 'html')
+        message.attach(messageText)
+
+
+        email = 'jachobwesth@gmail.com'
+        password = 'xlcsplckzsaeinre'
+
+
+        server = smtplib.SMTP('smtp.gmail.com:587')
+        server.ehlo('Gmail')
+        server.starttls()
+        server.login(email,password)
+        server.sendmail(from_email,to_email,message.as_string())
+        server.quit()
+    except Exception as ex:
+        print(ex)
+        return "error"
 
 
 

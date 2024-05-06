@@ -64,6 +64,9 @@ def _(error):
     return template('error.html')
 
 ##############################
+import routes.signup
+import routes.verify
+##############################
 import routes.get_more_properties
 
 ##############################

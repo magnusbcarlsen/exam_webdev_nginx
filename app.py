@@ -4,6 +4,7 @@ from icecream import ic
 import bcrypt
 import json
 import git
+import os
 import x
 
 ##############################
@@ -51,6 +52,13 @@ def git_update():
   return ""
 
 ##############################
+print('\n')
+print(os.environ)
+print('\n')
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    print('\n')
+    print("FOUND")
+    print('\n')
 try:
     import production
     application = default_app()

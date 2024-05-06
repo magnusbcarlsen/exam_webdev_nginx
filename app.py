@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response, run, static_file, template
+from bottle import default_app, error, get, post, redirect, response,request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -55,11 +55,12 @@ def git_update():
   return ""
 
 ##############################
+import routes.signup
+
+##############################
 try:
     import production
     application = default_app()
 except:
     run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)
 
-
-##############################

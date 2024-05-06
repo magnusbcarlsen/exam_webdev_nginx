@@ -11,16 +11,17 @@
       class="w-full border"
       type="text"
       placeholder="email"
-      value=""
-      mix-check="{{x.validate_email}}"
+      value="mail@mail.com"
+      mix-check="{{x.USER_EMAIL_REGEX}}"
     />
     <input
       name="user_username"
       class="w-full border"
       type="text"
       placeholder="username"
-      mix-check="{{x.validate_user_username}}"
+      mix-check="{{x.USER_USERNAME_REGEX}}"
     />
+
     <input
       name="user_name"
       class="w-full border"
@@ -73,6 +74,12 @@
         />
       </div>
     </div>
-    <button class="w-full bg-dragon-fruit text-white">Create user</button>
+    <button
+      class="w-full bg-dragon-fruit text-white"
+      mix-post="/signup"
+      mix-data="#frm_signup"
+    >
+      Create user
+    </button>
   </form>
 </main>

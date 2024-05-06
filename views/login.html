@@ -1,13 +1,31 @@
 %include("_header")
 
 <main class="flex h-full items-center justify-center">
-    <form class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
-        <input name="user_email" class="w-full border" type="text" placeholder="email">
-        <input name="user_password" class="w-full border" type="password" placeholder="password">
-        <button class="w-full bg-dragon-fruit text-white">
-            Login
-        </button>
-    </form>
+  <form class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
+    <input
+      name="user_email"
+      class="w-full border"
+      type="text"
+      placeholder="email"
+    />
+    <input
+      name="user_password"
+      class="w-full border"
+      type="password"
+      placeholder="password"
+    />
+    <button class="w-full bg-dragon-fruit text-white">Login</button>
+    <div>
+      <p class="text-center">
+        Forgot your password?
+        <a
+          class="text-dragon-fruit underline"
+          href="/reset_password"
+          >Click here to change your password</a
+        >
+      </p>
+    </div>
+  </form>
 </main>
 
 %include("_footer")

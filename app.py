@@ -41,6 +41,10 @@ def _():
 def _():
     return template("signup.html")
 ##############################
+@get("/reset_password")
+def _():
+    return template("reset_password.html")
+##############################
 # Serve 404 Not Found
 @error(404)
 def _(error):
@@ -49,6 +53,7 @@ def _(error):
 ##############################
 import routes.signup
 import routes.verify
+import routes.reset_password
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():

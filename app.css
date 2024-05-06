@@ -686,6 +686,10 @@ video {
   padding-right: 1rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .align-top {
   vertical-align: top;
 }
@@ -702,6 +706,15 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-dragon-fruit {
+  --tw-text-opacity: 1;
+  color: rgb(255 74 132 / var(--tw-text-opacity));
+}
+
+.underline {
+  text-decoration-line: underline;
 }
 
 .accent-emerald-500 {

@@ -4,6 +4,7 @@ from icecream import ic
 import bcrypt
 import json
 import git
+import os
 import x
 
 ##############################
@@ -52,8 +53,8 @@ def git_update():
   return ""
 
 ##############################
-try:
-    import production
+
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
     application = default_app()
-except:
+else:
     run(host="0.0.0.0", port=80, debug=True, reloader=True, interval=0)

@@ -17,9 +17,12 @@ def dict_factory(cursor, row):
 ##############################
 
 def db():
-    db = sqlite3.connect(os.getcwd()+"/database/company.db")  
-    db.row_factory = dict_factory
-    return db
+    try:
+        db = sqlite3.connect(os.getcwd()+"/database/company.db")  
+        db.row_factory = dict_factory
+        return db
+    except Exception as ex:
+        return ex
 
 ##############################
 COOKIE_SECRET_KEY = "429c6db7-0c7f-4836-9dbb-315ba228b8a9#f328df55-6862-4341-8611-e97e6585b9ab"

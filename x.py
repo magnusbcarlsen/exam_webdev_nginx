@@ -130,6 +130,16 @@ def validate_user_password():
     if not re.match(USER_PASSWORD_REGEX, user_password): raise Exception(error, 400)
     return user_password
 
+def validate_new_password():
+        error = f"Password {USER_PASSWORD_MIN} to {USER_PASSWORD_MAX} characters"
+        error2 = f"Passwords must match"
+        user_new_password = request.forms.get("user_new_password","").strip()
+        user_new_password_confirm = request.forms.get("user_new_password_confirm","").strip()
+        if not re.match(USER_PASSWORD_REGEX, user_new_password): raise Exception(error, 400)
+        if not re.match(USER_PASSWORD_REGEX, user_new_password_confirm): raise Exception(error, 400)
+        if not user_new_password == user_new_password_confirm: raise Exception(error2, 400)
+        return user_new_password
+
 ##############################
 
 USER_ROLE_REGEX = "^[0-1]$"

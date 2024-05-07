@@ -7,7 +7,7 @@ import uuid
 @post("/signup")
 def _():
     try:
-        # TODO: Get forms data, validate and parse into database
+
 
         random_id = uuid.uuid4().hex
         user_pk = random_id
@@ -15,12 +15,10 @@ def _():
         user_username = x.validate_user_username()
         user_name = x.validate_user_name()
         user_last_name = x.validate_last_name()
-        user_password = x.validate_password().encode()
+        user_password = x.validate_new_password().encode()
         user_role_fk = x.validate_role()
-
         salt = bcrypt.gensalt()
         user_password_hashed = bcrypt.hashpw(user_password, salt)
-
         db = x.db()
         q = db.execute("INSERT INTO users(user_pk, user_email, user_username, user_name, user_last_name, user_password, user_role_fk) VALUES(?,?,?,?,?,?,?)", (user_pk, user_email, user_username, user_name, user_last_name, user_password_hashed, user_role_fk))
         db.commit()
@@ -40,4 +38,4 @@ def _():
         ic(ex)
         return ex
     finally:
-        pass
+        if "db" in locals(): db.close()

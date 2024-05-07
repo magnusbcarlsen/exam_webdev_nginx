@@ -1,6 +1,7 @@
 from bottle import request, response
 import os
 import re
+import json
 import sqlite3
 import pathlib
 import smtplib
@@ -27,6 +28,13 @@ def db():
 ##############################
 COOKIE_SECRET_KEY = "429c6db7-0c7f-4836-9dbb-315ba228b8a9#f328df55-6862-4341-8611-e97e6585b9ab"
 ##############################
+
+def get_cookie_data():
+    user_data = request.get_cookie("user", secret=COOKIE_SECRET)
+    if user_data is not None:
+        return json.loads(user_data)
+    else:
+        return None
 
 def validate_user_logged():
     user = request.get_cookie("user", secret=COOKIE_SECRET)

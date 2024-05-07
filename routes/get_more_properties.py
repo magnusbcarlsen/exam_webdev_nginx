@@ -15,7 +15,12 @@ def _(page_number):
         properties = q.fetchall()
         ic(properties)
         html = ""
-        for property in properties: html += template("_property", property=property)
+        is_admin = False
+        try:
+            is_admin = x.get_cookie_data()['user_role_fk'] == '2'
+        except:
+            pass
+        for property in properties: html += template("_property", property=property, is_admin=is_admin)
         btn_more = f"""
         <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
                 mix-get="/properties/page/{next_page}"

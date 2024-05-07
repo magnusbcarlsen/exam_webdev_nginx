@@ -11,12 +11,12 @@ def _():
 
         random_id = uuid.uuid4().hex
         user_pk = random_id
-        user_email = x.validate_email()
+        user_email = x.validate_user_email()
         user_username = x.validate_user_username()
         user_name = x.validate_user_name()
-        user_last_name = x.validate_last_name()
-        user_password = x.validate_new_password().encode()
-        user_role_fk = x.validate_role()
+        user_last_name = x.validate_user_last_name()
+        user_password = x.validate_new_user_password().encode()
+        user_role_fk = x.validate_user_role()
         salt = bcrypt.gensalt()
         user_password_hashed = bcrypt.hashpw(user_password, salt)
         db = x.db()

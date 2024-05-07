@@ -1,23 +1,25 @@
-from bottle import post, request, template
-from icecream import ic
+from bottle import put, template
 import x
 import bcrypt
-import uuid
+from icecream import ic
 
-@post("/reset_password")
-def _():
+@put("/reset_password/<key>")
+def _(key):
     try:
-        user_mail = x.validate_email()
-        ic(user_mail)
+        ic(key)
+        user_password = x.validate_new_password().encode()
+        ic(user_password)
 
-        # TODO: Send email til provided email
-        # Lav link, som peger til ny side med nyt password
-        # Den skal kunne finde emailen i db og override det gamle password med det nye
-        # Lav password og confirm password
+        salt = bcrypt.gensalt()
+        user_password_hashed = bcrypt.hashpw(user_password, salt)
+        ic(user_password_hashed)
 
-        
+        db = x.db()
+        q = db.execute("UPDATE users SET user_password = ? WHERE user_pk = ?", (user_password_hashed, key))
+        db.commit()
+
     except Exception as ex:
         ic(ex)
         return ex
     finally:
-        pass
+        if "db" in locals(): db.close()     

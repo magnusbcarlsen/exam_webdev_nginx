@@ -41,18 +41,25 @@ def _():
 def _():
     return template("signup.html")
 ##############################
-@get("/reset_password")
+@get("/reset_password_agent")
 def _():
-    return template("reset_password.html")
+    return template("reset_password_agent.html")
+
+##############################
+@get("/reset_password_form/<key>")
+def _(key):
+    return template("reset_password_form.html", key=key)
 ##############################
 # Serve 404 Not Found
 @error(404)
 def _(error):
-    return template('error.html')
+    ic(error)
+    return error
 
 ##############################
 import routes.signup
 import routes.verify
+import routes.reset_password_agent
 import routes.reset_password
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')

@@ -1,13 +1,31 @@
-%include("_header")
-
+% import x
+<!--  -->
+% include("_header")
 <main class="flex h-full items-center justify-center">
-    <form class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
-        <input name="user_email" class="w-full border" type="text" placeholder="email">
-        <input name="user_password" class="w-full border" type="password" placeholder="password">
-        <button class="w-full bg-dragon-fruit text-white">
-            Login
-        </button>
-    </form>
+	<div id="error"></div>
+	<form id="login_form" class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
+		<input
+			name="user_email"
+			class="w-full border"
+			type="text"
+			placeholder="email"
+			mix-check="{{x.USER_EMAIL_REGEX}}"
+		/>
+		<input
+			name="user_password"
+			class="w-full border"
+			type="password"
+			placeholder="password"
+			mix-check="{{x.USER_PASSWORD_REGEX}}"
+		/>
+		<button
+			class="w-full bg-dragon-fruit text-white"
+			mix-post="/login"
+			mix-data="#login_form"
+		>
+			Login
+		</button>
+	</form>
 </main>
 
 %include("_footer")

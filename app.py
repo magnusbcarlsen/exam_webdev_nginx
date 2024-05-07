@@ -39,6 +39,12 @@ def _():
         db = x.db()
         q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3")
         properties = q.fetchall()
+        is_logged = False
+        try:    
+            x.validate_user_logged()
+            is_logged = True
+        except:
+            pass
         ic(properties)
         print(properties)
         return template('index.html', properties=properties)
@@ -61,8 +67,11 @@ def _():
 # Serve 404 Not Found
 @error(404)
 def _(error):
-    return template('error.html')
-
+    return template('error.html', is_logged=x.is_user_logged_in())
+############################## admin
+import routes.login
+import routes.logout
+import routes.not_verified
 ##############################
 import routes.signup
 import routes.verify

@@ -50,6 +50,7 @@ CREATE TABLE properties(
     property_pk                 TEXT UNIQUE,
     property_user_fk            TEXT,
     property_booking_fk         TEXT,
+    property_name               TEXT,
     property_description        TEXT,
     property_price_pr_night     REAL,
     property_images             TEXT,
@@ -67,19 +68,19 @@ CREATE TABLE properties(
 -- ##### PROPERTIES - SEED ##### --
 -- INSERT INTO properties VALUES ('0', '0', '0', 'one is a house', 1337, 'one.jpg', 4.5, 55.2001, 47.1240, '0', '', '', '');
 INSERT INTO properties(
-    property_pk, property_user_fk, property_booking_fk, 
+    property_pk, property_user_fk, property_booking_fk, property_name,
     property_description, property_price_pr_night, property_images, property_rating, 
     property_lat, property_lon, property_is_blocked, property_created_at )
-    VALUES('1', '1', '0', 'one is a house', 1337, 'one.webp', 4.5, 55.2001, 47.1240, '0', 1),
-    ('2', '1', '0', 'two is a house', 1337, 'two.webp', 4.5, 55.2001, 47.1240, '0', 2),
-    ('3', '1', '0', 'three is a house', 1337, 'three.webp', 4.5, 55.2001, 47.1240, '0', 3),
-    ('4', '1', '0', 'four is a house', 1337, 'four.webp', 4.5, 55.2001, 47.1240, '0', 4),
-    ('5', '1', '0', 'five is a house', 1337, 'five.webp', 4.5, 55.2001, 47.1240, '0', 5),
-    ('6', '1', '0', 'six is a house', 1337, 'six.webp', 4.5, 55.2001, 47.1240, '0', 6),
-    ('7', '1', '0', 'seven is a house', 1337, 'seven.webp', 4.5, 55.2001, 47.1240, '0', 7),
-    ('8', '1', '0', 'eight is a house', 1337, 'eight.webp', 4.5, 55.2001, 47.1240, '0', 8),
-    ('9', '1', '0', 'nine is a house', 1337, 'nine.webp', 4.5, 55.2001, 47.1240, '0', 9),
-    ('10', '1', '0', 'ten is a house', 1337, 'ten.webp', 4.5, 55.2001, 47.1240, '0', 10);
+    VALUES('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, 55.2001, 47.1240, '0', 1),
+    ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 55.2001, 47.1240, '0', 2),
+    ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 55.2001, 47.1240, '0', 3),
+    ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 55.2001, 47.1240, '0', 4),
+    ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, 55.2001, 47.1240, '0', 5),
+    ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 55.2001, 47.1240, '0', 6),
+    ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, 55.2001, 47.1240, '0', 7),
+    ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, 55.2001, 47.1240, '0', 8),
+    ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 55.2001, 47.1240, '0', 9),
+    ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, 55.2001, 47.1240, '0', 10);
 
 
 SELECT * FROM properties;

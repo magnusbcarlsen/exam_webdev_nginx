@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response,request, run, static_file, template
+from bottle import default_app, error, get, post, redirect, response, request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -77,6 +77,8 @@ import routes.signup
 import routes.verify
 ##############################
 import routes.get_more_properties
+##############################
+import routes.profile
 
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')

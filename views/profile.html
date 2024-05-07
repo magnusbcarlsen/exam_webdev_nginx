@@ -1,0 +1,48 @@
+%include("_header")
+<!--  -->
+%import x
+<main>
+	<form id="frm_profile" class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
+		<input
+			name="user_email"
+			class="w-full border"
+			type="text"
+			value="{{user['user_email']}}"
+			mix-check="{{x.USER_EMAIL_REGEX}}"
+		/>
+		<input
+			name="user_username"
+			class="w-full border"
+			type="text"
+			value="{{user['user_username']}}"
+			mix-check="{{x.USER_USERNAME_REGEX}}"
+		/>
+
+		<input
+			name="user_name"
+			class="w-full border"
+			type="text"
+			value="{{user['user_name']}}"
+			mix-check="{{x.USER_NAME_REGEX}}"
+		/>
+		<input
+			name="user_last_name"
+			class="w-full border"
+			type="text"
+			value="{{user['user_last_name']}}"
+			mix-check="{{x.USER_LAST_NAME_REGEX}}"
+		/>
+		<button
+			class="w-full bg-dragon-fruit text-white"
+			mix-put="/edit_user"
+			mix-data="#frm_profile"
+		>
+			Edit User
+		</button>
+		% if user['user_role_fk'] == '1':
+		<!-- properties block -->
+		<div class="w-screen h-screen bg-red-400"></div>
+		% end
+	</form>
+	<div id="message"></div>
+</main>

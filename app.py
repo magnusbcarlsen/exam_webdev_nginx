@@ -47,7 +47,7 @@ def _():
             pass
         ic(properties)
         print(properties)
-        return template('index.html', properties=properties)
+        return template('index.html', properties=properties, is_logged=is_logged)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"

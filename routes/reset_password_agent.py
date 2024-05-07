@@ -7,7 +7,7 @@ import uuid
 @post("/reset_password_agent")
 def _():
     try:
-        user_mail = x.validate_email()
+        user_mail = x.validate_user_email()
         ic(user_mail)
 
         # TODO: Send email til provided email

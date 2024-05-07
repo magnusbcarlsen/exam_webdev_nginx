@@ -7,7 +7,7 @@ from icecream import ic
 def _(key):
     try:
         ic(key)
-        user_password = x.validate_new_password().encode()
+        user_password = x.validate_new_user_password().encode()
         ic(user_password)
 
         salt = bcrypt.gensalt()

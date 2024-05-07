@@ -54,7 +54,6 @@ def _():
     finally: 
         if "db" in locals(): db.close()
 
-
 ##############################
 @get("/login")
 def _():
@@ -65,9 +64,10 @@ def _():
     return template("signup.html")
 ##############################
 # Serve 404 Not Found
-@error(404)
-def _(error):
-    return template('error.html', is_logged=x.is_user_logged_in())
+# @error(404)
+# def _(error):
+#     ic(error)
+#     return template('error.html', is_logged=x.is_user_logged_in())
 ############################## admin
 import routes.login
 import routes.logout
@@ -79,6 +79,7 @@ import routes.verify
 import routes.get_more_properties
 ##############################
 import routes.profile
+import routes.edit_user
 
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')

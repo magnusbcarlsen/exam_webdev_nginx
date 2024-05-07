@@ -4,12 +4,14 @@ import x
 
 @get('/profile')
 def _():
-    user = x.get_cookie_data()
-    is_logged = False
-    try:    
-        x.validate_user_logged()
-        is_logged = True
-    except:
-        pass
-        
-    return template('profile.html', user=user, is_logged=is_logged)
+    try:
+        user_pk = x.get_cookie_data()['user_pk']
+        db = x.db()
+        q = db.execute('SELECT * FROM users WHERE user_pk = ?', (user_pk,))
+        user = q.fetchone()
+        return template('profile.html', user=user)
+    except Exception as ex:
+        ic(ex)
+    finally:
+        if "db" in locals(): 
+            db.close()

@@ -16,7 +16,7 @@ def _():
     if user:
         if '1' in user['user_is_verified']:
             user_data = json.dumps(user)
-            response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
+            x.create_cookie('user', user_data)
             return """
                 <template mix-redirect="/" is_logged=True>
                 </template>

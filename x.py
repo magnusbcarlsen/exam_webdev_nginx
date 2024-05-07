@@ -8,8 +8,6 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
-
 ##############################
 def dict_factory(cursor, row):
     col_names = [col[0] for col in cursor.description]
@@ -23,7 +21,12 @@ def db():
     return db
 
 ##############################
-COOKIE_SECRET_KEY = "429c6db7-0c7f-4836-9dbb-315ba228b8a9#f328df55-6862-4341-8611-e97e6585b9ab"
+COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
+##############################
+
+def create_cookie(name, data):
+    response.set_cookie(name, data, secret=COOKIE_SECRET, httponly=True, secure=is_cookie_https())
+
 ##############################
 
 def get_cookie_data():
@@ -32,6 +35,11 @@ def get_cookie_data():
         return json.loads(user_data)
     else:
         return None
+
+##############################
+
+def delete_cookie(name):
+        response.delete_cookie(name, secret=COOKIE_SECRET)
 
 ##############################
 
@@ -56,7 +64,7 @@ def validate_logged():
     response.add_header("Cache-Control", "no-cache, no-store, must-revalidate")
     response.add_header("Pragma", "no-cache")
     response.add_header("Expires", "0")  
-    user = request.get_cookie("user", secret = COOKIE_SECRET_KEY)
+    user = request.get_cookie("user", secret = COOKIE_SECRET)
     if not user: raise Exception("***** user not logged *****", 400)
     return user
 
@@ -123,7 +131,7 @@ USER_LAST_NAME_MAX = 20
 USER_LAST_NAME_REGEX = "^.{2,20}$"
 
 def validate_user_last_name():
-  error = f"last_name {LAST_NAME_MIN} to {LAST_NAME_MAX} characters"
+  error = f"last_name {USER_LAST_NAME_MIN} to {USER_LAST_NAME_MAX} characters"
   user_last_name = request.forms.get("user_last_name").strip()
   if not re.match(USER_USERNAME_REGEX, user_last_name): raise Exception(error, 400)
   return user_last_name

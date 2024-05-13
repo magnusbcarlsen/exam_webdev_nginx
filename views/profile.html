@@ -45,7 +45,13 @@
 		</button>
 		% if user['user_role_fk'] == '1':
 		<!-- properties block -->
-		<!-- <div class="w-screen h-screen bg-red-400"></div> -->
+		<div id="property" class="grid grid-cols-3 gap-3 mt-3">
+			% for property in users_properties:
+			<!-- -->
+			% include("_property")
+			<!-- -->
+			% end
+		</div>
 		% end
 	</form>
 	<div id="message"></div>

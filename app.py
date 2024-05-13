@@ -68,10 +68,13 @@ def _():
 def _():
     return template("signup.html")
 ##############################
+@get("/profile_restore_agent/<user_pk>")
+def _(user_pk):
+    return template("profile_restore_agent.html", user_pk=user_pk)
+##############################
 @get("/reset_password_agent")
 def _():
     return template("reset_password_agent.html")
-
 ##############################
 @get("/reset_password_form/<key>")
 def _(key):
@@ -96,6 +99,8 @@ import routes.get_more_properties
 ##############################
 import routes.profile
 import routes.edit_user
+import routes.user_deleted
+import routes.profile_restore
 ##############################
 import routes.admin_block_property
 

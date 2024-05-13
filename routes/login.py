@@ -7,6 +7,7 @@ import x
 @post("/login")
 def _():
   try:
+    # TODO: Add logic for if they try and log on to a user who's user_deleted_at != 0
     user_email = x.validate_user_email()
     user_password = x.validate_user_password()
     db = x.db()
@@ -15,12 +16,20 @@ def _():
     ic(user['user_is_verified'])
     if user:
         if '1' in user['user_is_verified']:
-            user_data = json.dumps(user)
-            response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
-            return """
-                <template mix-redirect="/" is_logged=True>
-                </template>
-            """
+            if user['user_deleted_at'] != '0':
+                # return template("profile_restore", user_pk=user['user_pk'])
+                ic(user['user_pk'])
+                return f"""
+                    <template mix-redirect="/profile_restore_agent/{user['user_pk']}">
+                    </template>
+                """
+            else:
+                user_data = json.dumps(user)
+                response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
+                return """
+                    <template mix-redirect="/" is_logged=True>
+                    </template>
+                """
         else:
             return """
                 <template mix-redirect="/not_verified" is_logged=False>

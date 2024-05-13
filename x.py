@@ -32,15 +32,6 @@ def create_cookie(name, data):
 
 ##############################
 
-def get_cookie_data():
-    user_data = request.get_cookie("user", secret=COOKIE_SECRET)
-    if user_data is not None:
-        return json.loads(user_data)
-    else:
-        return None
-
-##############################
-
 def delete_cookie(name):
         response.delete_cookie(name, secret=COOKIE_SECRET)
 
@@ -52,6 +43,8 @@ def get_cookie_data():
         return json.loads(user_data)
     else:
         return None
+
+##############################
 
 def validate_user_logged():
     user = request.get_cookie("user", secret=COOKIE_SECRET)

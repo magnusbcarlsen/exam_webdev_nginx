@@ -73,16 +73,16 @@ INSERT INTO properties(
     property_description, property_price_pr_night, property_images, property_rating, 
     property_lat, property_lon, property_is_blocked, property_created_at )
 VALUES
-    ('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, -73.935242, 40.730610, '0', 1),
-    ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, -0.127758, 51.507351, '0', 2),
-    ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 139.691711, 35.689487, '0', 3),
-    ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 151.209290, -33.868820, '0', 4),
-    ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, -122.419418, 37.774929, '0', 5),
-    ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 37.617300, 55.755826, '0', 6),
-    ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, -43.172897, -22.906847, '0', 7),
-    ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, -43.210487, -22.951915, '0', 8),
-    ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 2.352222, 48.856613, '0', 9),
-    ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, -3.703790, 40.416775, '0', 10);
+    ('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, 12.5683, 55.6761, '0', 1),
+    ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 12.5012, 55.7095, '0', 2),
+    ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 10.3869, 55.3967, '0', 3),
+    ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 9.9217, 55.4663, '0', 4),
+    ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, 9.5540, 55.6776, '0', 5),
+    ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 8.5100, 55.3911, '0', 6),
+    ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, 8.4467, 55.4668, '0', 7),
+    ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, 8.5136, 55.7051, '0', 8),
+    ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 9.9716, 55.5863, '0', 9),
+    ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, 10.4024, 55.4038, '0', 10);
 
 SELECT * FROM properties;
 

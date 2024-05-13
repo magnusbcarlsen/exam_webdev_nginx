@@ -2,6 +2,7 @@ from bottle import error, get, request, template
 import sqlite3
 from icecream import ic
 import x
+import json
 
 @get ("/properties/page/<page_number>")
 def _(page_number): 
@@ -20,7 +21,8 @@ def _(page_number):
             is_admin = x.get_cookie_data()['user_role_fk'] == '2'
         except:
             pass
-        for property in properties: html += template("_property", property=property, is_admin=is_admin)
+        for property in properties: 
+            html += template("_property", property=property, is_admin=is_admin)
         btn_more = f"""
         <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
                 mix-get="/properties/page/{next_page}"
@@ -28,7 +30,7 @@ def _(page_number):
                 mix-await="Please wait..."
             >
                 Load more
-            </button>  
+            </button>
         """
         if len(properties) < 3: btn_more = ""
         
@@ -39,6 +41,7 @@ def _(page_number):
         <template mix-target="#more" mix-replace>
             {btn_more}
         </template>
+        <template mix-function="newMarker">{json.dumps(properties)}</template>
         """
         
     except Exception as ex:

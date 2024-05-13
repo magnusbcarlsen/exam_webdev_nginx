@@ -46,8 +46,13 @@ def _():
         except:
             pass
         ic(properties)
-        print(properties)
-        return template('index.html', properties=properties, is_logged=is_logged)
+        is_admin = False
+        try:
+            is_admin = x.get_cookie_data()['user_role_fk'] == '2'
+        except:
+            pass
+        # print(properties)
+        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"
@@ -63,6 +68,15 @@ def _():
 def _():
     return template("signup.html")
 ##############################
+@get("/reset_password_agent")
+def _():
+    return template("reset_password_agent.html")
+
+##############################
+@get("/reset_password_form/<key>")
+def _(key):
+    return template("reset_password_form.html", key=key)
+##############################
 # Serve 404 Not Found
 # @error(404)
 # def _(error):
@@ -75,11 +89,15 @@ import routes.not_verified
 ##############################
 import routes.signup
 import routes.verify
+import routes.reset_password_agent
+import routes.reset_password
 ##############################
 import routes.get_more_properties
 ##############################
 import routes.profile
 import routes.edit_user
+##############################
+import routes.admin_block_property
 
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
@@ -91,6 +109,7 @@ def git_update():
   return ""
 
 ##############################
+
 
 if 'PYTHONANYWHERE_DOMAIN' in os.environ:
     application = default_app()

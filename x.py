@@ -16,9 +16,12 @@ def dict_factory(cursor, row):
 ##############################
 
 def db():
-    db = sqlite3.connect(os.getcwd()+"/database/company.db")  
-    db.row_factory = dict_factory
-    return db
+    try:
+        db = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve())+"/database/company.db")  
+        db.row_factory = dict_factory
+        return db
+    except Exception as ex:
+        return 'server under maintenance'
 
 ##############################
 COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
@@ -42,6 +45,13 @@ def delete_cookie(name):
         response.delete_cookie(name, secret=COOKIE_SECRET)
 
 ##############################
+
+def get_cookie_data():
+    user_data = request.get_cookie("user", secret=COOKIE_SECRET)
+    if user_data is not None:
+        return json.loads(user_data)
+    else:
+        return None
 
 def validate_user_logged():
     user = request.get_cookie("user", secret=COOKIE_SECRET)
@@ -148,19 +158,29 @@ def validate_user_password():
     if not re.match(USER_PASSWORD_REGEX, user_password): raise Exception(error, 400)
     return user_password
 
+def validate_new_user_password():
+        error = f"Password {USER_PASSWORD_MIN} to {USER_PASSWORD_MAX} characters"
+        error2 = f"Passwords must match"
+        user_new_password = request.forms.get("user_new_password","").strip()
+        user_new_password_confirm = request.forms.get("user_new_password_confirm","").strip()
+        if not re.match(USER_PASSWORD_REGEX, user_new_password): raise Exception(error, 400)
+        if not re.match(USER_PASSWORD_REGEX, user_new_password_confirm): raise Exception(error, 400)
+        if not user_new_password == user_new_password_confirm: raise Exception(error2, 400)
+        return user_new_password
+
 ##############################
 
 USER_ROLE_REGEX = "^[0-1]$"
 
-def validate_role():
+def validate_user_role():
     user_role = request.forms.get("user_role", "")
     if not re.match(USER_ROLE_REGEX, user_role): raise Exception(400, "Invalid Role")
     return user_role
 
 ##############################
 
-def confirm_password():
-  error = f"password and confirm_password do not match"
+def confirm_user_password():
+  error = f"password and confirm_user_password do not match"
   user_password = request.forms.get("user_password", "").strip()
   user_confirm_password = request.forms.get("user_confirm_password", "").strip()
   if user_password != user_confirm_password: raise Exception(error, 400)

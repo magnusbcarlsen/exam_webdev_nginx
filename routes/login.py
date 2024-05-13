@@ -1,4 +1,4 @@
-from bottle import post, response, request
+from bottle import post, response, request, template
 from icecream import ic
 import json
 import x
@@ -16,7 +16,7 @@ def _():
     if user:
         if '1' in user['user_is_verified']:
             user_data = json.dumps(user)
-            x.create_cookie('user', user_data)
+            response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
             return """
                 <template mix-redirect="/" is_logged=True>
                 </template>

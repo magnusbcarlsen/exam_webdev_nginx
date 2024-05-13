@@ -3,7 +3,9 @@
 <main>
     <div id="property" class="grid grid-cols-3 gap-3 mt-3">
         % for property in properties:
-            %include("_property")
+            % if property['property_is_blocked'] != '1' or is_admin:
+                % include("_property")
+            % end
         % end
     </div>
     <button id="more"

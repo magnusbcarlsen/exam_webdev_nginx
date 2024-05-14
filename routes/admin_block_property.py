@@ -12,11 +12,11 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-white"
+                    <button class="bg-black text-white border-solid"
                         mix-data="[id='{property_pk}'"
                         mix-put="/unblock_property/{property_pk}"
                         >
-                        Property blocked
+                        PROPERTY BLOCKED
                     </button>
                 </form>
             </template>

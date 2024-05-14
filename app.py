@@ -6,12 +6,17 @@ import json
 import git
 import os
 import x
+import credentials
 
 ##############################
 # Serve style
 @get('/app.css')
 def _():
     return static_file('app.css', '.')
+##############################
+@get("/app.js")
+def _():
+    return static_file("app.js", ".")
 ##############################
 # Serve Script
 @get('/mixhtml.js')
@@ -37,28 +42,33 @@ def _():
 def _():
     try:
         db = x.db()
-        q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3")
-        properties = q.fetchall()
         is_logged = False
+        is_admin = False
         try:    
             x.validate_user_logged()
             is_logged = True
         except:
             pass
-        ic(properties)
-        is_admin = False
+  
         try:
             is_admin = x.get_cookie_data()['user_role_fk'] == '2'
-        except:
-            pass
-        # print(properties)
-        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin)
+        except Exception as ex:
+            ic(ex)
+        if is_admin: 
+            query = "SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3"
+        else: 
+            query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 0, 3"
+        
+        q = db.execute(query)
+        properties = q.fetchall()
+        
+        
+        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, mapbox_token= credentials.mapbox_token)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"
     finally: 
         if "db" in locals(): db.close()
-
 
 ##############################
 @get("/login")
@@ -69,10 +79,13 @@ def _():
 def _():
     return template("signup.html")
 ##############################
+@get("/profile_restore_agent/<user_pk>")
+def _(user_pk):
+    return template("profile_restore_agent.html", user_pk=user_pk)
+##############################
 @get("/reset_password_agent")
 def _():
     return template("reset_password_agent.html")
-
 ##############################
 @get("/reset_password_form/<key>")
 def _(key):
@@ -86,6 +99,7 @@ def _():
 # Serve 404 Not Found
 # @error(404)
 # def _(error):
+#     ic(error)
 #     return template('error.html', is_logged=x.is_user_logged_in())
 ############################## admin
 import routes.login
@@ -98,6 +112,11 @@ import routes.reset_password_agent
 import routes.reset_password
 ##############################
 import routes.get_more_properties
+##############################
+import routes.profile
+import routes.edit_user
+import routes.user_deleted
+import routes.profile_restore
 ##############################
 import routes.admin_block_property
 import routes.admin_block_user

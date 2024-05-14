@@ -112,6 +112,7 @@ import routes.edit_user
 import routes.user_deleted
 import routes.profile_restore
 ##############################
+import routes.add_property
 import routes.admin_block_property
 ##############################
 @get("/db/reset")

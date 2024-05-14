@@ -297,6 +297,74 @@ def validate_user_role():
 
 ##############################
 
+PROPERTY_NAME_REGEX = "^[a-zA-Z][a-zA-Z0-9_ ]*$"
+
+def validate_property_name():
+    property_name = request.forms.get("property_name", "")
+    if not re.match(PROPERTY_NAME_REGEX, property_name):
+        raise Exception(400, "Invalid Property Name")
+    return property_name
+
+##############################
+
+PROPERTY_DESCRIPTION_REGEX = "^[a-zA-Z0-9 _,.!?'\"-]*$"
+
+def validate_property_description():
+    property_description = request.forms.get("property_description", "")
+    if not re.match(PROPERTY_DESCRIPTION_REGEX, property_description):
+        raise Exception(400, "Invalid Property Description")
+    return property_description
+
+##############################
+
+PROPERTY_PRICE_PER_NIGHT_REGEX = "^[0-9]*$"
+
+def validate_property_price_pr_night():
+    property_price_pr_night = request.forms.get("property_price_pr_night", "")
+    if not re.match(PROPERTY_PRICE_PER_NIGHT_REGEX, property_price_pr_night):
+        raise Exception(400, "Invalid Property Price Per Night")
+    return property_price_pr_night
+
+##############################
+
+PROPERTY_ADDRESS_REGEX = "^[a-zA-Z0-9\s,.'-]+$"
+
+def validate_property_address():
+    property_address = request.forms.get("property_address", "")
+    if not re.match(PROPERTY_ADDRESS_REGEX, property_address):
+        raise Exception(400, "Invalid Property Address")
+    return property_address
+
+##############################
+
+PROPERTY_COUNTRY_REGEX = "^[a-zA-Z\s]+$"
+
+def validate_property_country():
+    property_country = request.forms.get("property_country", "")
+    if not re.match(PROPERTY_COUNTRY_REGEX, property_country):
+        raise Exception(400, "Invalid Property Country")
+    return property_country
+
+##############################
+
+PROPERTY_POSTAL_CODE_REGEX = "^[0-9]{4}$"
+
+def validate_property_postal_code():
+    property_postal_code = request.forms.get("property_postal_code", "")
+    if not re.match(PROPERTY_POSTAL_CODE_REGEX, property_postal_code):
+        raise Exception(400, "Invalid Property Postal Code")
+    return property_postal_code
+
+##############################
+
+def validate_property_images():
+    property_images = request.files.getall('property_images')
+    if not property_images:
+        raise Exception(400, "No Images Uploaded")
+    return property_images
+
+##############################
+
 def confirm_user_password():
   error = f"password and confirm_user_password do not match"
   user_password = request.forms.get("user_password", "").strip()

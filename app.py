@@ -63,7 +63,7 @@ def _():
         properties = q.fetchall()
         
         
-        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin)
+        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, mapbox_token= credentials.mapbox_token)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"

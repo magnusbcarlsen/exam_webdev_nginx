@@ -39,7 +39,7 @@ CREATE TABLE users(
 
 -- ##### USERS - SEED ##### --
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('1', '1', 'dirty_ranch', 'ole', 'olesen', 'ole@partner.dk', '12345678', '1');
-INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678', '0');
+INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678');
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('3', '2', 'admin', 'admin', 'adminson', 'admin@company.dk', '12345678', '1');
 
 SELECT * FROM users;

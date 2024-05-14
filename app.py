@@ -78,6 +78,11 @@ def _():
 def _(key):
     return template("reset_password_form.html", key=key)
 ##############################
+
+@get("/all_users")
+def _():
+    return template("all_users.html")
+##############################
 # Serve 404 Not Found
 # @error(404)
 # def _(error):
@@ -95,6 +100,10 @@ import routes.reset_password
 import routes.get_more_properties
 ##############################
 import routes.admin_block_property
+import routes.admin_block_user
+
+##############################
+import routes.all_users
 
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')

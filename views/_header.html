@@ -1,46 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="/app.css" />
-		<script src="../mixhtml.js" defer></script>
-		<title>{{ get("title", "Company") }}</title>
-		<style>
-			.mix-error {
-				border-color: tomato;
-			}
-			.mix-hidden {
-				display: none;
-			}
-		</style>
-	</head>
-	<body class="w-full h-screen overflow-x-hidden">
-		<div id="toast"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="/app.css"
+    />
+    <script
+      src="../mixhtml.js"
+      defer
+    ></script>
+    <script src="../app.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <title>{{ get("title", "Company") }}</title>
+    <style>
+      .mix-error {
+      	border-color: tomato;
+      }
+      .mix-hidden {
+      	display: none;
+      }
+    </style>
+  </head>
+  <body class="w-full h-screen overflow-x-hidden">
+    <div id="toast"></div>
 
-		<nav
-			class="grid grid-cols-[1fr_20fr_5fr] gap-4 w-full h-16 items-center px-2"
-		>
-			<a
-				href="/"
-				class="{{ get('active_home', '') }} 
+    <nav
+      class="fixed bg-white z-10 grid grid-cols-[1fr_20fr_5fr] gap-4 w-full h-16 items-center px-2"
+    >
+      <a
+        href="/"
+        class="{{ get('active_home', '') }} 
             flex items-center h-12 px-4 font-bold text-2xl text-white bg-dragon-fruit rounded-md"
-			>
-				bottleBnB
-			</a>
+      >
+        bottleBnB
+      </a>
 
-			<form>
-				<input type="text" placeholder="Where?" />
-			</form>
+      <form>
+        <input
+          type="text"
+          placeholder="Where?"
+        />
+      </form>
 
-			<div class="flex gap-4 ml-auto mx-auto w-full justify-evenly">
-				<a href="/profile" class="{{ get('active_login', '') }}"> Profile </a>
-				% if get("is_logged", False):
-				<a href="/logout" class="{{ get('active_login', '') }}"> Logout </a>
-				% else:
-				<a href="/login" class="{{ get('active_login', '') }}"> Login </a>
-				% end
-			</div>
-		</nav>
-	</body>
+      <div class="flex gap-4 ml-auto mx-auto w-full justify-evenly">
+        <a
+          href="/profile"
+          class="{{ get('active_login', '') }}"
+        >
+          Profile
+        </a>
+        % if get("is_logged", False):
+        <a
+          href="/logout"
+          class="{{ get('active_login', '') }}"
+        >
+          Logout
+        </a>
+        % else:
+        <a
+          href="/login"
+          class="{{ get('active_login', '') }}"
+        >
+          Login
+        </a>
+        % end
+      </div>
+    </nav>
+  </body>
 </html>

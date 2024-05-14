@@ -6,12 +6,17 @@ import json
 import git
 import os
 import x
+import credentials
 
 ##############################
 # Serve style
 @get('/app.css')
 def _():
     return static_file('app.css', '.')
+##############################
+@get("/app.js")
+def _():
+    return static_file("app.js", ".")
 ##############################
 # Serve Script
 @get('/mixhtml.js')
@@ -58,7 +63,7 @@ def _():
         properties = q.fetchall()
         
         
-        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin)
+        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, mapbox_token= credentials.mapbox_token)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"

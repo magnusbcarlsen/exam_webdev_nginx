@@ -2,6 +2,7 @@ from bottle import error, get, request, template
 import sqlite3
 from icecream import ic
 import x
+import json
 
 @get ("/properties/page/<page_number>")
 def _(page_number): 
@@ -33,7 +34,7 @@ def _(page_number):
                 mix-await="Please wait..."
             >
                 Load more
-            </button>  
+            </button>
         """
         if len(properties) < 3: btn_more = ""
         
@@ -44,6 +45,7 @@ def _(page_number):
         <template mix-target="#more" mix-replace>
             {btn_more}
         </template>
+        <template mix-function="newMarker">{json.dumps(properties)}</template>
         """
         
     except Exception as ex:

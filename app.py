@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response, request, run, static_file, template
+from bottle import default_app, error, get, HTTPResponse, post, redirect, response, request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -31,7 +31,7 @@ def _():
 @get ("/images/<property_images>")
 def _(property_images): 
     return static_file(property_images, "images")
-
+##############################
 # Serve notfound GIF
 @get('/images/notfound.gif')
 def _():
@@ -69,7 +69,22 @@ def _():
         return "No no noo, more lemon pledge"
     finally: 
         if "db" in locals(): db.close()
-
+##############################
+@get("/db/reset")
+def _():
+    try:
+        x.reset_db()
+        redirect("/")
+    except HTTPResponse:
+        raise
+##############################
+@get("/db/seed")
+def _():
+    try:
+        x.seed_db()
+        redirect("/")
+    except HTTPResponse:
+        raise
 ##############################
 @get("/login")
 def _():
@@ -125,7 +140,6 @@ def git_update():
   return ""
 
 ##############################
-
 
 if 'PYTHONANYWHERE_DOMAIN' in os.environ:
     application = default_app()

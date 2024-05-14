@@ -182,7 +182,7 @@ def confirm_user_password():
 ##############################
 
 
-def send_mail(to_email, from_email,email_subject, email_body):
+def send_mail(to_email, from_email, email_subject, email_body):
 
     try:
         

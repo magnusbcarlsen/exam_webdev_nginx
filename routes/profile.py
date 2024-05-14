@@ -60,25 +60,22 @@ def _():
 def _():
     try:
         user_data = x.get_cookie_data()
-        ic(user_data['user_email'])
-        ic(x.validate_user_email())
 
         if user_data['user_email'] == x.validate_user_email():
-            ic('They match!')
             db = x.db()
             q = db.execute('UPDATE users SET user_deleted_at = CURRENT_TIMESTAMP WHERE user_pk = ?', (user_data['user_pk'],))
             x.delete_cookie('user')
+            x.send_mail(user_data['user_email'], 'admin@bottleBnB.com', "Profile has been deleted", template('email_profile_restore', user_pk=user_data['user_pk']))
             db.commit()
             return """
                 <template mix-redirect="/user_deleted" is_logged=False>
                 </template>
             """
         else:
-            ic('They dont match!')
             return """
                 <template mix-target="#error_message" mix-replace>
                     <div class='flex justify-center bg-red-400 rounded-md'>
-                        <p>Email is invalid</p>
+                        <p>Email is invalid, please write your own email</p>
                     </div>
                 </template>
             """

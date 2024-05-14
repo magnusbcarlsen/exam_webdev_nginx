@@ -70,22 +70,6 @@ def _():
     finally: 
         if "db" in locals(): db.close()
 ##############################
-@get("/db/reset")
-def _():
-    try:
-        x.reset_db()
-        redirect("/")
-    except HTTPResponse:
-        raise
-##############################
-@get("/db/seed")
-def _():
-    try:
-        x.seed_db()
-        redirect("/")
-    except HTTPResponse:
-        raise
-##############################
 @get("/login")
 def _():
     return template("login.html")
@@ -129,7 +113,22 @@ import routes.user_deleted
 import routes.profile_restore
 ##############################
 import routes.admin_block_property
-
+##############################
+@get("/db/reset")
+def _():
+    try:
+        x.reset_db()
+        redirect("/")
+    except HTTPResponse:
+        raise
+##############################
+@get("/db/seed")
+def _():
+    try:
+        x.seed_db()
+        redirect("/")
+    except HTTPResponse:
+        raise
 ##############################
 @post('/a0eb0d133292439b941c063361315db6')
 def git_update():

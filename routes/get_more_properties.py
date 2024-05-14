@@ -10,19 +10,23 @@ def _(page_number):
         db = x.db()
         next_page = int(page_number) + 1
         offset = (int(page_number) - 1) * 3
-        q = db.execute(f"""
-        SELECT * FROM properties ORDER BY property_created_at LIMIT 3 OFFSET {offset}
-        """)
-        properties = q.fetchall()
-        ic(properties)
+        limit = 3
         html = ""
         is_admin = False
         try:
             is_admin = x.get_cookie_data()['user_role_fk'] == '2'
-        except:
-            pass
-        for property in properties: 
-            html += template("_property", property=property, is_admin=is_admin)
+        except Exception as ex:
+            ic(ex)
+        if is_admin: 
+            query = f"SELECT * FROM properties ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
+        else: 
+            query = f"SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
+        
+        q = db.execute(query)
+        properties = q.fetchall()
+        
+        
+        for property in properties: html += template("_property", property=property, is_admin=is_admin)
         btn_more = f"""
         <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
                 mix-get="/properties/page/{next_page}"

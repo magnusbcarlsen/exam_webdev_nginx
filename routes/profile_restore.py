@@ -26,3 +26,17 @@ def _(user_pk):
     finally:
         if "db" in locals():
             db.close()
+
+@get('/profile_restore/email/<user_pk>')
+def _(user_pk):
+    try:
+        db = x.db()
+        q = db.execute('UPDATE users SET user_deleted_at = 0 WHERE user_pk = ?', (user_pk,))
+        db.commit()
+
+        return template('profile_restored')
+    except Exception as ex:
+        ic(ex)
+    finally:
+        if "db" in locals():
+            db.close()

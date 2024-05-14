@@ -1,4 +1,6 @@
 from bottle import request, response
+from icecream import ic
+import bcrypt
 import os
 import re
 import json
@@ -22,6 +24,129 @@ def db():
         return db
     except Exception as ex:
         return 'server under maintenance'
+
+##############################
+
+def reset_db():
+    try:
+        database = db()
+        database.executescript(
+            """
+            DROP TABLE IF EXISTS roles;
+            CREATE TABLE roles(
+                role_pk         TEXT,
+                role_name       TEXT,
+                PRIMARY KEY(role_pk)
+            );
+
+            DROP TABLE IF EXISTS users;
+            CREATE TABLE users(
+                user_pk             TEXT,
+                user_role_fk        TEXT,
+                user_username       TEXT,
+                user_name           TEXT,
+                user_last_name      TEXT,
+                user_email          TEXT UNIQUE,
+                user_password       TEXT,
+                user_is_blocked     TEXT DEFAULT 0,
+                user_is_verified    TEXT DEFAULT 0,
+                user_created_at     TEXT DEFAULT CURRENT_TIMESTAMP,
+                user_updated_at     TEXT DEFAULT CURRENT_TIMESTAMP,
+                user_deleted_at     TEXT DEFAULT 0,
+                FOREIGN KEY(user_role_fk) REFERENCES roles(role_pk) ON DELETE CASCADE
+                PRIMARY KEY(user_pk)
+            ) WITHOUT ROWID;
+
+            DROP TABLE IF EXISTS properties;
+            CREATE TABLE properties(
+                property_pk                 TEXT UNIQUE,
+                property_user_fk            TEXT,
+                property_booking_fk         TEXT,
+                property_name               TEXT,
+                property_description        TEXT,
+                property_price_pr_night     REAL,
+                property_images             TEXT,
+                property_rating             REAL,
+                property_lat                TEXT,
+                property_lon                TEXT,
+                property_is_blocked         TEXT,
+                property_created_at         INTEGER DEFAULT CURRENT_TIMESTAMP,
+                property_updated_at         TEXT DEFAULT CURRENT_TIMESTAMP,
+                property_deleted_at         TEXT DEFAULT 0,
+                FOREIGN KEY(property_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
+                PRIMARY KEY(property_pk)
+            ) WITHOUT ROWID;
+
+            DROP TABLE IF EXISTS bookings;
+            CREATE TABLE bookings(
+                booking_pk              TEXT UNIQUE,
+                booking_user_fk         TEXT,
+                booking_property_fk     TEXT,
+                FOREIGN KEY(booking_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
+                FOREIGN KEY(booking_property_fk) REFERENCES properties(property_pk) ON DELETE CASCADE,
+                PRIMARY KEY(booking_pk)
+            ) WITHOUT ROWID;
+
+            CREATE TRIGGER update_property_booking_fk
+            AFTER INSERT ON bookings
+            FOR EACH ROW
+            BEGIN
+                UPDATE properties
+                SET property_booking_fk = NEW.booking_pk
+                WHERE property_pk = NEW.booking_property_fk;
+            END;
+            """
+        )
+        database.commit()
+    except Exception as ex:
+        ic(f"reset db error occurred: {ex}")
+    finally:
+        if "db" in locals():
+            database.close()
+
+##############################
+
+def seed_db():
+    try:
+        database = db()
+        salt = bcrypt.gensalt()
+        password = '12345678'.encode()
+        user_password_hashed = bcrypt.hashpw(password, salt)
+
+        # Prepare the SQL statements
+        insert_roles = "INSERT INTO roles VALUES(?, ?);"
+        roles = [('0', 'customer'), ('1', 'partner'), ('2', 'admin')]
+
+        insert_users = "INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?);"
+        users = [('1', '1', 'dirty_ranch', 'ole', 'olesen', 'ole@partner.dk', user_password_hashed, '1'),
+                 ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', user_password_hashed, '0'),
+                 ('3', '2', 'admin', 'admin', 'adminson', 'admin@company.dk', user_password_hashed, '1')]
+
+        insert_properties = "INSERT INTO properties(property_pk, property_user_fk, property_booking_fk, property_name, property_description, property_price_pr_night, property_images, property_rating, property_lat, property_lon, property_is_blocked, property_created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+        properties = [('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, 12.5683, 55.6761, '0', 1),
+                      ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 12.5012, 55.7095, '0', 2),
+                      ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 10.3869, 55.3967, '0', 3),
+                      ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 9.9217, 55.4663, '0', 4),
+                      ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, 9.5540, 55.6776, '0', 5),
+                      ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 8.5100, 55.3911, '0', 6),
+                      ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, 8.4467, 55.4668, '0', 7),
+                      ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, 8.5136, 55.7051, '0', 8),
+                      ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 9.9716, 55.5863, '0', 9),
+                      ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, 10.4024, 55.4038, '0', 10)]
+
+        # Execute the SQL statements
+        with database:
+            database.executemany(insert_roles, roles)
+            database.executemany(insert_users, users)
+            database.executemany(insert_properties, properties)
+
+        database.commit()
+
+    except Exception as ex:
+        ic(f"seed db error occured: {ex}")
+    finally:
+        if "db" in locals():
+            database.close()
 
 ##############################
 COOKIE_SECRET = "41ebeca46f3b-4d77-a8e2-554659075C6319a2fbfb-9a2D-4fb6-Afcad32abb26a5e0"
@@ -96,7 +221,7 @@ def validate_user_id():
 ##############################
 
 USER_EMAIL_MAX = 100
-USER_EMAIL_REGEX = "^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
+USER_EMAIL_REGEX = r"^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$"
 
 def validate_user_email():
     error = f"email invalid"
@@ -181,11 +306,8 @@ def confirm_user_password():
 
 ##############################
 
-
 def send_mail(to_email, from_email, email_subject, email_body):
-
     try:
-        
         message = MIMEMultipart()
         message["To"] = to_email
         message["From"] = from_email

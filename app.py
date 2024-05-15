@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, redirect, response, request, run, static_file, template
+from bottle import default_app, error, get, post, put, redirect, response, request, run, static_file, template
 import sqlite3
 from icecream import ic
 import bcrypt
@@ -90,6 +90,52 @@ def _():
 @get("/reset_password_form/<key>")
 def _(key):
     return template("reset_password_form.html", key=key)
+##############################
+@put("/unblock_user/<user_pk>")
+def _(user_pk):
+    try:
+        ic(user_pk)
+        db = x.db()
+        q = db.execute("UPDATE users SET user_is_blocked = '0' WHERE user_pk = ?", (user_pk,))
+        db.commit()
+        return f"""
+            <template mix-target="#user_row_{user_pk}" mix-replace>
+                <form id="user_row_{user_pk}">
+                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/block_user/{user_pk}" class="bg-black text-cyan-50 px-3 py-1 h-fit" >BLOCK</button>
+                </form>
+            </template>
+""" 
+
+    except Exception as ex:
+        ic(ex)
+        return ex
+    finally:
+         if "db" in locals():
+            db.close()
+##############################
+@put("/block_user/<user_pk>")
+def _(user_pk):
+    try:
+        ic(user_pk)
+        db = x.db()
+        q = db.execute("UPDATE users SET user_is_blocked = '1' WHERE user_pk = ?", (user_pk,))
+        db.commit()
+        return f"""
+            <template mix-target="#user_row_{user_pk}" mix-replace>
+                <form id="user_row_{user_pk}">
+                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/unblock_user/{user_pk}" class="bg-black text-cyan-50 px-3 py-1 h-fit" >UNBLOCK</button>
+                </form>
+            </template>
+""" 
+
+    except Exception as ex:
+        ic(ex)
+        return ex
+    finally:
+         if "db" in locals():
+            db.close()
+
+
 ##############################
 # Serve 404 Not Found
 # @error(404)

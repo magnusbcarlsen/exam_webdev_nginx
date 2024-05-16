@@ -9,6 +9,11 @@ def _(user_pk):
         db = x.db()
         q = db.execute("UPDATE users SET user_is_blocked = '1' WHERE user_pk = ?", (user_pk,))
         db.commit()
+        email_q = db.execute("SELECT user_email FROM users WHERE user_pk = ?", (user_pk,))
+        user_email = email_q.fetchone()
+        x.send_mail(user_email, user_email, "Your profile has been blocked", 
+        """<p>Your profile has been blocked</p>""")
+        
         return f"""
             <template mix-target="[id='{user_pk}']" mix-replace>
                 <form id="{user_pk}">

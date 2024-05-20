@@ -1,0 +1,38 @@
+% import x
+% include("_header")
+<main class='pt-16'>
+    <table class='border-2 border-dragon-fruit bg-dragon-fruit border-separate border-spacing-0 rounded'>
+        <thead class='bg-dragon-fruit rounded'>
+            <tr class='text-white'>
+                <th class='text-start px-3 py-1'>ID</th>
+                <th class='text-start px-3 py-1'>Name</th>
+                <th class='text-start px-3 py-1'>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class='bg-white'>
+            % for user in user_list:
+            <tr class='py-20'>
+                <td class='text-start px-3 py-1 border-b'>{{user['user_pk']}}</td>
+                <td class='text-start px-3 py-1 border-b'>{{user['user_name']}} {{user['user_last_name']}}</td>
+                <td class='text-start px-3 py-1 border-b'>{{user['user_email']}}</td>
+                <td class='text-start px-3 py-1 border-b'>
+                    % if user['user_is_blocked'] == '0':
+                    <form id="user_row_{{user['user_pk']}}">
+                        <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/block_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-6 py-1 h-fit" >BLOCK</button>
+                    </form>
+                    % else:
+                    <form id="user_row_{{user['user_pk']}}">
+                    <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/unblock_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-1 py-1 h-fit" >UNBLOCK</button>
+                    </form>
+                    % end
+                    </td>
+                </tr>
+            % end
+        </tbody>
+    </table>
+</main>
+% include("_footer")
+
+
+<!-- mix-data="[id='{{user['user_pk']}}']" -->

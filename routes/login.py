@@ -16,12 +16,19 @@ def _():
     ic(user)
     if user:
         if not bcrypt.checkpw(user_password.encode(), user["user_password"]): raise Exception("Invalid credentials", 400)
-        if '1' in user['user_is_verified']:
+        if user['user_is_blocked'] == '1':
+               return """
+                    <template mix-redirect="/user_blocked">
+                    </template>
+                """
+        elif '1' in user['user_is_verified']:
             if user['user_deleted_at'] != '0':
                 return f"""
                     <template mix-redirect="/profile_restore_agent/{user['user_pk']}">
                     </template>
                 """
+            
+            
             else:
                 for key in user:
                     if isinstance(user[key], bytes):

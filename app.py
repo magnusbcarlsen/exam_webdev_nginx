@@ -91,6 +91,11 @@ def _():
 def _(key):
     return template("reset_password_form.html", key=key)
 ##############################
+
+@get ("/user_blocked")
+def _():
+    return template('user_blocked.html')
+##############################
 @put("/unblock_user/<user_pk>")
 def _(user_pk):
     try:

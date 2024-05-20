@@ -17,7 +17,7 @@ def _():
         user = user_q.fetchone()
 
         if user['user_role_fk'] == '2':
-            user_list_q = db.execute('SELECT * FROM users')
+            user_list_q = db.execute('SELECT * FROM users WHERE user_role_fk != 2')
             user_list = user_list_q.fetchall()
             return template('profile_admin.html', user_list=user_list, is_logged=True)
             

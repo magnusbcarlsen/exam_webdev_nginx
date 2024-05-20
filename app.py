@@ -87,7 +87,6 @@ def _():
     finally: 
         if "db" in locals(): db.close()
 
-
 ##############################
 @get("/login")
 def _():
@@ -97,10 +96,13 @@ def _():
 def _():
     return template("signup.html")
 ##############################
+@get("/profile_restore_agent/<user_pk>")
+def _(user_pk):
+    return template("profile_restore_agent.html", user_pk=user_pk)
+##############################
 @get("/reset_password_agent")
 def _():
     return template("reset_password_agent.html")
-
 ##############################
 @get("/reset_password_form/<key>")
 def _(key):
@@ -109,6 +111,7 @@ def _(key):
 # Serve 404 Not Found
 # @error(404)
 # def _(error):
+#     ic(error)
 #     return template('error.html', is_logged=x.is_user_logged_in())
 ############################## admin
 import routes.login
@@ -121,6 +124,11 @@ import routes.reset_password_agent
 import routes.reset_password
 ##############################
 import routes.get_more_properties
+##############################
+import routes.profile
+import routes.edit_user
+import routes.user_deleted
+import routes.profile_restore
 ##############################
 import routes.admin_block_property
 

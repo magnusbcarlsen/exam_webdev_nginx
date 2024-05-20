@@ -1,0 +1,66 @@
+%include("_header")
+<!--  -->
+%import x
+<main class="pt-16">
+	<div id="profile_content" class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
+		<form id="frm_profile" class="flex flex-col gap-2 w-full">
+			<input
+				id="put_user_email"
+				name="user_email"
+				class="w-full border"
+				type="text"
+				value="{{user['user_email']}}"
+				mix-check="{{x.USER_EMAIL_REGEX}}"
+			/>
+			<input
+				id="put_user_username"
+				name="user_username"
+				class="w-full border"
+				type="text"
+				value="{{user['user_username']}}"
+				mix-check="{{x.USER_USERNAME_REGEX}}"
+			/>
+
+			<input
+				id="put_user_name"
+				name="user_name"
+				class="w-full border"
+				type="text"
+				value="{{user['user_name']}}"
+				mix-check="{{x.USER_NAME_REGEX}}"
+			/>
+			<input
+				id="put_user_last_name"
+				name="user_last_name"
+				class="w-full border"
+				type="text"
+				value="{{user['user_last_name']}}"
+				mix-check="{{x.USER_LAST_NAME_REGEX}}"
+			/>
+			<button
+				class="w-full bg-dragon-fruit text-white"
+				mix-put="/edit_user/{{user['user_pk']}}"
+				mix-data="#frm_profile"
+			>
+				Edit User
+			</button>
+		</form>
+		<button
+			id="delete_user_button"
+			class="w-full bg-dragon-fruit text-white"
+			mix-get="/profile/delete-pop-up"
+		>
+			Delete User
+		</button>
+	</div>
+	% if user['user_role_fk'] == '1':
+	<!-- properties block -->
+	<div id="property" class="grid grid-cols-3 gap-3 mt-3">
+		% for property in users_properties:
+		<!-- -->
+		% include("_property")
+		<!-- -->
+		% end
+	</div>
+	% end
+</main>

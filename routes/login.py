@@ -1,5 +1,6 @@
 from bottle import post, response, request, template
 from icecream import ic
+import bcrypt
 import json
 import x
 
@@ -10,17 +11,27 @@ def _():
     user_email = x.validate_user_email()
     user_password = x.validate_user_password()
     db = x.db()
-    q = db.execute('SELECT * FROM users WHERE user_email = ? AND user_password = ?', (user_email, user_password))
+    q = db.execute('SELECT * FROM users WHERE user_email = ?', (user_email,))
     user = q.fetchone()
-    ic(user['user_is_verified'])
+    ic(user)
     if user:
+        if not bcrypt.checkpw(user_password.encode(), user["user_password"]): raise Exception("Invalid credentials", 400)
         if '1' in user['user_is_verified']:
-            user_data = json.dumps(user)
-            response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
-            return """
-                <template mix-redirect="/" is_logged=True>
-                </template>
-            """
+            if user['user_deleted_at'] != '0':
+                return f"""
+                    <template mix-redirect="/profile_restore_agent/{user['user_pk']}">
+                    </template>
+                """
+            else:
+                for key in user:
+                    if isinstance(user[key], bytes):
+                        user[key] = user[key].decode('utf-8')
+                user_data = json.dumps(user)
+                response.set_cookie("user", user_data, secret=x.COOKIE_SECRET, httponly=True, secure=x.is_cookie_https())
+                return """
+                    <template mix-redirect="/" is_logged=True>
+                    </template>
+                """
         else:
             return """
                 <template mix-redirect="/not_verified" is_logged=False>

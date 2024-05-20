@@ -341,7 +341,7 @@ def validate_property_price_pr_night():
 
 ##############################
 
-PROPERTY_ADDRESS_REGEX = "^[a-zA-Z0-9\s,.'-]+$"
+PROPERTY_ADDRESS_REGEX = "^[a-zA-Z0-9\s,.'-ÆØÅæøå]+$"
 
 def validate_property_address():
     property_address = request.forms.get("property_address", "")

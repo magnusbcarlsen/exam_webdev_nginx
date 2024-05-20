@@ -28,9 +28,26 @@ def _():
 def _():
     return static_file('favicon.ico', '.')
 ##############################
-@get ("/images/<property_images>")
+@get("/images/<property_images>")
 def _(property_images): 
     return static_file(property_images, "images")
+
+##############################
+# db route
+@get('/properties')
+def _():
+    db = x.db()
+    q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3")
+    properties = q.fetchall()
+    db.commit()
+    return json.dumps(properties)
+##############################
+# get mapbox token
+@get('/mapbox_token')
+def _():
+    token = credentials.mapbox_token
+    return json.dumps({'mapbox_token': token})
+
 
 # Serve notfound GIF
 @get('/images/notfound.gif')

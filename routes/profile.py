@@ -13,8 +13,14 @@ def _():
 
         db = x.db()
 
-        user_q = db.execute('SELECT * FROM users WHERE user_pk = ?', (user_data['user_pk'],))
+        user_q = db.execute('SELECT * FROM users WHERE user_pk = ? AND user_role_fk = ?', (user_data['user_pk'],user_data['user_role_fk']))
         user = user_q.fetchone()
+
+        if user['user_role_fk'] == '2':
+            user_list_q = db.execute('SELECT * FROM users WHERE user_role_fk != 2')
+            user_list = user_list_q.fetchall()
+            return template('profile_admin.html', user_list=user_list, is_logged=True)
+            
     
         property_q = db.execute('SELECT * FROM properties WHERE property_user_fk = ?', (user_data['user_pk'],))
         users_properties = property_q.fetchall()

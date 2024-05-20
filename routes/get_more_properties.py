@@ -45,7 +45,7 @@ def _(page_number):
         <template mix-target="#more" mix-replace>
             {btn_more}
         </template>
-        <template mix-function="newMarker">{json.dumps(properties)}</template>
+        <template mix-function="addProperties">{json.dumps(properties)}</template>
         """
         
     except Exception as ex:

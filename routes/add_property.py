@@ -15,20 +15,23 @@ def _():
                     class="flex flex-col gap-2 w-full"
                 >
                     <input
+                        id="property_name"
                         name="property_name"
                         class="w-full border"
                         type="text"
-                        placeholder="property name"
+                        placeholder="Property name (3 - 30 characters)"
                         mix-check="{html.escape(x.PROPERTY_NAME_REGEX)}"
                     />
                     <input
+                        id="property_description"
                         name="property_description"
                         class="w-full border"
                         type="text"
-                        placeholder="property description"
+                        placeholder="Property description (min 10 characters)"
                         mix-check="{html.escape(x.PROPERTY_DESCRIPTION_REGEX)}"
                     />
                     <input
+                        id="property_address"
                         name="property_address"
                         class="w-full border"
                         type="text"
@@ -36,6 +39,7 @@ def _():
                         mix-check="{html.escape(x.PROPERTY_ADDRESS_REGEX)}"
                     />
                     <input
+                        id="property_country"
                         name="property_country"
                         class="w-full border"
                         type="text"
@@ -43,6 +47,7 @@ def _():
                         mix-check="{html.escape(x.PROPERTY_COUNTRY_REGEX)}"
                     />
                     <input
+                        id="property_postal_code"
                         name="property_postal_code"
                         class="w-full border"
                         type="text"
@@ -50,12 +55,14 @@ def _():
                         mix-check="{html.escape(x.PROPERTY_POSTAL_CODE_REGEX)}"
                     />
                     <input
+                        id="property_price_pr_night"
                         name="property_price_pr_night"
                         class="w-full border"
                         type="text"
                         placeholder="property price pr night"
                         mix-check="{html.escape(x.PROPERTY_PRICE_PER_NIGHT_REGEX)}"
                     />
+                    <label for="property_images">Property Images (You must select at least 3 images) </label>
                     <input
                         name="property_images"
                         class="file-input"
@@ -72,7 +79,6 @@ def _():
                         Add Property
                     </button
                 </form>
-                <div id="property_error_message"></div>
             </div>
         </template>
     """
@@ -94,8 +100,16 @@ def _():
     
         property_lat, property_lon = x.get_random_lat_lon_within_copenhagen()
 
-        if not isinstance(property_images, list):
-            property_images = [property_images]
+        ic("hej")
+
+        if not isinstance(property_images, list) or len(property_images) < 3:
+            return f"""
+                <template mix-target='#property_error_message' mix-replace>
+                    <div>
+                        <p>Your property needs at least 3 images</p>
+                    </div>
+                </template>
+            """
 
         filenames = []
         for image in property_images:
@@ -122,7 +136,7 @@ def _():
             </template>
         """
     except Exception as ex:
-        ic(ex)
+        ic('- - - - - AN ERROR HAPPENED: ', ex)
     finally:
         if "db" in locals():
             db.close()

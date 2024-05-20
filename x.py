@@ -325,7 +325,7 @@ def validate_user_role():
 
 ##############################
 
-PROPERTY_NAME_REGEX = "^[a-zA-Z][a-zA-Z0-9_ ]*$"
+PROPERTY_NAME_REGEX = "^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{3,30}$"
 
 def validate_property_name():
     property_name = request.forms.get("property_name", "")
@@ -335,7 +335,7 @@ def validate_property_name():
 
 ##############################
 
-PROPERTY_DESCRIPTION_REGEX = "^[a-zA-Z0-9 _,.!?'\"-]*$"
+PROPERTY_DESCRIPTION_REGEX = "^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{10,}$"
 
 def validate_property_description():
     property_description = request.forms.get("property_description", "")

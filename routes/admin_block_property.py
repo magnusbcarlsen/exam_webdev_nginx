@@ -19,6 +19,8 @@ def _(property_pk):
                         PROPERTY BLOCKED
                     </button>
                 </form>
+
+
             </template>
         """
     except Exception as ex:

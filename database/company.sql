@@ -44,6 +44,17 @@ INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_nam
 
 SELECT * FROM users;
 
+/* 
+Laver lige mig til Admin forstår du
+ */
+
+ UPDATE users 
+ SET user_role_fk = "2" 
+ WHERE user_pk = "b4f7652e6b28432ba219743fd8fe234b";
+ UPDATE users 
+ SET user_is_blocked = "0" 
+ WHERE user_pk = "b4f7652e6b28432ba219743fd8fe234b";
+
 -- ##### PROPERTIES - INIT ##### --
 DROP TABLE IF EXISTS properties;
 

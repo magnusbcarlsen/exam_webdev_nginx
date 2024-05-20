@@ -1,8 +1,8 @@
 % include('_header.html', title='Welcome')
 
-<main class="flex pt-16">
+<main class="flex h-screen pt-20 relative overflow-y-hidden ">
   <div class="w-full h-full">
-    <div class="fixed w-[calc(50%-0.5rem)] h-[calc(100%-5rem)] bg-neutral-100">
+    <div class="absolute w-[calc(50%-1rem)] xl:w-[calc(1280px-50%-1rem)] h-[calc(100%-6rem)] bg-neutral-100">
       <div
         id="map"
         class="w-full h-full rounded-lg"
@@ -10,10 +10,10 @@
 	  </div>
 	</div>
   </div>
-  <div class="w-full pb-16 px-4">
+  <div class="w-full pb-16 overflow-y-scroll no-scrollbar">
     <div
       id="property"
-      class="grid grid-cols-3 gap-3"
+      class="grid grid-cols-[repeat(auto-fit,minmax(16rem,1fr))] gap-3 "
     >
       % for property in properties:
       <!--  -->
@@ -23,7 +23,9 @@
     </div>
     <button
       id="more"
-      class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
+      class='block bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-transparent duration-100 w-1/3 py-2 mx-auto m-4'
+
+
       mix-get="/properties/page/2"
       mix-default="more"
       mix-await="Please wait..."

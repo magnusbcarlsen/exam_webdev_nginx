@@ -51,7 +51,7 @@ def _():
                 />
                 <button
                     id='confirm_delete_button'
-                    class="w-full bg-dragon-fruit text-white"
+                    class="w-full bg-accentCol text-white"
                     mix-put="/profile"
                     mix-data="#delete_form"
                 >

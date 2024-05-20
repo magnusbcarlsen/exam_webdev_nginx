@@ -84,7 +84,7 @@ INSERT INTO properties(
     property_description, property_price_pr_night, property_images, property_rating, 
     property_lat, property_lon, property_is_blocked, property_created_at )
 VALUES
-    ('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, 12.5683, 55.6761, '0', 1),
+    ('1', '1', '0', 'Hjemme hos Olivers mor muuums', 'one is a house', 1337, 'one.webp', 4.5, 12.5683, 55.6761, '0', 1),
     ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 12.5012, 55.7095, '0', 2),
     ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 10.3869, 55.3967, '0', 3),
     ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 9.9217, 55.4663, '0', 4),

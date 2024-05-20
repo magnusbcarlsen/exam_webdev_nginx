@@ -1,8 +1,8 @@
 % import x
 % include("_header")
 <main class='pt-16'>
-    <table class='border-2 border-dragon-fruit bg-dragon-fruit border-separate border-spacing-0 rounded'>
-        <thead class='bg-dragon-fruit rounded'>
+    <table class='border-2 border-accentCol bg-accentCol border-separate border-spacing-0 rounded'>
+        <thead class='bg-accentCol rounded'>
             <tr class='text-white'>
                 <th class='text-start px-3 py-1'>ID</th>
                 <th class='text-start px-3 py-1'>Name</th>
@@ -19,11 +19,11 @@
                 <td class='text-start px-3 py-1 border-b'>
                     % if user['user_is_blocked'] == '0':
                     <form id="user_row_{{user['user_pk']}}">
-                        <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/block_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-6 py-1 h-fit" >BLOCK</button>
+                        <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/block_user/{{user['user_pk']}}" class="bg-secondaryCol text-cyan-50 px-6 py-1 h-fit" >BLOCK</button>
                     </form>
                     % else:
                     <form id="user_row_{{user['user_pk']}}">
-                    <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/unblock_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-1 py-1 h-fit" >UNBLOCK</button>
+                    <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/unblock_user/{{user['user_pk']}}" class="bg-secondaryCol text-cyan-50 px-1 py-1 h-fit" >UNBLOCK</button>
                     </form>
                     % end
                     </td>

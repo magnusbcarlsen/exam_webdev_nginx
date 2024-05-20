@@ -12,7 +12,7 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-white border-solid"
+                    <button class="bg-secondaryCol text-white border-solid"
                         mix-data="[id='{property_pk}'"
                         mix-put="/unblock_property/{property_pk}"
                         >
@@ -39,7 +39,7 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-cyan-50"
+                    <button class="bg-secondaryCol text-cyan-50"
                         mix-data="[id='{property_pk}']"
                         mix-put="/block_property/{property_pk}"
                     >

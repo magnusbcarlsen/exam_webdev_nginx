@@ -123,7 +123,7 @@ def _(user_pk):
         return f"""
             <template mix-target="#user_row_{user_pk}" mix-replace>
                 <form id="user_row_{user_pk}">
-                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/block_user/{user_pk}" class="bg-black text-cyan-50 px-3 py-1 h-fit" >BLOCK</button>
+                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/block_user/{user_pk}" class="bg-secondaryCol text-cyan-50 px-3 py-1 h-fit" >BLOCK</button>
                 </form>
             </template>
 """ 
@@ -145,7 +145,7 @@ def _(user_pk):
         return f"""
             <template mix-target="#user_row_{user_pk}" mix-replace>
                 <form id="user_row_{user_pk}">
-                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/unblock_user/{user_pk}" class="bg-black text-cyan-50 px-3 py-1 h-fit" >UNBLOCK</button>
+                    <button id="{user_pk}_block_btn" mix-data="#user_row_{user_pk}" mix-put="/unblock_user/{user_pk}" class="bg-secondaryCol text-cyan-50 px-3 py-1 h-fit" >UNBLOCK</button>
                 </form>
             </template>
 """ 

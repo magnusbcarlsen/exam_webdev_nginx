@@ -10,6 +10,7 @@
       rel="stylesheet"
       href="/app.css"
     />
+   
     <script
       src="../mixhtml.js"
       defer
@@ -33,16 +34,16 @@
       }
     </style>
   </head>
-  <body class="w-full h-screen overflow-x-hidden">
+  <body class="w-full max-w-screen-xl mx-auto h-screen overflow-x-hidden bg-primaryCol">
     <div id="toast"></div>
 
     <nav
-      class="fixed bg-white z-10 grid grid-cols-[1fr_20fr_5fr] gap-4 w-full h-16 items-center px-2"
+      class="fixed bg-white max-w-full left-0 z-10 grid grid-cols-[1fr_20fr_5fr] gap-4 w-full h-16 items-center px-2"
     >
       <a
         href="/"
         class="{{ get('active_home', '') }} 
-            flex items-center h-12 px-4 font-bold text-2xl text-white bg-dragon-fruit rounded-md"
+            flex items-center h-12 px-4 font-bold text-2xl text-white bg-accentCol rounded-md"
       >
         bottleBnB
       </a>

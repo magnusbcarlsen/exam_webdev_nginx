@@ -28,7 +28,7 @@ def _(page_number):
         
         for property in properties: html += template("_property", property=property, is_admin=is_admin)
         btn_more = f"""
-        <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
+        <button id="more" class='block bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-transparent duration-100 w-1/3 py-2 mx-auto m-4'
                 mix-get="/properties/page/{next_page}"
                 mix-default="more"
                 mix-await="Please wait..."

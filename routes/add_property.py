@@ -1,5 +1,4 @@
 from bottle import get, post, template
-from geopy.geocoders import Nominatim
 from icecream import ic
 import uuid
 import html
@@ -92,8 +91,8 @@ def _():
         property_price_pr_night = x.validate_property_price_pr_night()
         property_images = x.validate_property_images()
 
-        property_lat = 12.5012
-        property_lon = 55.7095
+    
+        property_lat, property_lon = x.get_random_lat_lon_within_copenhagen()
 
         if not isinstance(property_images, list):
             property_images = [property_images]
@@ -114,7 +113,7 @@ def _():
             INSERT INTO properties(property_pk, property_user_fk, property_booking_fk, property_name,
             property_description, property_price_pr_night, property_images, property_rating,
             property_address, property_country, property_postal_code, property_lat, 
-            property_lon, property_is_blocked) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (property_pk, user_data['user_pk'], '0', property_name, property_description, property_price_pr_night, filenames_str, 4.5, property_address, property_country, property_postal_code, property_lat, property_lon, "0"))
+            property_lon, property_is_blocked) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (property_pk, user_data['user_pk'], '0', property_name, property_description, property_price_pr_night, filenames_str, 4.5, property_address, property_country, property_postal_code, property_lon, property_lat, "0"))
         db.commit()
         
         return """

@@ -7,6 +7,7 @@ import json
 import sqlite3
 import pathlib
 import smtplib
+import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -222,6 +223,19 @@ def is_cookie_https():
 
 ##############################
 
+def get_random_lat_lon_within_copenhagen():
+    # Define the approximate borders of Copenhagen
+    min_lat, max_lat = 55.6154, 55.7271
+    min_lon, max_lon = 12.4534, 12.7343
+
+    # Generate a random latitude and longitude within these borders
+    lat = random.uniform(min_lat, max_lat)
+    lon = random.uniform(min_lon, max_lon)
+
+    return (lat, lon)
+
+##############################
+
 USER_ID_LEN = 32
 USER_ID_REGEX = "^[a-f0-9]{32}$"
 
@@ -341,7 +355,7 @@ def validate_property_price_pr_night():
 
 ##############################
 
-PROPERTY_ADDRESS_REGEX = "^[a-zA-Z0-9\s,.'-ÆØÅæøå]+$"
+PROPERTY_ADDRESS_REGEX = r"^[a-zA-Z0-9\s,.'-ÆØÅæøå]+$"
 
 def validate_property_address():
     property_address = request.forms.get("property_address", "")
@@ -351,7 +365,7 @@ def validate_property_address():
 
 ##############################
 
-PROPERTY_COUNTRY_REGEX = "^[a-zA-Z\s]+$"
+PROPERTY_COUNTRY_REGEX = r"^[a-zA-Z\s]+$"
 
 def validate_property_country():
     property_country = request.forms.get("property_country", "")
@@ -413,19 +427,3 @@ def send_mail(to_email, from_email, email_subject, email_body):
     except Exception as ex:
         print(ex)
         return "error"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

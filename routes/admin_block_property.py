@@ -12,12 +12,13 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-white border-solid"
+                    <button class="bg-black text-cyan-50 px-1 py-1 h-fit" 
                         mix-data="[id='{property_pk}'"
                         mix-put="/unblock_property/{property_pk}"
                         >
-                        PROPERTY BLOCKED
+                        UNBLOCK
                     </button>
+                    
                 </form>
 
 
@@ -39,11 +40,11 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-cyan-50"
+                    <button class="bg-black text-cyan-50 px-6 py-1 h-fit" 
                         mix-data="[id='{property_pk}']"
                         mix-put="/block_property/{property_pk}"
                     >
-                        Admin block
+                        BLOCK
                     </button>
                 </form>
             </template>

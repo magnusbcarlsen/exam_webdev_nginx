@@ -19,7 +19,11 @@ def _():
         if user['user_role_fk'] == '2':
             user_list_q = db.execute('SELECT * FROM users WHERE user_role_fk != 2')
             user_list = user_list_q.fetchall()
-            return template('profile_admin.html', user_list=user_list, is_logged=True)
+            properties_q = db.execute("SELECT * FROM properties ORDER BY property_created_at")
+            properties = properties_q.fetchall()
+            db.commit()
+
+            return template('profile_admin.html', user_list=user_list, is_logged=True, is_admin=True, properties=properties)
             
     
         property_q = db.execute('SELECT * FROM properties WHERE property_user_fk = ?', (user_data['user_pk'],))

@@ -26,50 +26,6 @@
             {{property['property_price_pr_night']}} DKK
         </div>
     </div>
-
-    % if is_partner or is_customer == True:
-        % if property['property_booking_fk'] != '0':
     
-        <form id="{{property['property_pk']}}"> 
-            <button class="bg-black text-cyan-50"
-                mix-data="[id='{{property['property_pk']}}']"
-                mix-put="/unbook_property/{{property['property_pk']}}"
-            >
-                UNBOOK PROPERTY
-            </button>
-        % else:
-        <form id="{{property['property_pk']}}">
-                <button class="bg-black text-cyan-50"
-                    mix-data="[id='{{property['property_pk']}}']"
-                    mix-post="/book_property/{{property['property_pk']}}"
-                >
-                BOOK PROPERTY
-        </button>
-    </form>
-    % end 
-    % end   
-    
-    
-
-    % if is_admin == True:
-        % if property['property_is_blocked'] == '1':
-        <form id="{{property['property_pk']}}">
-            <button class="bg-black text-white"
-                mix-data="[id='{{property['property_pk']}}']"
-                mix-put="/unblock_property/{{property['property_pk']}}"
-            >
-            Property blocked
-            </button>
-        </form>
-        % else:
-        <form id="{{property['property_pk']}}">
-            <button class="bg-black text-white"
-                mix-data="[id='{{property['property_pk']}}']"
-                mix-put="/block_property/{{property['property_pk']}}"
-            >
-                Admin block
-            </button>
-        </form>
-    % end
     % end
 </div>

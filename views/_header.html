@@ -56,9 +56,13 @@
           class="px-2 border border-neutral-400"
         />
       </form>
-
+        % if get("is_admin", False):
+			<div class="flex gap-4 ml-auto mx-auto w-full justify-evenly">
+				<a href="/profile" class="{{ get('active_login', '') }}"> Dashboard </a>
+        % else:
 			<div class="flex gap-4 ml-auto mx-auto w-full justify-evenly">
 				<a href="/profile" class="{{ get('active_login', '') }}"> Profile </a>
+        % end
 				% if get("is_logged", False):
 				<a href="/logout" class="{{ get('active_login', '') }}"> Logout </a>
 				% else:

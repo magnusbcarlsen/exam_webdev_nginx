@@ -1,36 +1,111 @@
 % import x
-% include("_header")
-<main class='pt-16'>
-    <table class='border-2 border-dragon-fruit bg-dragon-fruit border-separate border-spacing-0 rounded'>
+% include("_header", is_admin=True)
+<main class='flex flex-col gap-10 justify-center items-center h-full'>
+    <div class='flex flex-col gap-3'>
+        <h2 class="text-dragon-fruit text-4xl text-center">Users</h2>
+        <table class='border-2 border-dragon-fruit bg-dragon-fruit border-separate border-spacing-0 rounded'>
+            <thead class='bg-dragon-fruit rounded'>
+                <tr class='text-white'>
+                    <th class='text-start px-3 py-1'>ID</th>
+                    <th class='text-start px-3 py-1'>Username</th>
+                    <th class='text-start px-3 py-1'>Name</th>
+                    <th class='text-start px-3 py-1'>Role</th>
+                    <th class='text-start px-3 py-1'>Email</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <div class='overflow-y-auto'>
+                <tbody class='bg-white'>
+                    % for user in user_list:
+                    <tr class='py-20'>
+                        <td class='text-start px-3 py-1 border-b'>{{user['user_pk']}}</td>
+                        <td class='text-start px-3 py-1 border-b'>{{user['user_username']}}</td>
+                        <td class='text-start px-3 py-1 border-b'>{{user['user_name']}} {{user['user_last_name']}}</td>
+
+                        % if user['user_role_fk'] == '0':
+                        <td class='text-start px-3 py-1 border-b'>Customer</td>
+                        % elif user['user_role_fk'] == '1':
+                        <td class='text-start px-3 py-1 border-b'>Partner</td>
+                        % else:
+                        <td class='text-start px-3 py-1 border-b'>Admin</td>
+                        % end
+
+
+
+
+                        <td class='text-start px-3 py-1 border-b'>{{user['user_email']}}</td>
+                        <td class='text-start px-3 py-1 border-b'>
+                            % if user['user_is_blocked'] == '0':
+                            <form id="user_row_{{user['user_pk']}}">
+                                <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/block_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-6 py-1 h-fit" >BLOCK</button>
+                            </form>
+                            % else:
+                            <form id="user_row_{{user['user_pk']}}">
+                            <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/unblock_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-1 py-1 h-fit" >UNBLOCK</button>
+                            </form>
+                            % end
+                            </td>
+                        </tr>
+                    % end
+                </tbody>
+            </div>
+        </table>
+    </div>
+    <div class='flex flex-col gap-3'>
+        <h2 class="text-dragon-fruit text-4xl text-center">Properties</h2>
+        <table class='border-2 border-dragon-fruit bg-dragon-fruit border-separate border-spacing-0 rounded'>
         <thead class='bg-dragon-fruit rounded'>
+
             <tr class='text-white'>
                 <th class='text-start px-3 py-1'>ID</th>
-                <th class='text-start px-3 py-1'>Name</th>
-                <th class='text-start px-3 py-1'>Email</th>
-                <th></th>
+                <th class='text-start px-3 py-1'>Property name</th>
+                <th class='text-start px-3 py-1'>Currently booked</th>
+                <th class='text-start px-3 py-1'>Price</th>
             </tr>
         </thead>
         <tbody class='bg-white'>
-            % for user in user_list:
+            % for property in properties:
             <tr class='py-20'>
-                <td class='text-start px-3 py-1 border-b'>{{user['user_pk']}}</td>
-                <td class='text-start px-3 py-1 border-b'>{{user['user_name']}} {{user['user_last_name']}}</td>
-                <td class='text-start px-3 py-1 border-b'>{{user['user_email']}}</td>
-                <td class='text-start px-3 py-1 border-b'>
-                    % if user['user_is_blocked'] == '0':
-                    <form id="user_row_{{user['user_pk']}}">
-                        <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/block_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-6 py-1 h-fit" >BLOCK</button>
+                <td class='text-start px-3 py-1 border-b'>{{property['property_pk']}}</td>
+                <td class='text-start px-3 py-1 border-b'>{{property['property_name']}}</td>
+                % if property['property_booking_fk'] != "0" :
+                <td class='text-start px-3 py-1 border-b'>Yes</td>
+                % else:
+                <td class='text-start px-3 py-1 border-b'>No</td>
+                % end
+                <td class='text-start px-3 py-1 border-b'>{{property['property_price_pr_night']}} DKK</td>
+                <td class='text-start px-3 py-1 border-b'> 
+                    % if property['property_is_blocked'] == '1':
+                    <form id="{{property['property_pk']}}">
+                        <button class="bg-black text-cyan-50 px-1 py-1 h-fit" 
+                            mix-data="[id='{{property['property_pk']}}']"
+                            mix-put="/unblock_property/{{property['property_pk']}}"
+                        >
+                        UNBLOCK
+                        </button>
                     </form>
                     % else:
-                    <form id="user_row_{{user['user_pk']}}">
-                    <button id="{{user['user_pk']}}_block_btn" mix-data="#user_row_{{user['user_pk']}}" mix-put="/unblock_user/{{user['user_pk']}}" class="bg-black text-cyan-50 px-1 py-1 h-fit" >UNBLOCK</button>
+
+                    <form id="{{property['property_pk']}}">
+                        <button class="bg-black text-cyan-50 px-6 py-1 h-fit" 
+                            mix-data="[id='{{property['property_pk']}}']"
+                            mix-put="/block_property/{{property['property_pk']}}"
+                        >
+                            BLOCK
+                        </button>
                     </form>
                     % end
-                    </td>
-                </tr>
+                </td>
+ 
+                
+
+
+            </tr>
             % end
         </tbody>
-    </table>
+       </table>
+       
+    </div>
 </main>
 % include("_footer")
 

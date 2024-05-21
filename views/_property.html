@@ -26,25 +26,6 @@
             {{property['property_price_pr_night']}} DKK
         </div>
     </div>
-    % if is_admin == True:
-        % if property['property_is_blocked'] == '1':
-        <form id="{{property['property_pk']}}">
-            <button class="bg-black text-white"
-                mix-data="[id='{{property['property_pk']}}']"
-                mix-put="/unblock_property/{{property['property_pk']}}"
-            >
-            Property blocked
-            </button>
-        </form>
-        % else:
-        <form id="{{property['property_pk']}}">
-            <button class="bg-black text-white"
-                mix-data="[id='{{property['property_pk']}}']"
-                mix-put="/block_property/{{property['property_pk']}}"
-            >
-                Admin block
-            </button>
-        </form>
-    % end
+    
     % end
 </div>

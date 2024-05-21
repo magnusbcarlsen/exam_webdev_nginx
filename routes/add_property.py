@@ -12,7 +12,7 @@ def _():
             <div id="modal_content" class="flex flex-col">
                 <form
                     id="add_property_form"
-                    class="flex flex-col gap-8"
+                    class="flex flex-col gap-4"
                 >
                     <div class="flex flex-col gap-y-1">
                         <label class="text-dragon-fruit" for="property_name">
@@ -23,12 +23,12 @@ def _():
                             name="property_name"
                             class="w-full border"
                             type="text"
-                            placeholder="Property name (3 - 30 characters)"
+                            placeholder="ex. Cozy Village House"
                             mix-check="{html.escape(x.PROPERTY_NAME_REGEX)}"
                         />
                     </div>
                     <div class="flex flex-col gap-y-1">
-                        <label class="text-dragon-fruit" for="property_name">
+                        <label class="text-dragon-fruit" for="property_description">
                             <h2>Property Description (min 10 characters)</h2>
                         </label>
                         <input
@@ -36,42 +36,62 @@ def _():
                             name="property_description"
                             class="w-full border"
                             type="text"
-                            placeholder="Property description (min 10 characters)"
+                            placeholder="ex. Very cozy house down by the river..."
                             mix-check="{html.escape(x.PROPERTY_DESCRIPTION_REGEX)}"
                         />
                     </div>
-                    <input
-                        id="property_address"
-                        name="property_address"
-                        class="w-full border"
-                        type="text"
-                        placeholder="property address"
-                        mix-check="{html.escape(x.PROPERTY_ADDRESS_REGEX)}"
-                    />
-                    <input
-                        id="property_country"
-                        name="property_country"
-                        class="w-full border"
-                        type="text"
-                        placeholder="property country"
-                        mix-check="{html.escape(x.PROPERTY_COUNTRY_REGEX)}"
-                    />
-                    <input
-                        id="property_postal_code"
-                        name="property_postal_code"
-                        class="w-full border"
-                        type="text"
-                        placeholder="property postal code"
-                        mix-check="{html.escape(x.PROPERTY_POSTAL_CODE_REGEX)}"
-                    />
-                    <input
-                        id="property_price_pr_night"
-                        name="property_price_pr_night"
-                        class="w-full border"
-                        type="text"
-                        placeholder="property price pr night"
-                        mix-check="{html.escape(x.PROPERTY_PRICE_PER_NIGHT_REGEX)}"
-                    />
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_address">
+                            <h2>Property Address</h2>
+                        </label>
+                        <input
+                            id="property_address"
+                            name="property_address"
+                            class="w-full border"
+                            type="text"
+                            placeholder="ex. Street Name 123"
+                            mix-check="{html.escape(x.PROPERTY_ADDRESS_REGEX)}"
+                        />
+                    </div>
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_country">
+                            <h2>Property Country</h2>
+                        </label>
+                        <input
+                            id="property_country"
+                            name="property_country"
+                            class="w-full border"
+                            type="text"
+                            placeholder="ex. Danmark"
+                            mix-check="{html.escape(x.PROPERTY_COUNTRY_REGEX)}"
+                        />
+                    </div>
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_postal_code">
+                            <h2>Property postal code</h2>
+                        </label>
+                        <input
+                            id="property_postal_code"
+                            name="property_postal_code"
+                            class="w-full border"
+                            type="text"
+                            placeholder="ex. 1234"
+                            mix-check="{html.escape(x.PROPERTY_POSTAL_CODE_REGEX)}"
+                        />
+                    </div>
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_price_pr_night">
+                                <h2>Property postal code</h2>
+                        </label>
+                        <input
+                            id="property_price_pr_night"
+                            name="property_price_pr_night"
+                            class="w-full border"
+                            type="text"
+                            placeholder="ex. 1234"
+                            mix-check="{html.escape(x.PROPERTY_PRICE_PER_NIGHT_REGEX)}"
+                        />
+                    </div>
                     <label for="property_images">Property Images (You must select at least 3 images) </label>
                     <input
                         name="property_images"

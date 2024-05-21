@@ -1,5 +1,7 @@
-<div id="property_{{property['property_pk']}}" class="relative">    
-    <img src="../images/{{property['property_images']}}" alt="property image"
+
+<div id="property_{{property['property_pk']}}">    
+    <img src="../images/{{property['property_images'].split(',')[0]}}" alt="property image"
+
     class="property_image w-full aspect-square object-cover rounded-lg">
     % if get('in_profile', False):
         <button class="absolute top-2 right-12 rounded-full h-8 w-8 bg-[#FDC149] flex items-center justify-center">

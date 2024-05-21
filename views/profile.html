@@ -2,7 +2,7 @@
 <!--  -->
 %import x
 <main class="pt-16">
-	<div id="profile_content" class="flex flex-col gap-2 w-full mx-4 md:w-1/2">
+	<div id="profile_content" class="flex flex-col gap-2 w-full mx-4 mb-4 md:w-1/2">
 		<form id="frm_profile" class="flex flex-col gap-2 w-full">
 			<input
 				id="put_user_email"
@@ -54,6 +54,15 @@
 		</button>
 	</div>
 	% if user['user_role_fk'] == '1':
+	<div id="add_property_container" class="flex flex-col gap-2 w-full md:w-1/2">
+		<button
+			id="add_property_button"
+			class="w-full bg-dragon-fruit text-white"
+			mix-get="/property/add-pop-up"
+		>
+			Add Property
+		</button>
+	</div>
 	<!-- properties block -->
 	<div id="property" class="grid grid-cols-3 gap-3 mt-3">
 		% for property in users_properties:

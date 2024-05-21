@@ -64,9 +64,11 @@ function newMarker(properties) {
       .addTo(map);
 
     markers.push(marker);
+    console.log(markers, 'marker');
     document
       .getElementById('property_' + properties[index].property_pk)
       .addEventListener('click', function () {
+        console.log(markers);
         markers.forEach(marker => marker.getPopup().remove());
         map.flyTo({
           center: [properties[index].property_lat, properties[index].property_lon],
@@ -74,7 +76,7 @@ function newMarker(properties) {
           speed: 5,
           curve: 1,
         });
-        markers[index].togglePopup();
+        marker.togglePopup();
       });
   }
 }

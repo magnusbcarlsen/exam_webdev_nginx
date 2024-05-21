@@ -21,3 +21,7 @@ input {
 main {
 	@apply px-2;
 }
+
+::backdrop {
+	background: rgba(0, 0, 0, 0.5);
+}

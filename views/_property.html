@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    % if is_partner or is_customer == True:
+    % if get('is_partner', False) or get('is_customer', False) == True:
         % if property['property_booking_fk'] != '0':
     
         <form id="{{property['property_pk']}}"> 

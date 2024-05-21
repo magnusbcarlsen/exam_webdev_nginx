@@ -104,6 +104,8 @@ CREATE TABLE bookings(
     booking_pk              TEXT UNIQUE,
     booking_user_fk         TEXT,
     booking_property_fk     TEXT,
+    property_created_at     INTEGER DEFAULT CURRENT_TIMESTAMP,
+    booking_deleted_at      TEXT DEFAULT 0,
     FOREIGN KEY(booking_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
     FOREIGN KEY(booking_property_fk) REFERENCES properties(property_pk) ON DELETE CASCADE,
     PRIMARY KEY(booking_pk)
@@ -120,7 +122,7 @@ BEGIN
 END;
 
 -- ##### BOOKINGS - SEED ##### --
-INSERT INTO bookings VALUES('1', '2', '1');
+INSERT INTO bookings(booking_pk, booking_user_fk, booking_property_fk) VALUES('1', '2', '1');
 
 SELECT * from bookings;
 -- ##### BOOKINGS - TRIGGER DEMO ##### --

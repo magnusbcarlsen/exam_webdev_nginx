@@ -8,28 +8,38 @@ import x
 @get('/property/add-pop-up')
 def _():
     return f"""
-        <template mix-target='#add_property_button' mix-after>
-            <div>
+        <template mix-target='#modal_content' mix-replace>
+            <div id="modal_content" class="flex flex-col">
                 <form
                     id="add_property_form"
-                    class="flex flex-col gap-2 w-full"
+                    class="flex flex-col gap-8"
                 >
-                    <input
-                        id="property_name"
-                        name="property_name"
-                        class="w-full border"
-                        type="text"
-                        placeholder="Property name (3 - 30 characters)"
-                        mix-check="{html.escape(x.PROPERTY_NAME_REGEX)}"
-                    />
-                    <input
-                        id="property_description"
-                        name="property_description"
-                        class="w-full border"
-                        type="text"
-                        placeholder="Property description (min 10 characters)"
-                        mix-check="{html.escape(x.PROPERTY_DESCRIPTION_REGEX)}"
-                    />
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_name">
+                            <h2>Property name (3 - 30 characters)</h2>
+                        </label>
+                        <input
+                            id="property_name"
+                            name="property_name"
+                            class="w-full border"
+                            type="text"
+                            placeholder="Property name (3 - 30 characters)"
+                            mix-check="{html.escape(x.PROPERTY_NAME_REGEX)}"
+                        />
+                    </div>
+                    <div class="flex flex-col gap-y-1">
+                        <label class="text-dragon-fruit" for="property_name">
+                            <h2>Property Description (min 10 characters)</h2>
+                        </label>
+                        <input
+                            id="property_description"
+                            name="property_description"
+                            class="w-full border"
+                            type="text"
+                            placeholder="Property description (min 10 characters)"
+                            mix-check="{html.escape(x.PROPERTY_DESCRIPTION_REGEX)}"
+                        />
+                    </div>
                     <input
                         id="property_address"
                         name="property_address"
@@ -70,17 +80,26 @@ def _():
                         accept="image/*"
                         multiple
                     />
-                    <button
-                        id='confirm_add_property'
-                        class="w-full bg-dragon-fruit text-white"
-                        mix-post="/property"
-                        mix-data="#add_property_form"
-                    >
-                        Add Property
-                    </button
+
+                    <div id="modal_buttons" class="flex flex-row gap-4">
+                        <button
+                            id='confirm_add_property'
+                            class="flex items-center justify-center bg-dragon-fruit w-2/3 text-white"
+                            mix-post="/property"
+                            mix-data="#add_property_form"
+                        >
+                            Add Property
+                        </button>
+                        <button id="modal_close" 
+                        class="flex items-center justify-center border w-1/3 p-4"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
         </template>
+        <template mix-function="showModal"></template>
     """
 
 @post('/property')
@@ -131,9 +150,8 @@ def _():
         db.commit()
         
         return """
-            <template mix-target="#add_property_form" mix-after>
-                <p>property has been added!</p>
-            </template>
+            <template mix-redirect="/profile"></template>
+            <template mix-function="closeModal"></template>
         """
     except Exception as ex:
         ic('- - - - - AN ERROR HAPPENED: ', ex)

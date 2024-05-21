@@ -30,8 +30,8 @@ def _(property_pk):
                 <h2>Are you sure you want to delete your property?</h2>
                 <form id='delete_property'>
                     <div id="modal_buttons" class="flex flex-row gap-4">
-                        <button id="modal_close" class="flex items-center justify-center border p-4">Cancel</button>
                         <button class="flex items-center justify-center border p-4 bg-red-500 text-white" mix-put="/property/delete/{property_pk}" mix-data='#delete_property'>Confirm Deletion</button>
+                        <button id="modal_close" class="flex items-center justify-center border p-4">Cancel</button>
                     </div>
                 </form>
             </div>

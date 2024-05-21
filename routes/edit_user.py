@@ -4,7 +4,7 @@ import time
 import json
 import x
 
-@put('/edit_user/<user_pk>')
+@put('/profile/edit/<user_pk>')
 def _(user_pk):
     try:
         user_email = x.validate_user_email()

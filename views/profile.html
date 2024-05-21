@@ -39,7 +39,7 @@
 			/>
 			<button
 				class="w-full bg-dragon-fruit text-white"
-				mix-put="/edit_user/{{user['user_pk']}}"
+				mix-put="/profile/edit/{{user['user_pk']}}"
 				mix-data="#frm_profile"
 			>
 				Edit User
@@ -67,9 +67,12 @@
 	<div id="property" class="grid grid-cols-3 gap-3 mt-3">
 		% for property in users_properties:
 		<!-- -->
-		% include("_property")
-		<!-- -->
+		% if property['property_deleted_at'] == '0':
+			% include("_property")
+			<!-- -->
+			% end
 		% end
 	</div>
 	% end
 </main>
+% include("_footer")

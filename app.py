@@ -173,6 +173,7 @@ import routes.reset_password_agent
 import routes.reset_password
 ##############################
 import routes.get_more_properties
+import routes.delete_property
 ##############################
 import routes.profile
 import routes.edit_user

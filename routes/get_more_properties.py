@@ -13,8 +13,13 @@ def _(page_number):
         limit = 3
         html = ""
         is_admin = False
+        is_partner = False
+        is_customer = False
         try:
-            is_admin = x.get_cookie_data()['user_role_fk'] == '2'
+            user_role = x.get_cookie_data()['user_role_fk']
+            is_customer = user_role == '0'
+            is_partner = user_role == '1'
+            is_admin = user_role == '2'
         except Exception as ex:
             ic(ex)
         if is_admin: 
@@ -26,7 +31,7 @@ def _(page_number):
         properties = q.fetchall()
         
         
-        for property in properties: html += template("_property", property=property, is_admin=is_admin)
+        for property in properties: html += template("_property", property=property, is_admin=is_admin, is_partner=is_partner, is_customer=is_customer)
         btn_more = f"""
         <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
                 mix-get="/properties/page/{next_page}"

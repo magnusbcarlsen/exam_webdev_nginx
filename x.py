@@ -86,6 +86,8 @@ def reset_db():
                 booking_pk              TEXT UNIQUE,
                 booking_user_fk         TEXT,
                 booking_property_fk     TEXT,
+                booking_created_at      TEXT DEFAULT CURRENT_TIMESTAMP,
+                booking_deleted_at      TEXT DEFAULT 0,
                 FOREIGN KEY(booking_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
                 FOREIGN KEY(booking_property_fk) REFERENCES properties(property_pk) ON DELETE CASCADE,
                 PRIMARY KEY(booking_pk)

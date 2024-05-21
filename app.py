@@ -60,6 +60,8 @@ def _():
         db = x.db()
         is_logged = False
         is_admin = False
+        is_customer = False
+        is_partner = False
         try:    
             x.validate_user_logged()
             is_logged = True
@@ -67,7 +69,13 @@ def _():
             pass
   
         try:
-            is_admin = x.get_cookie_data()['user_role_fk'] == '2'
+            user_role = x.get_cookie_data()['user_role_fk']
+            is_customer = user_role == '0'
+            is_partner = user_role == '1'
+            is_admin = user_role == '2'
+
+            # is_customer_partner = x.get_cookie_data()['user_role_fk'] == ['0', '1']
+            # is_admin = x.get_cookie_data()['user_role_fk'] == '2'
         except Exception as ex:
             ic(ex)
         if is_admin: 
@@ -79,7 +87,7 @@ def _():
         properties = q.fetchall()
         
         
-        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, mapbox_token= credentials.mapbox_token)
+        return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, is_customer=is_customer, is_partner=is_partner, mapbox_token= credentials.mapbox_token)
     except Exception as ex:
         ic(ex)
         return "No no noo, more lemon pledge"
@@ -182,6 +190,11 @@ import routes.profile_restore
 ##############################
 import routes.add_property
 import routes.admin_block_property
+import routes.admin_block_user
+
+##############################
+import routes.all_users
+import routes.book_property
 ##############################
 @get("/db/reset")
 def _():

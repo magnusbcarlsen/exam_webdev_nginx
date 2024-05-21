@@ -58,7 +58,11 @@
       </form>
 
 			<div class="flex gap-4 ml-auto mx-auto w-full justify-evenly">
+				% if get("is_admin", False):
+				<a href="/all_users"> Show all users </a>
+				% else:
 				<a href="/profile" class="{{ get('active_login', '') }}"> Profile </a>
+				% end
 				% if get("is_logged", False):
 				<a href="/logout" class="{{ get('active_login', '') }}"> Logout </a>
 				% else:

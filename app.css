@@ -554,8 +554,32 @@ video {
   --tw-contain-style:  ;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+}
+
 .fixed {
   position: fixed;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.right-12 {
+  right: 3rem;
+}
+
+.right-2 {
+  right: 0.5rem;
+}
+
+.top-2 {
+  top: 0.5rem;
+}
+
+.top-4 {
+  top: 1rem;
 }
 
 .z-10 {
@@ -574,6 +598,10 @@ video {
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
 }
 
 .ml-auto {
@@ -624,6 +652,10 @@ video {
   height: 4rem;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .h-\[calc\(100\%-5rem\)\] {
   height: calc(100% - 5rem);
 }
@@ -651,6 +683,10 @@ video {
 
 .w-5 {
   width: 1.25rem;
+}
+
+.w-8 {
+  width: 2rem;
 }
 
 .w-\[calc\(50\%-0\.5rem\)\] {
@@ -739,6 +775,10 @@ video {
   border-radius: 0.25rem;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -759,9 +799,24 @@ video {
   border-bottom-width: 1px;
 }
 
+.border-black {
+  --tw-border-opacity: 1;
+  border-color: rgb(0 0 0 / var(--tw-border-opacity));
+}
+
 .border-dragon-fruit {
   --tw-border-opacity: 1;
   border-color: rgb(255 74 132 / var(--tw-border-opacity));
+}
+
+.border-neutral-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(163 163 163 / var(--tw-border-opacity));
+}
+
+.bg-\[\#FDC149\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 193 73 / var(--tw-bg-opacity));
 }
 
 .bg-black {
@@ -779,6 +834,11 @@ video {
   background-color: rgb(245 245 245 / var(--tw-bg-opacity));
 }
 
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -787,6 +847,10 @@ video {
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.p-4 {
+  padding: 1rem;
 }
 
 .px-1 {
@@ -899,6 +963,13 @@ input {
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(163 163 163 / var(--tw-border-opacity));
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.file-input {
+  margin-top: 1rem;
+  border-width: 0px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }

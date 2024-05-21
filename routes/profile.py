@@ -25,7 +25,7 @@ def _():
         property_q = db.execute('SELECT * FROM properties WHERE property_user_fk = ?', (user_data['user_pk'],))
         users_properties = property_q.fetchall()
 
-        return template('profile.html', user=user, users_properties=users_properties, is_logged=True, is_admin=False)
+        return template('profile.html', user=user, users_properties=users_properties, is_logged=True, is_admin=False, in_profile=True)
     except HTTPResponse:
         raise
     except Exception as ex:

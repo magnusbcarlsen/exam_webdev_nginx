@@ -80,3 +80,21 @@ function newMarker(properties) {
       });
   }
 }
+
+function showModal() {
+  const modal = document.querySelector('#page_modal');
+  modal.showModal();
+  const modalButtons = document.querySelectorAll('#page_modal button');
+  modalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      modal.close();
+    });
+  });
+
+  window.addEventListener('click', function (event) {
+    const modal = document.querySelector('#page_modal');
+    if (event.target == modal) {
+      modal.close();
+    }
+  });
+}

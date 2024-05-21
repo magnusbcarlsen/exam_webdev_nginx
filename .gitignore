@@ -7,3 +7,4 @@ lib
 .env
 app.css
 database/company.db
+images/*

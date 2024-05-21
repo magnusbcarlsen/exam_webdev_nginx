@@ -39,7 +39,7 @@ function newMarker(properties) {
 		var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
 			'<div class="property-card">' +
 				'<img src="../images/' +
-				properties[index].property_images +
+				properties[index].property_images.split(',')[0] +
 				'" alt="property image" class="w-full aspect-square object-cover rounded-lg">' +
 				'<div class="property-info flex flex-col-2">' +
 				'<div>' +
@@ -67,11 +67,9 @@ function newMarker(properties) {
 			.addTo(map);
 
 		markers.push(marker);
-		console.log(markers, 'marker');
 		document
 			.getElementById('property_' + properties[index].property_pk)
 			.addEventListener('click', function () {
-				console.log(markers);
 				markers.forEach((marker) => marker.getPopup().remove());
 				map.flyTo({
 					center: [

@@ -3,23 +3,23 @@
 @tailwind utilities;
 
 form {
-	@apply w-full;
+  @apply w-full;
 }
 input,
 button {
-	@apply w-full h-12 rounded-md outline-none;
+  @apply w-full h-12 rounded-md outline-none;
 }
 
 input {
-	@apply px-2 border border-neutral-400;
+  @apply px-2 border border-neutral-400;
 }
 
 .file-input {
-	@apply px-2 border-0 mt-4;
+  @apply px-2 border-0 mt-4;
 }
 
 main {
-	@apply px-2;
+  @apply px-2;
 }
 
 ::backdrop {

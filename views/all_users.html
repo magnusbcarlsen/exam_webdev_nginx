@@ -1,0 +1,54 @@
+% include('_header.html', title='All users')
+
+
+    <div id="user" class="max-w-4xl mx-auto mt-10">
+            <div class="grid grid-cols-3 md:grid-cols-3 gap-4">
+                % for user in users:
+                
+                <div class="flex flex-col items-center p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <img
+                        class="mb-0"
+                        src="../images/profilepic.jpg" 
+                        alt="profile picture">
+                    <h3 class="text-lg font-semibold items-center p-2">{{user['user_username']}}</h3>
+
+                % if user['user_role_fk'] == '0':
+                    <p class="pb-3 pt-0">Customer</p>
+
+                % elif user['user_role_fk'] == '1':
+                    <p class="pb-3 pt-0">Partner</p>
+
+                % else: 
+                    <p class="pb-3 pt-0">Admin</p>
+
+                % end
+
+               
+                % if user['user_is_blocked'] == '1':
+                    <form id="{{user['user_pk']}}">
+                        <button class="bg-black text-cyan-50"
+                            mix-data="[id='{{user['user_pk']}}']"
+                            mix-put="/unblock_user/{{user['user_pk']}}"
+                        >
+                        USER BLOCKED
+                        </button>
+                    </form>
+                % else:
+                    <form id="{{user['user_pk']}}">
+                        <button class="bg-black text-cyan-50"
+                            mix-data="[id='{{user['user_pk']}}']"
+                            mix-put="/block_user/{{user['user_pk']}}"
+                        >
+                            Block user?
+                        </button>
+                    </form>
+                % end
+                
+                </div>
+                % end
+            </div>
+    </div>
+
+
+% include('_footer.html', title='All users')
+

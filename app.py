@@ -82,6 +82,8 @@ def _():
         db = x.db()
         is_logged = False
         is_admin = False
+        is_customer = False
+        is_partner = False
         try:    
             x.validate_user_logged()
             is_logged = True
@@ -89,7 +91,13 @@ def _():
             pass
   
         try:
-            is_admin = x.get_cookie_data()['user_role_fk'] == '2'
+            user_role = x.get_cookie_data()['user_role_fk']
+            is_customer = user_role == '0'
+            is_partner = user_role == '1'
+            is_admin = user_role == '2'
+
+            # is_customer_partner = x.get_cookie_data()['user_role_fk'] == ['0', '1']
+            # is_admin = x.get_cookie_data()['user_role_fk'] == '2'
         except Exception as ex:
             ic(ex)
         query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 0, 3"
@@ -139,7 +147,6 @@ def _(key):
 #     ic(error)
 #     return template('error.html', is_logged=x.is_user_logged_in())
 ############################## admin
-
 @get("/db/reset")
 def _():
     try:

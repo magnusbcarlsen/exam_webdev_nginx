@@ -39,7 +39,7 @@ CREATE TABLE users(
 
 -- ##### USERS - SEED ##### --
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('1', '1', 'dirty_ranch', 'ole', 'olesen', 'ole@partner.dk', '12345678', '1');
-INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678', '0');
+INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678');
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('3', '2', 'admin', 'admin', 'adminson', 'admin@company.dk', '12345678', '1');
 
 SELECT * FROM users;
@@ -115,6 +115,8 @@ CREATE TABLE bookings(
     booking_pk              TEXT UNIQUE,
     booking_user_fk         TEXT,
     booking_property_fk     TEXT,
+    booking_created_at      TEXT DEFAULT CURRENT_TIMESTAMP,
+    booking_deleted_at      TEXT DEFAULT 0,
     FOREIGN KEY(booking_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
     FOREIGN KEY(booking_property_fk) REFERENCES properties(property_pk) ON DELETE CASCADE,
     PRIMARY KEY(booking_pk)
@@ -131,7 +133,7 @@ BEGIN
 END;
 
 -- ##### BOOKINGS - SEED ##### --
-INSERT INTO bookings VALUES('1', '2', '1');
+INSERT INTO bookings(booking_pk, booking_user_fk, booking_property_fk) VALUES('1', '2', '1');
 
 SELECT * from bookings;
 -- ##### BOOKINGS - TRIGGER DEMO ##### --

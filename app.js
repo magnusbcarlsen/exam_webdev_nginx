@@ -74,7 +74,7 @@ function newMarker(properties) {
           speed: 5,
           curve: 1,
         });
-        markers[index].togglePopup();
+        marker.togglePopup();
       });
   }
 }

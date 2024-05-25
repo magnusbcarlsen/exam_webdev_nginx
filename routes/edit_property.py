@@ -2,7 +2,7 @@ from bottle import get, put, template
 from icecream import ic
 import os
 import x
-
+# TODO: Make X button on images that "delete" them
 @put('/property/edit/<property_pk>')
 def _(property_pk):
     try:
@@ -14,7 +14,7 @@ def _(property_pk):
         property_price_pr_night = x.validate_property_price_pr_night()
         property_images = x.validate_property_images()
 
-
+        ic(property_images)
         db = x.db()
         # 1. First see how many images the property already has
         images_q = db.execute('SELECT property_images FROM properties WHERE property_pk = ?', (property_pk,))
@@ -46,10 +46,11 @@ def _(property_pk):
         # 2. Combine strings
         # Concatenating strings to check their length
         old_images = old_property_images['property_images']
-        new_images = filenames_str
-
-        combined_images = old_images + ',' + new_images
-
+        combined_images = ''
+        if (filenames_str == 'empty'):
+            combined_images = old_images
+        else:
+            combined_images = old_images + ',' + filenames_str
 
         # 3. Check lengths
         if len(combined_images.split(',')) > 6:

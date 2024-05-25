@@ -81,7 +81,7 @@ def _():
                     </div>
                     <div class="flex flex-col gap-y-1">
                         <label class="text-dragon-fruit" for="property_price_pr_night">
-                                <h2>Property postal code</h2>
+                                <h2>Property price pr night</h2>
                         </label>
                         <input
                             id="property_price_pr_night"
@@ -92,7 +92,8 @@ def _():
                             mix-check="{html.escape(x.PROPERTY_PRICE_PER_NIGHT_REGEX)}"
                         />
                     </div>
-                    <label for="property_images">Property Images (You must select at least 3 images) </label>
+                    <div id="property_error_message"></div>
+                    <label for="property_images">Property Images (You must select at least 3 images - max 6) </label>
                     <input
                         name="property_images"
                         class="file-input"
@@ -139,13 +140,20 @@ def _():
     
         property_lat, property_lon = x.get_random_lat_lon_within_copenhagen()
 
-        ic("hej")
-
         if not isinstance(property_images, list) or len(property_images) < 3:
             return f"""
                 <template mix-target='#property_error_message' mix-replace>
-                    <div>
-                        <p>Your property needs at least 3 images</p>
+                    <div id="property_error_message" class="w-full p-2 border border-red-500 bg-pink-100">
+                        <p class="text-red-500">Your property needs at least 3 images</p>
+                    </div>
+                </template>
+            """
+        
+        if not isinstance(property_images, list) or len(property_images) > 6:
+            return f"""
+                <template mix-target='#property_error_message' mix-replace>
+                    <div id="property_error_message" class="w-full p-2 border border-red-500 bg-pink-100">
+                        <p class="text-red-500">Too many images! Max 6 images</p>
                     </div>
                 </template>
             """

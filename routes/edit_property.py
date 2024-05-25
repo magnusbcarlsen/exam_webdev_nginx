@@ -186,7 +186,7 @@ def _(property_pk):
                         />
                     </div>
                     <div id="modal_buttons" class="flex flex-row gap-4">
-                        <button class="flex items-center justify-center border p-4 bg-green-500 text-white" mix-put="/property/edit/{property_pk}" mix-data='#edit_property'>Confirm update</button>
+                        <button class="flex items-center justify-center border p-4 bg-green-500 text-white" mix-put="/property/edit/{property_pk}" mix-data="#edit_property">Confirm update</button>
                         <button id="modal_close" class="flex items-center justify-center border p-4">Cancel</button>
                     </div>
                 </form>

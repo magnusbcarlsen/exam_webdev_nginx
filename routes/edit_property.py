@@ -14,12 +14,10 @@ def _(property_pk):
         property_price_pr_night = x.validate_property_price_pr_night()
         property_images = x.validate_property_images()
 
-        ic(property_images)
         db = x.db()
         # 1. First see how many images the property already has
         images_q = db.execute('SELECT property_images FROM properties WHERE property_pk = ?', (property_pk,))
         old_property_images = images_q.fetchone()
-        ic(old_property_images['property_images'])
 
         filenames = []
         for image in property_images:
@@ -29,19 +27,7 @@ def _(property_pk):
             image.save(file_path, overwrite=True)
             
         filenames_str = ",".join(filenames)
-        ic(filenames_str)
 
-        ic("- - - - - - - - - -")
-
-        ic(property_name)
-        ic(property_description)
-        ic(property_address)
-        ic(property_country)
-        ic(property_postal_code)
-        ic(property_price_pr_night)
-        ic(property_images)
-
-        ic("- - - - - - - - - -")
         
         # 2. Combine strings
         # Concatenating strings to check their length

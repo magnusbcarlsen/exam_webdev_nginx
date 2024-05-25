@@ -158,6 +158,7 @@ def _():
                 </template>
             """
 
+        # Add Property_Pk to the filename
         filenames = []
         for image in property_images:
             filename = image.filename

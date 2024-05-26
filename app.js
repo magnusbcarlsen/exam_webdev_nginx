@@ -89,17 +89,23 @@ const modal = document.querySelector('#page_modal');
 function showModal() {
 	modal.showModal();
 	const closeButton = document.querySelector('#modal_close');
-	closeButton.addEventListener('click', () => {
+	closeButton.addEventListener('click', (event) => {
+		event.preventDefault();
 		modal.close();
 	});
 
 	window.addEventListener('click', function (event) {
 		const modal = document.querySelector('#page_modal');
 		if (event.target == modal) {
+			event.preventDefault();
 			modal.close();
 		}
 	});
 }
+
+modal.addEventListener('close', (e) => {
+	console.log(e);
+});
 
 function closeModal() {
 	modal.close();

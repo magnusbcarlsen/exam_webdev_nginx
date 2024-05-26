@@ -18,8 +18,8 @@ def _(deleted_image, property_pk):
         db.commit()
 
         return f"""
-            <template mix-target="#property_image_{deleted_image}" mix-replace>
-                <div class="flex items-center justify-center" mix-ttl="1500">
+            <template mix-target="#property_image_{deleted_image.split('.')[0]}" mix-replace>
+                <div class="flex items-center justify-center w-1/3 h-1/3 p-4 flex-shrink-0" mix-ttl="1500">
                     <p>Image deleted!</p>
                 </div>
             </template>
@@ -119,14 +119,14 @@ def _(property_pk):
         property_image_html = ''
         for property_image in property_images:
             property_image_html += f"""
-                <div id="property_image_{property_image}" class="relative w-full h-full p-4">
+                <div id="property_image_{property_image.split(".")[0]}" class="relative w-1/3 h-1/3 p-4 flex-shrink-0">
                     <img 
                         src='../images/{property_image}' 
                         alt='property image' 
                         class='property_image w-full aspect-square object-cover rounded-lg'
                     >
                     <form id="remove_image">
-                        <button class="absolute top-0 right-0 bg-red-500 h-8 w-8 rounded-full flex items-center justify-center"
+                        <button class="absolute top-1 right-1 bg-red-500 h-8 w-8 rounded-full flex items-center justify-center"
                             mix-put="/property/remove_picture/{property_image}/{property_pk}"
                             mix-data="#remove_image"
                         >
@@ -140,7 +140,7 @@ def _(property_pk):
         return f"""
         <template mix-target="#modal_content" mix-replace>
             <div id="modal_content" class="flex flex-col gap-4">
-                <div class="flex flex-row items-center justify-center gap-6 overflow-y-scroll">
+                <div class="flex items-center justify-start h-1/3 gap-6 overflow-y-scroll">
                     {property_image_html}
                 </div>
                 <form id='edit_property'>

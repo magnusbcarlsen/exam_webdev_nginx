@@ -238,6 +238,35 @@ def get_random_lat_lon_within_copenhagen():
 
 ##############################
 
+def remove_image_from_property(property_images, image_to_remove):
+    # Split the string into a list
+    images = property_images.split(',')
+
+    # Remove the image name from the list
+    if image_to_remove in images:
+        images.remove(image_to_remove)
+        delete_file(image_to_remove, 'images/')
+
+    # Join the list back into a string
+    new_property_images = ','.join(images)
+
+    return new_property_images
+
+
+##############################
+
+def delete_file(filename, path):
+    # Construct the full path to the file
+    file_path = os.path.join(path, filename)
+
+    # Delete the file
+    try:
+        os.remove(file_path)
+    except FileNotFoundError:
+        print(f"The file {filename} does not exist")
+
+##############################
+
 USER_ID_LEN = 32
 USER_ID_REGEX = "^[a-f0-9]{32}$"
 

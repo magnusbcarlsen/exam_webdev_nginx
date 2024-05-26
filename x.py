@@ -327,7 +327,7 @@ def validate_user_role():
 
 ##############################
 
-PROPERTY_NAME_REGEX = "^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{3,30}$"
+PROPERTY_NAME_REGEX = r"^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{3,30}$"
 
 def validate_property_name():
     property_name = request.forms.get("property_name", "")
@@ -337,7 +337,7 @@ def validate_property_name():
 
 ##############################
 
-PROPERTY_DESCRIPTION_REGEX = "^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{10,}$"
+PROPERTY_DESCRIPTION_REGEX = r"^[a-zA-Z0-9 _,.!?'\"-ÆØÅæøå]{10,}$"
 
 def validate_property_description():
     property_description = request.forms.get("property_description", "")
@@ -347,7 +347,7 @@ def validate_property_description():
 
 ##############################
 
-PROPERTY_PRICE_PER_NIGHT_REGEX = "^[0-9]*$"
+PROPERTY_PRICE_PER_NIGHT_REGEX = "^[0-9]+\.?[0-9]*$"
 
 def validate_property_price_pr_night():
     property_price_pr_night = request.forms.get("property_price_pr_night", "")

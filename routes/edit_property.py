@@ -1,8 +1,35 @@
 from bottle import get, put, template
 from icecream import ic
+import html
 import os
 import x
 # TODO: Make X button on images that "delete" them
+
+@put('/property/remove_picture/<deleted_image>/<property_pk>')
+def _(deleted_image, property_pk):
+    try:
+        db = x.db()
+        property_query = db.execute('SELECT * FROM properties WHERE property_pk = ?', (property_pk,))
+        property_to_edit = property_query.fetchone()
+
+        new_property_images = x.remove_image_from_property(property_to_edit['property_images'], deleted_image)
+        
+        db.execute("UPDATE properties SET property_images = ? WHERE property_pk = ?", (new_property_images, property_pk))
+        db.commit()
+
+        return f"""
+            <template mix-target="#property_image_{deleted_image}" mix-replace>
+                <div class="flex items-center justify-center" mix-ttl="1500">
+                    <p>Image deleted!</p>
+                </div>
+            </template>
+        """
+    except Exception as ex:
+        ic(ex)
+    finally:
+        if "db" in locals():
+            db.close()
+
 @put('/property/edit/<property_pk>')
 def _(property_pk):
     try:
@@ -71,7 +98,10 @@ def _(property_pk):
         db.commit()
 
 
-        return '<template mix-function="closeModal"></template>'
+        return """
+            <template mix-redirect="/profile"></template>
+            <template mix-function="closeModal"></template>
+        """
     except Exception as ex:
         ic(ex)
     finally:
@@ -88,11 +118,29 @@ def _(property_pk):
         property_images = property_to_edit['property_images'].split(',')
         property_image_html = ''
         for property_image in property_images:
-            property_image_html += f"""<img src='../images/{property_image}' alt='property image' class='property_image w-1/4 aspect-square object-cover rounded-lg'>"""
+            property_image_html += f"""
+                <div id="property_image_{property_image}" class="relative w-full h-full p-4">
+                    <img 
+                        src='../images/{property_image}' 
+                        alt='property image' 
+                        class='property_image w-full aspect-square object-cover rounded-lg'
+                    >
+                    <form id="remove_image">
+                        <button class="absolute top-0 right-0 bg-red-500 h-8 w-8 rounded-full flex items-center justify-center"
+                            mix-put="/property/remove_picture/{property_image}/{property_pk}"
+                            mix-data="#remove_image"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="pointer-events-none" width="30" height="30" fill="#ffffff" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            """
         return f"""
         <template mix-target="#modal_content" mix-replace>
             <div id="modal_content" class="flex flex-col gap-4">
-                <div class="flex flex-row gap-4 overflow-y-scroll">
+                <div class="flex flex-row items-center justify-center gap-6 overflow-y-scroll">
                     {property_image_html}
                 </div>
                 <form id='edit_property'>
@@ -107,7 +155,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_name']}"
-                                mix-check="{x.PROPERTY_NAME_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_NAME_REGEX)}"
                             />
                         </div>
                         <div class="flex flex-col gap-y-1">
@@ -120,7 +168,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_description']}"
-                                mix-check="{x.PROPERTY_DESCRIPTION_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_DESCRIPTION_REGEX)}"
                             />
                         </div>
                         <div class="flex flex-col gap-y-1">
@@ -133,7 +181,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_address']}"
-                                mix-check="{x.PROPERTY_ADDRESS_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_ADDRESS_REGEX)}"
                             />
                         </div>
                         <div class="flex flex-col gap-y-1">
@@ -146,7 +194,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_country']}"
-                                mix-check="{x.PROPERTY_COUNTRY_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_COUNTRY_REGEX)}"
                             />
                         </div>
                         <div class="flex flex-col gap-y-1">
@@ -159,7 +207,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_postal_code']}"
-                                mix-check="{x.PROPERTY_POSTAL_CODE_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_POSTAL_CODE_REGEX)}"
                             />
                         </div>
                         <div class="flex flex-col gap-y-1">
@@ -172,7 +220,7 @@ def _(property_pk):
                                 class="w-full border"
                                 type="text"
                                 value="{property_to_edit['property_price_pr_night']}"
-                                mix-check="{x.PROPERTY_PRICE_PER_NIGHT_REGEX}"
+                                mix-check="{html.escape(x.PROPERTY_PRICE_PER_NIGHT_REGEX)}"
                             />
                         </div>
                         <div id="property_error_message"></div>

@@ -7,7 +7,6 @@ def _(property_pk):
     try:
         db = x.db()
         q = db.execute('UPDATE properties SET property_deleted_at = CURRENT_TIMESTAMP WHERE property_pk = ?', (property_pk,))
-        # TODO: Delete images that is stored for the property locally as well
         db.commit()
         return f"""
             <template mix-target="#property_{property_pk}" mix-replace>

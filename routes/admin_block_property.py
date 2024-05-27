@@ -16,8 +16,9 @@ def _(property_pk):
                         mix-data="[id='{property_pk}'"
                         mix-put="/unblock_property/{property_pk}"
                         >
-                        PROPERTY BLOCKED
+                        UNBLOCK
                     </button>
+                    
                 </form>
 
 
@@ -43,7 +44,7 @@ def _(property_pk):
                         mix-data="[id='{property_pk}']"
                         mix-put="/block_property/{property_pk}"
                     >
-                        Admin block
+                        BLOCK
                     </button>
                 </form>
             </template>

@@ -39,7 +39,7 @@ CREATE TABLE users(
 
 -- ##### USERS - SEED ##### --
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('1', '1', 'dirty_ranch', 'ole', 'olesen', 'ole@partner.dk', '12345678', '1');
-INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678', '0');
+INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password) VALUES ('2', '0', 'cowboy', 'anders', 'andersen', 'anders@customer.dk', '12345678');
 INSERT INTO users(user_pk, user_role_fk, user_username, user_name, user_last_name, user_email, user_password, user_is_verified) VALUES ('3', '2', 'admin', 'admin', 'adminson', 'admin@company.dk', '12345678', '1');
 
 SELECT * FROM users;
@@ -50,10 +50,17 @@ Laver lige mig til Admin forstår du
 
  UPDATE users 
  SET user_role_fk = "2" 
- WHERE user_pk = "b4f7652e6b28432ba219743fd8fe234b";
+ WHERE user_pk = "98144f1f1ae843a68457de916cbbcd09";
+
+
  UPDATE users 
  SET user_is_blocked = "0" 
- WHERE user_pk = "b4f7652e6b28432ba219743fd8fe234b";
+ WHERE user_pk = "98144f1f1ae843a68457de916cbbcd09";
+
+ 
+ UPDATE users 
+ SET user_is_verified = "1" 
+ WHERE user_pk = "1b27050bd4b74a43bc0faedb252531aa";
 
 -- ##### PROPERTIES - INIT ##### --
 DROP TABLE IF EXISTS properties;
@@ -67,6 +74,9 @@ CREATE TABLE properties(
     property_price_pr_night     REAL,
     property_images             TEXT,
     property_rating             REAL,
+    property_address            TEXT,
+    property_country            TEXT,
+    property_postal_code        TEXT,
     property_lat                TEXT,
     property_lon                TEXT,
     property_is_blocked         TEXT,
@@ -78,22 +88,23 @@ CREATE TABLE properties(
 ) WITHOUT ROWID;
 
 -- ##### PROPERTIES - SEED ##### --
--- INSERT INTO properties VALUES ('0', '0', '0', 'one is a house', 1337, 'one.jpg', 4.5, 55.2001, 47.1240, '0', '', '', '');
 INSERT INTO properties(
     property_pk, property_user_fk, property_booking_fk, property_name,
     property_description, property_price_pr_night, property_images, property_rating, 
-    property_lat, property_lon, property_is_blocked, property_created_at )
+    property_address, property_country, property_postal_code, property_lat, 
+    property_lon, property_is_blocked, property_created_at)
 VALUES
-    ('1', '1', '0', 'Hjemme hos Olivers mor muuums', 'one is a house', 1337, 'one.webp', 4.5, 12.5683, 55.6761, '0', 1),
-    ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 12.5012, 55.7095, '0', 2),
-    ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 10.3869, 55.3967, '0', 3),
-    ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 9.9217, 55.4663, '0', 4),
-    ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, 9.5540, 55.6776, '0', 5),
-    ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 8.5100, 55.3911, '0', 6),
-    ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, 8.4467, 55.4668, '0', 7),
-    ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, 8.5136, 55.7051, '0', 8),
-    ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 9.9716, 55.5863, '0', 9),
-    ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, 10.4024, 55.4038, '0', 10);
+    ('1', '1', '0', 'one', 'one is a house', 1337, 'one.webp', 4.5, 'Borgergade 45, Copenhagen', 'Denmark', '1300', 12.5683, 55.6761, '0', 1),
+    ('2', '1', '0', 'two', 'two is a house', 1337, 'two.webp', 4.5, 'Algade 23, Aarhus', 'Denmark', '8000', 12.5012, 55.7095, '0', 2),
+    ('3', '1', '0', 'three', 'three is a house', 1337, 'three.webp', 4.5, 'Vestergade 7, Odense', 'Denmark', '5000', 10.3869, 55.3967, '0', 3),
+    ('4', '1', '0', 'four', 'four is a house', 1337, 'four.webp', 4.5, 'Havnegade 39, Esbjerg', 'Denmark', '6700', 9.9217, 55.4663, '0', 4),
+    ('5', '1', '0', 'five', 'five is a house', 1337, 'five.webp', 4.5, 'Østergade 21, Aalborg', 'Denmark', '9000', 9.5540, 55.6776, '0', 5),
+    ('6', '1', '0', 'six', 'six is a house', 1337, 'six.webp', 4.5, 'Nørregade 30, Randers', 'Denmark', '8900', 8.5100, 55.3911, '0', 6),
+    ('7', '1', '0', 'seven', 'seven is a house', 1337, 'seven.webp', 4.5, 'Bredgade 76, Kolding', 'Denmark', '6000', 8.4467, 55.4668, '0', 7),
+    ('8', '1', '0', 'eight', 'eight is a house', 1337, 'eight.webp', 4.5, 'Kirkegade 43, Vejle', 'Denmark', '7100', 8.5136, 55.7051, '0', 8),
+    ('9', '1', '0', 'nine', 'nine is a house', 1337, 'nine.webp', 4.5, 'Park Alle 34, Horsens', 'Denmark', '8700', 9.9716, 55.5863, '0', 9),
+    ('10', '1', '0', 'ten', 'ten is a house', 1337, 'ten.webp', 4.5, 'Fjordvej 68, Fredericia', 'Denmark', '7000', 10.4024, 55.4038, '0', 10);
+
 
 SELECT * FROM properties;
 
@@ -104,6 +115,8 @@ CREATE TABLE bookings(
     booking_pk              TEXT UNIQUE,
     booking_user_fk         TEXT,
     booking_property_fk     TEXT,
+    booking_created_at      TEXT DEFAULT CURRENT_TIMESTAMP,
+    booking_deleted_at      TEXT DEFAULT 0,
     FOREIGN KEY(booking_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
     FOREIGN KEY(booking_property_fk) REFERENCES properties(property_pk) ON DELETE CASCADE,
     PRIMARY KEY(booking_pk)
@@ -120,7 +133,7 @@ BEGIN
 END;
 
 -- ##### BOOKINGS - SEED ##### --
-INSERT INTO bookings VALUES('1', '2', '1');
+INSERT INTO bookings(booking_pk, booking_user_fk, booking_property_fk) VALUES('1', '2', '1');
 
 SELECT * from bookings;
 -- ##### BOOKINGS - TRIGGER DEMO ##### --

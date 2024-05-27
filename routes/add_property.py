@@ -72,7 +72,7 @@ def _():
                     />
                     <button
                         id='confirm_add_property'
-                        class="w-full bg-dragon-fruit text-white"
+                        class="w-full bg-accentCol text-white"
                         mix-post="/property"
                         mix-data="#add_property_form"
                     >

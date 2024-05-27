@@ -1,4 +1,4 @@
-from bottle import default_app, error, get, post, put, template
+from bottle import post, put
 import uuid
 import x
 from icecream import ic

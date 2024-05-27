@@ -25,8 +25,10 @@ import routes.edit_user
 import routes.user_deleted
 import routes.profile_restore
 ##############################
+import routes.see_property_details
 import routes.add_property
 import routes.admin_block_property
+import routes.edit_property
 ##############################
 import routes.user_blocking
 ##############################

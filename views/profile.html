@@ -68,8 +68,9 @@
 		% for property in users_properties:
 		<!-- -->
 		% if property['property_deleted_at'] == '0':
-			% include("_property")
-			<!-- -->
+			<a href="/property/details/{{property['property_pk']}}">
+				% include("_property")
+			</a>
 			% end
 		% end
 	</div>

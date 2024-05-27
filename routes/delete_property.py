@@ -14,6 +14,7 @@ def _(property_pk):
                     <p>Property deleted!</p>
                 </div>
             </template>
+            <template mix-function="closeModal"></template>
         """
     except Exception as ex:
         ic(ex)
@@ -25,15 +26,15 @@ def _(property_pk):
 def _(property_pk):
     return f"""
         <template mix-target="#modal_content" mix-replace>
-        <div id="modal_content">
-            <h2>Are you sure you want to delete your property?</h2>
-            <div>
-                <button class="border border-pink-400 bg-white p-4">Cancel</button>
+            <div id="modal_content" class="flex flex-col gap-4">
+                <h2>Are you sure you want to delete your property?</h2>
                 <form id='delete_property'>
-                    <button id="modal_close" mix-put="/property/delete/{property_pk}" mix-data='#delete_property' class="p-4">Confirm Deletion</button>
+                    <div id="modal_buttons" class="flex flex-row gap-4">
+                        <button class="flex items-center justify-center border p-4 bg-red-500 text-white" mix-put="/property/delete/{property_pk}" mix-data="#delete_property">Confirm Deletion</button>
+                        <button id="modal_close" class="flex items-center justify-center border p-4">Cancel</button>
+                    </div>
                 </form>
             </div>
-        </div>
         </template>
         <template mix-function="showModal"></template>
     """

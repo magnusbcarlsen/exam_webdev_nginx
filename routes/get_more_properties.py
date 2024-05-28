@@ -24,7 +24,7 @@ def _(page_number):
         if is_admin: 
             query = f"SELECT * FROM properties ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
         else: 
-            query = f"SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
+            query = f"SELECT * FROM properties WHERE property_is_blocked != '1' AND property_deleted_at == '0' ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
         
         q = db.execute(query)
         properties = q.fetchall()

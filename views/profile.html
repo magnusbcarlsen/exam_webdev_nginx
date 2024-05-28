@@ -1,7 +1,7 @@
 %include("_header")
 <!--  -->
 %import x
-<main class="pt-16">
+<main class="pt-20">
 	<div id="profile_content" class="flex flex-col gap-2 w-full mx-4 mb-4 md:w-1/2">
 		<form id="frm_profile" class="flex flex-col gap-2 w-full">
 			<input
@@ -39,7 +39,7 @@
 			/>
 			<button
 				class="w-full bg-accentCol text-white"
-				mix-put="/edit_user/{{user['user_pk']}}"
+				mix-put="/profile/{{user['user_pk']}}"
 				mix-data="#frm_profile"
 			>
 				Edit User
@@ -68,9 +68,7 @@
 		% for property in users_properties:
 		<!-- -->
 		% if property['property_deleted_at'] == '0':
-			<a href="/property/details/{{property['property_pk']}}">
 				% include("_property")
-			</a>
 			% end
 		% end
 	</div>

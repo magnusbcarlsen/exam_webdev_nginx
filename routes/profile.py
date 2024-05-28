@@ -41,29 +41,42 @@ def _():
 @get('/profile/delete-pop-up')
 def _():
     return f"""
-        <template mix-target='#delete_user_button' mix-after>
-            <form
-                id="delete_form"
-                class="flex flex-col gap-2 w-full"
-            >
-                <input
-                    name="user_email"
-                    class="w-full border"
-                    type="text"
-                    placeholder="email"
-                    mix-check="{html.escape(x.USER_EMAIL_REGEX)}"
-                />
-                <button
-                    id='confirm_delete_button'
-                    class="w-full bg-accentCol text-white"
-                    mix-put="/profile"
-                    mix-data="#delete_form"
+        <template mix-target='#modal_content' mix-replace>
+            <div id="modal_content" class="flex flex-col gap-4">
+                <div>
+                    <h2>Are you sure you want to delete your profile?</h2>
+                    <p>Write your email and press 'confirm' to delete your profile.</p>
+                </div>
+                <form
+                    id="delete_form"
+                    class="flex flex-col gap-2 w-full"
                 >
-                    Confirm deletion
-                </button
-            </form>
-            <div id="error_message"></div>
+                    <input
+                        name="user_email"
+                        class="w-full border"
+                        type="text"
+                        placeholder="email"
+                        mix-check="{html.escape(x.USER_EMAIL_REGEX)}"
+                        autofocus
+                    />
+                    <div id="error_message"></div>
+                    <div id="modal_buttons" class="flex flex-row gap-4">
+                        <button
+                            id='confirm_delete_button'
+                            class="flex items-center justify-center bg-accentCol text-white"
+                            mix-put="/profile"
+                            mix-data="#delete_form"
+                        >
+                            Confirm deletion
+                        </button>
+                        <button id="modal_close" class="flex items-center justify-center border border-pink-400 bg-white p-4">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
         </template>
+        <template mix-function="showModal"></template>
     """
 
 @put('/profile')
@@ -80,11 +93,12 @@ def _():
             return """
                 <template mix-redirect="/user_deleted" is_logged=False>
                 </template>
+                <template mix-function="closeModal"></template>
             """
         else:
             return """
                 <template mix-target="#error_message" mix-replace>
-                    <div class='flex justify-center bg-red-400 rounded-md'>
+                    <div id="error-message" class="flex justify-center rounded-md">
                         <p>Email is invalid, please write your own email</p>
                     </div>
                 </template>

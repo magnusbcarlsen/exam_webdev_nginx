@@ -52,3 +52,11 @@ input {
 main {
   @apply px-2;
 }
+
+::backdrop {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#error-message {
+	@apply text-red-500;
+}

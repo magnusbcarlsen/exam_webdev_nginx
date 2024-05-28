@@ -1,6 +1,7 @@
 % include('_header.html')
-<main class="pt-20">
-    <div id="property_details" class="flex flex-col gap-4 p-16">
+<main>
+    <div id="property_details" class="flex flex-col gap-2">
+        <h1 class="text-secondaryCol text-2xl p-1 font-extrabold">{{property['property_name']}}</h1>
         <div class="flex items-center justify-start h-1/3 gap-6 overflow-y-scroll p-2 bg-white rounded-lg shadow-lg">
             % for property_image in property_images:
                 <div id="property_image_{{property_image.split('.')[0]}}" class="relative w-1/3 h-1/3 p-4 flex-shrink-0">
@@ -12,44 +13,31 @@
                 </div>
             % end
         </div>
-        <div class="flex justify-between p-4">
-            <div class="flex w-1/2 gap-40">
-                <div class="flex flex-col gap-2">
-                        <label>
-                            <h2 class="text-accentCol mr-2">Name</h2>
-                            <p>{{property['property_name']}}</p>
-                        </label>
-                        <label>
-                            <h2 class="text-accentCol mr-2">Description</h2>
-                            <p>{{property['property_description']}}</p>
-                        </label>
-                        <label>
-                            <h2 class="text-accentCol mr-2">Rating</h2>
-                            <p>{{property['property_rating']}}</p>
-                        </label>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label>
-                        <h2 class="text-accentCol mr-2">Address</h2>
-                        <p>{{property['property_address']}}</p>
-                    </label>
-                    <label>
-                        <h2 class="text-accentCol mr-2">Country</h2>
-                        <p>{{property['property_country']}}</p>
-                    </label>
-                    <label>
-                        <h2 class="text-accentCol mr-2">Postal code</h2>
-                        <p>{{property['property_postal_code']}}</p>
-                    </label>
+        <div class="flex justify-between p-1 mt-2">
+            <div class="flex flex-col w-1/2">
+                <p class="text-secondaryCol text-2xl font-bold">
+                    {{property['property_address']}}
+                    <span>{{property['property_country']}}</span>
+                    <span>{{property['property_postal_code']}}</span>
+                </p>
+                <p class="text-secondaryCol text-xl font-light">{{property['property_description']}}</p>
+                <div class="flex items-center gap-2 mt-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                        </svg>
+                        <p class="text-secondaryCol">{{property['property_rating']}}</p>
                 </div>
             </div>
-            <div class="h-1/5 border border-secondaryCol bg-white p-4 rounded-md shadow-md">
-                <label>
+            <div class="h-1/5 w-1/3 bg-white p-4 rounded-md shadow-xl">
+                <div>
                     <h3 class="font-bold italic text-secondaryCol text-2xl mb-2">
                         {{property['property_price_pr_night']}} kr DKK <span class="not-italic font-normal text-lg">night</span>
                     </h3>
-                </label>
+                </div>
+                <div class="mt-4">
                 % if property['property_booking_fk'] != '0':
+
+               
                     <form id="{{property['property_pk']}}"> 
                         <button 
                             class="bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-white duration-100 w-full py-2"
@@ -69,6 +57,7 @@
                         </button>
                     </form>
                 % end
+            </div>
             </div>
         </div>
     </div>

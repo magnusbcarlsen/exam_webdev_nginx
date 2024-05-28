@@ -1,5 +1,4 @@
-from bottle import error, get, request, template
-import sqlite3
+from bottle import get, template
 from icecream import ic
 import x
 import json

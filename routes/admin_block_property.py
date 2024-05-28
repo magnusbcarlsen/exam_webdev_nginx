@@ -1,4 +1,4 @@
-from bottle import default_app, get, request, template, put
+from bottle import put
 import sqlite3
 from icecream import ic
 import x
@@ -20,8 +20,6 @@ def _(property_pk):
                     </button>
                     
                 </form>
-
-
             </template>
         """
     except Exception as ex:

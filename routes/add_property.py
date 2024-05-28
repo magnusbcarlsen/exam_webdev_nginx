@@ -1,9 +1,10 @@
-from bottle import get, post, template
+from bottle import get, post
 from icecream import ic
 import uuid
 import html
 import os
 import x
+
 
 @get('/property/add-pop-up')
 def _():

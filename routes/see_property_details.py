@@ -9,7 +9,7 @@ def _(property_pk):
         q = db.execute("SELECT * from properties WHERE property_pk = ?", (property_pk,))
         fetched_property = q.fetchone()
         property_images = fetched_property['property_images'].split(',')
-        return template("property_details", property_images=property_images, property=fetched_property)
+        return template("property_details", property_images=property_images, property=fetched_property, is_logged=True)
     except Exception as ex:
         ic(ex)
     finally:

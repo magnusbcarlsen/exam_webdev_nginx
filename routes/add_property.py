@@ -5,7 +5,6 @@ import html
 import os
 import x
 
-
 @get('/property/add-pop-up')
 def _():
     return f"""
@@ -162,7 +161,7 @@ def _():
         # Add Property_Pk to the filename
         filenames = []
         for image in property_images:
-            filename = image.filename
+            filename = property_pk + image.filename
             filenames.append(filename)
             file_path = os.path.join('images', filename)
 

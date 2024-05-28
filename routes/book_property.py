@@ -33,7 +33,7 @@ def _(property_pk):
             db.close()
 
 
-@put ("/unbook_property/<property_pk>")
+@put("/unbook_property/<property_pk>")
 def _(property_pk):
     try:
         db = x.db()

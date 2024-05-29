@@ -13,7 +13,13 @@ def _(user_pk):
         ic(user_pk)
         db = x.db()
         q = db.execute("UPDATE users SET user_is_blocked = '0' WHERE user_pk = ?", (user_pk,))
+
+        q_mail = db.execute("SELECT user_email FROM users WHERE user_pk = ?", (user_pk,))
+
+        user_email = q_mail.fetchone()['user_email']
         db.commit()
+        
+        x.send_mail("jachobwesth@gmail.com", "jachobwesth@gmail.com", "Your account has been unblocked", template("email_profile_blocked", key=user_pk))
         return f"""
             <template mix-target="#user_row_{user_pk}" mix-replace>
                 <form id="user_row_{user_pk}">
@@ -38,7 +44,7 @@ def _(user_pk):
        
         q_mail = db.execute("SELECT user_email FROM users WHERE user_pk = ?", (user_pk,))
 
-        user_email = q_mail.fetchone()
+        user_email = q_mail.fetchone()['user_email']
         db.commit()
         
         x.send_mail("jachobwesth@gmail.com", "jachobwesth@gmail.com", "Your account has been suspended", template("email_profile_blocked", key=user_pk))

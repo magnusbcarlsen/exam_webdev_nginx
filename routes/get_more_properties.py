@@ -24,7 +24,7 @@ def _(page_number):
         if is_admin: 
             query = f"SELECT * FROM properties ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
         else: 
-            query = f"SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
+            query = f"SELECT * FROM properties WHERE property_is_blocked != '1' AND property_deleted_at == '0' ORDER BY property_created_at LIMIT {limit} OFFSET {offset}"
         
         q = db.execute(query)
         properties = q.fetchall()
@@ -32,7 +32,7 @@ def _(page_number):
         
         for property in properties: html += template("_property", property=property, is_admin=is_admin, is_partner=is_partner, is_customer=is_customer)
         btn_more = f"""
-        <button id="more" class="block w-1/3 text-white bg-dragon-fruit mx-auto m-4"
+        <button id="more" class='block bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-transparent duration-100 w-1/3 py-2 mx-auto m-4'
                 mix-get="/properties/page/{next_page}"
                 mix-default="more"
                 mix-await="Please wait..."

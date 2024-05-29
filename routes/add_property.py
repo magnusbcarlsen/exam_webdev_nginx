@@ -5,7 +5,6 @@ import html
 import os
 import x
 
-
 @get('/property/add-pop-up')
 def _():
     return f"""
@@ -106,7 +105,7 @@ def _():
                     <div id="modal_buttons" class="flex flex-row gap-4">
                         <button
                             id='confirm_add_property'
-                            class="flex items-center justify-center bg-dragon-fruit w-2/3 text-white"
+                            class="flex items-center justify-center bg-accentCol w-2/3 text-white"
                             mix-post="/property"
                             mix-data="#add_property_form"
                         >
@@ -162,7 +161,7 @@ def _():
         # Add Property_Pk to the filename
         filenames = []
         for image in property_images:
-            filename = image.filename
+            filename = property_pk + image.filename
             filenames.append(filename)
             file_path = os.path.join('images', filename)
 

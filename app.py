@@ -29,6 +29,7 @@ import routes.see_property_details
 import routes.add_property
 import routes.admin_block_property
 import routes.edit_property
+import routes.book_property
 ##############################
 import routes.user_blocking
 ##############################

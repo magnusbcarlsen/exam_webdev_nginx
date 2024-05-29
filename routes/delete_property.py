@@ -8,6 +8,7 @@ def _(property_pk):
         db = x.db()
         q = db.execute('UPDATE properties SET property_deleted_at = CURRENT_TIMESTAMP WHERE property_pk = ?', (property_pk,))
         db.commit()
+        x.delete_all_property_images(property_pk)
         return f"""
             <template mix-target="#property_{property_pk}" mix-replace>
                 <div class="flex items-center justify-center" mix-ttl="1500">

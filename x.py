@@ -10,6 +10,7 @@ import smtplib
 import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import glob
 
 ##############################
 def dict_factory(cursor, row):
@@ -238,6 +239,18 @@ def get_random_lat_lon_within_copenhagen():
 
 ##############################
 
+def delete_all_property_images(property_pk):
+    # Get a list of all image files that start with the property_pk
+    image_files = glob.glob(f'images/{property_pk}*')
+    ic(image_files)
+    # Iterate over the list and delete each file using delete_file function
+    for image_file in image_files:
+        image_file = image_file.split("images/")[1]
+        ic('hej fra delete_all: ', image_file)
+        delete_file(image_file, 'images/')
+
+##############################
+
 def remove_image_from_property(property_images, image_to_remove):
     # Split the string into a list
     images = property_images.split(',')
@@ -252,15 +265,15 @@ def remove_image_from_property(property_images, image_to_remove):
 
     return new_property_images
 
-
 ##############################
 
 def delete_file(filename, path):
     # Construct the full path to the file
     file_path = os.path.join(path, filename)
-
+    ic("Brother ewwww")
     # Delete the file
     try:
+        ic("Removing file at: ", file_path)
         os.remove(file_path)
     except FileNotFoundError:
         print(f"The file {filename} does not exist")

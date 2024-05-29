@@ -15,11 +15,11 @@ def _(property_pk):
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-cyan-50"
+                    <button class="bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-white duration-100 w-full py-2"
                         mix-data="[id='{property_pk}']"
                         mix-put="/unbook_property/{property_pk}"
                     >
-                        PROPERTY BOOKED
+                        unbook property
                     </button>
                 </form>
             </template>
@@ -33,23 +33,21 @@ def _(property_pk):
             db.close()
 
 
-@put ("/unbook_property/<property_pk>")
+@put("/unbook_property/<property_pk>")
 def _(property_pk):
     try:
         db = x.db()
-        user_pk = x.get_cookie_data()['user_pk']
-        random_id = uuid.uuid4().hex
-        booking_pk = random_id
-        q = db.execute("UPDATE bookings SET booking_deleted_at = CURRENT_TIMESTAMP WHERE booking_pk = ?", (booking_pk,))
+        db.execute("UPDATE bookings SET booking_deleted_at = CURRENT_TIMESTAMP WHERE booking_property_fk = ?", (property_pk,))
+        db.execute("UPDATE properties SET property_booking_fk = 0 WHERE property_pk = ?", (property_pk,))
         db.commit()
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
-                    <button class="bg-black text-cyan-50"
+                    <button class="bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-white duration-100 w-full py-2"
                         mix-data="[id='{property_pk}']"
                         mix-post="/book_property/{property_pk}"
                     >
-                        BOOK PROPERTY
+                        book property
                     </button>
                 </form>
             </template>

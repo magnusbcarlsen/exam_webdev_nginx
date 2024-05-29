@@ -11,7 +11,7 @@ def _(user_pk):
 
         return"""
             <template mix-target="#message_header" mix-replace>
-                <h1 id="message_header" class="text-dragon-fruit text-5xl">
+                <h1 id="message_header" class="text-accentCol text-5xl">
 		            Your profile has been restored!
 	            </h1>
             </template>

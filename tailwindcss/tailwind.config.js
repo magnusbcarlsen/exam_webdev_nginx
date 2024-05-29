@@ -4,7 +4,9 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				'dragon-fruit': '#FF4a84',
+				accentCol: '#0271ce',
+				secondaryCol: '#232528',
+				primaryCol: '#EAF6FF',
 			},
 		},
 	},

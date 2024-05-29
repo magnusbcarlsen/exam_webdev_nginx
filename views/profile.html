@@ -1,8 +1,8 @@
 %include("_header")
 <!--  -->
 %import x
-<main class="pt-16">
-	<div id="profile_content" class="flex flex-col gap-2 w-full mx-4 mb-4 md:w-1/2">
+<main class="pb-4">
+	<div id="profile_content" class="flex flex-col gap-2 w-full mb-4 md:w-1/2">
 		<form id="frm_profile" class="flex flex-col gap-2 w-full">
 			<input
 				id="put_user_email"
@@ -38,8 +38,8 @@
 				mix-check="{{x.USER_LAST_NAME_REGEX}}"
 			/>
 			<button
-				class="w-full bg-dragon-fruit text-white"
-				mix-put="/profile/edit/{{user['user_pk']}}"
+				class="w-full bg-accentCol text-white"
+				mix-put="/profile/{{user['user_pk']}}"
 				mix-data="#frm_profile"
 			>
 				Edit User
@@ -47,7 +47,7 @@
 		</form>
 		<button
 			id="delete_user_button"
-			class="w-full bg-dragon-fruit text-white"
+			class="w-full bg-accentCol text-white"
 			mix-get="/profile/delete-pop-up"
 		>
 			Delete User
@@ -57,7 +57,7 @@
 	<div id="add_property_container" class="flex flex-col gap-2 w-full md:w-1/2">
 		<button
 			id="add_property_button"
-			class="w-full bg-dragon-fruit text-white"
+			class="w-full bg-accentCol text-white"
 			mix-get="/property/add-pop-up"
 		>
 			Add Property
@@ -68,9 +68,7 @@
 		% for property in users_properties:
 		<!-- -->
 		% if property['property_deleted_at'] == '0':
-			<a href="/property/details/{{property['property_pk']}}">
 				% include("_property")
-			</a>
 			% end
 		% end
 	</div>

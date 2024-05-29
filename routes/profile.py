@@ -63,7 +63,7 @@ def _():
                     <div id="modal_buttons" class="flex flex-row gap-4">
                         <button
                             id='confirm_delete_button'
-                            class="flex items-center justify-center bg-red-500 text-white"
+                            class="flex items-center justify-center bg-accentCol text-white"
                             mix-put="/profile"
                             mix-data="#delete_form"
                         >

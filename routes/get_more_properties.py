@@ -8,8 +8,8 @@ def _(page_number):
     try:
         db = x.db()
         next_page = int(page_number) + 1
-        offset = (int(page_number) - 1) * 3
-        limit = 3
+        offset = (int(page_number) - 1) * 4
+        limit = 4
         html = ""
         is_admin = False
         is_partner = False
@@ -54,7 +54,7 @@ def _(page_number):
         
     except Exception as ex:
         ic(ex)
-        return "no noo, more lemon pledge"
+        return "System under maintenance."
     finally: 
         if "db" in locals(): db.close()
     

@@ -103,7 +103,7 @@ def _():
             # is_admin = x.get_cookie_data()['user_role_fk'] == '2'
         except Exception as ex:
             ic(ex)
-        query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 0, 3"
+        query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 0, 4"
         
         q = db.execute(query)
         properties = q.fetchall()

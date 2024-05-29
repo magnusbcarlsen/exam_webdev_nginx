@@ -205,18 +205,6 @@ def is_user_logged_in():
 
 ##############################
 
-def validate_logged():
-    # Prevent logged pages from caching
-    response.add_header("Cache-Control", "no-cache, no-store, must-revalidate")
-    response.add_header("Pragma", "no-cache")
-    response.add_header("Expires", "0")  
-    user = request.get_cookie("user", secret = COOKIE_SECRET)
-    if not user: raise Exception("***** user not logged *****", 400)
-    return user
-
-
-##############################
-
 def is_cookie_https():
     if 'PYTHONANYWHERE_DOMAIN' in os.environ:
         return True;

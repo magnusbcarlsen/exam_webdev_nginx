@@ -1,4 +1,4 @@
-from bottle import put
+from bottle import put, template
 import sqlite3
 from icecream import ic
 import x
@@ -8,7 +8,16 @@ def _(property_pk):
     try:
         db = x.db()
         q = db.execute("UPDATE properties SET property_is_blocked = '1' WHERE property_pk = ?", (property_pk,))
+
+        q_email = db.execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = ?", (property_pk,))
+
+        user_email = q_email.fetchone()['user_email']
+        ic(user_email)
+
         db.commit()
+
+        x.send_mail("jachobwesth@gmail.com", "jachobwesth@gmail.com", "One of your properties has been suspended", template("email_profile_blocked"))
+
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">
@@ -34,7 +43,14 @@ def _(property_pk):
     try:
         db = x.db()
         q = db.execute("UPDATE properties SET property_is_blocked = '0' WHERE property_pk = ?", (property_pk,))
+        q_email = db.execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = ?", (property_pk,))
+
+        user_email = q_email.fetchone()['user_email']
+        ic(user_email)
+
         db.commit()
+
+        x.send_mail("jachobwesth@gmail.com", "jachobwesth@gmail.com", "One of your properties has been unblocked", template("email_profile_blocked"))
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>
                 <form id="{property_pk}">

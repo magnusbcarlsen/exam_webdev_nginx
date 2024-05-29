@@ -50,7 +50,7 @@ Laver lige mig til Admin forstår du
 
  UPDATE users 
  SET user_role_fk = "2" 
- WHERE user_pk = "98144f1f1ae843a68457de916cbbcd09";
+ WHERE user_pk = "cd941bc1ae124fb1a61aa026abced8f7";
 
 
  UPDATE users 
@@ -86,6 +86,7 @@ CREATE TABLE properties(
     FOREIGN KEY(property_user_fk) REFERENCES users(user_pk) ON DELETE CASCADE,
     PRIMARY KEY(property_pk)
 ) WITHOUT ROWID;
+
 
 -- ##### PROPERTIES - SEED ##### --
 INSERT INTO properties(

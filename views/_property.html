@@ -1,4 +1,4 @@
-<div id="property_{{property['property_pk']}}" class='hover:shadow-lg flex flex-col max-h-[580px] p-2 duration-300 bg-white rounded-lg relative'>    
+<div id="property_{{property['property_pk']}}" class='hover:shadow-lg flex flex-col max-h-[640px] p-2 duration-300 bg-white rounded-lg relative'>    
     <a href="/property/{{property['property_pk']}}">
         <img src="../images/{{property['property_images'].split(',')[0]}}" alt="property image"
             class="property_image w-full aspect-[12/10] object-cover rounded-lg">
@@ -22,7 +22,7 @@
     <div class="flex flex-col p-1 h-full text-secondaryCol">
         <div>
             <h3 class="font-bold text-2xl">{{property['property_name']}}</h3>
-            <p class='text-gray-500'>{{property['property_description']}}</p>
+            <p class='text-gray-500 line-clamp-2'>{{property['property_description']}}</p>
         </div>    
         <div class='flex flex-col gap-2 mt-auto'>
             <h3 class=" mt-3 font-bold italic text-secondaryCol text-2xl">
@@ -30,7 +30,7 @@
             </h3>
             <div class='flex gap-3'>
                 % if get('in_profile', False) == False:
-                    <button id="property_{{property['property_pk']}}" class='bg-white border border-accentCol rounded-lg text-accentCol hover:border-transparent hover:text-white hover:bg-accentCol duration-100 w-full py-2'>view on map</button>
+                    <button id="property_view{{property['property_pk']}}" class='bg-white border border-accentCol rounded-lg text-accentCol hover:border-transparent hover:text-white hover:bg-accentCol duration-100 w-full py-2'>view on map</button>
                     % if property['property_booking_fk'] != '0':
                         <form id="{{property['property_pk']}}"> 
                             <button 

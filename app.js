@@ -38,21 +38,22 @@ function newMarker(properties) {
 	for (let index = 0; index < properties.length; index++) {
 		var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
 			'<div class="property-card">' +
+				'<a href="/property/' +
+				properties[index].property_pk +
+				'">' +
 				'<img src="../images/' +
 				properties[index].property_images.split(',')[0] +
 				'" alt="property image" class="w-full aspect-square object-cover rounded-lg">' +
+				'</a>' +
 				'<div class="property-info flex flex-col-2">' +
-				'<div>' +
+				'<div class="max-h-1 overflow-y-hidden">' +
 				'<h3 class="font-bold">' +
 				properties[index].property_name +
 				'</h3>' +
-				'<p>' +
-				properties[index].property_description +
-				'</p>' +
-				'</div>' +
 				'<div class="property-price font-semibold">' +
 				properties[index].property_price_pr_night +
 				' DKK' +
+				'</div>' +
 				'</div>' +
 				'</div>' +
 				'</div>'
@@ -68,7 +69,7 @@ function newMarker(properties) {
 
 		markers.push(marker);
 		document
-			.getElementById('property_' + properties[index].property_pk)
+			.getElementById('property_view' + properties[index].property_pk)
 			.addEventListener('click', function () {
 				markers.forEach((marker) => marker.getPopup().remove());
 				map.flyTo({

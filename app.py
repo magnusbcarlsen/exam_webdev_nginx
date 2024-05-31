@@ -33,6 +33,8 @@ import routes.book_property
 ##############################
 import routes.user_blocking
 ##############################
+import routes.arango
+##############################
 
 # Serve style
 @get('/app.css')

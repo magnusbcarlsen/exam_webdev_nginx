@@ -26,7 +26,7 @@ def _():
 
         return f"""
                 <template mix-target="#message" mix-replace>
-                    <div id="message">
+                    <div class="h-8" id="message">
                         <p>Thank you for signing up {user_username}!</p>
                         <p>We have sent you an email to ({user_email}) to verify your account</p>
                     </div>
@@ -36,6 +36,22 @@ def _():
 
     except Exception as ex:
         ic(ex)
-        return ex
+
+        if "UNIQUE constraint failed: users.user_email" in ex.args[0] :
+            return f"""
+                <template mix-target="#message" mix-replace>
+                    <div class="h-8" id="message">
+                       The email you've provided already exists
+                    </div>
+                </template>
+                """
+
+        return f"""
+                <template mix-target="#message" mix-replace>
+                    <div class="h-8" id="message">
+                       {ex.args[0]}
+                    </div>
+                </template>
+                """
     finally:
         if "db" in locals(): db.close()

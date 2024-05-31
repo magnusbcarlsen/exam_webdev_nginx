@@ -44,6 +44,7 @@ def delete_item(key):
     query = f"""
         FOR item in items FILTER item._key == '{key}' 
         REMOVE item IN items
+        RETURN OLD
     """
     return execute_query(query)
 ############################################################

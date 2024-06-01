@@ -7,8 +7,6 @@ import uuid
 @post("/signup")
 def _():
     try:
-
-
         random_id = uuid.uuid4().hex
         user_pk = random_id
         user_email = x.validate_user_email()

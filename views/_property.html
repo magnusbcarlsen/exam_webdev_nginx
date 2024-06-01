@@ -31,7 +31,7 @@
             <div class='flex gap-3'>
                 % if get('in_profile', False) == False:
                     <button id="property_view{{property['property_pk']}}" class='bg-white border border-accentCol rounded-lg text-accentCol hover:border-transparent hover:text-white hover:bg-accentCol duration-100 w-full py-2'>view on map</button>
-                    % if property['property_booking_fk'] != '0':
+                    % if property['property_booking_fk'] != '0' and get("is_logged", False):
                         <form id="{{property['property_pk']}}"> 
                             <button 
                                 class="bg-accentCol border border-transparent rounded-lg text-white hover:border-accentCol hover:text-accentCol hover:bg-white duration-100 w-full py-2"

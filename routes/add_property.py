@@ -161,7 +161,7 @@ def _():
         for image in property_images:
             filename = property_pk + image.filename
             filenames.append(filename)
-            directory_path = '../images' if x.is_on_production() else 'images'
+            directory_path = 'exam_webdev/images/' if x.is_on_production() else 'images'
             file_path = os.path.join(directory_path, filename)
             if(filename == 'empty'):
                     pass

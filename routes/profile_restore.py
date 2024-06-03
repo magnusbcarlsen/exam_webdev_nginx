@@ -19,6 +19,7 @@ def _(user_pk):
                 <p id="message_content" class="text-xl">
                     Proceed to log in with your restored profile
                 </p>
+                <a href="/login"> Login </a>
             </template>
         """
     except Exception as ex:

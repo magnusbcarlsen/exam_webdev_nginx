@@ -38,7 +38,7 @@ def _(property_pk):
         property_country = x.validate_property_country()
         property_postal_code = x.validate_property_postal_code()
         property_price_pr_night = x.validate_property_price_pr_night()
-        property_images = x.validate_property_images()
+        property_images = x.validate_edited_property_images()
 
         db = x.db()
         images_q = db.execute('SELECT property_images FROM properties WHERE property_pk = ?', (property_pk,))

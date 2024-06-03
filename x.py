@@ -424,10 +424,16 @@ def validate_property_postal_code():
 
 ##############################
 
-def validate_property_images():
+def validate_added_property_images():
     property_images = request.files.getall('property_images')
     if not property_images:
         raise Exception(400, "No Images Uploaded")
+    return property_images
+
+##############################
+
+def validate_edited_property_images():
+    property_images = request.files.getall('property_images')
     return property_images
 
 ##############################

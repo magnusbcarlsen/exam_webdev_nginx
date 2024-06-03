@@ -214,6 +214,14 @@ def is_cookie_https():
 
 ##############################
 
+def is_on_production():
+    if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+        return True;
+    else:
+        return False;
+
+##############################
+
 def get_random_lat_lon_within_copenhagen():
     # Define the approximate borders of Copenhagen
     min_lat, max_lat = 55.6154, 55.7271

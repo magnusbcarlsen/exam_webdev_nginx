@@ -161,10 +161,11 @@ def _():
         for image in property_images:
             filename = property_pk + image.filename
             filenames.append(filename)
-            file_path = os.path.join('images', filename)
-
-            image.save(file_path)
-
+            file_path = os.path.join('./exam_webdev/images', filename)
+            if(filename == 'empty'):
+                    pass
+            else:
+                image.save(file_path)
 
         filenames_str = ",".join(filenames)
 

@@ -4,11 +4,13 @@
 		This profile has been previously deleted
 	</h1>
 	<!-- <div class="w-1/3 h-1/3 bg-accentCol rounded-md"></div> -->
-	<p id="message_content" class="text-xl">
-		Click here if you wish to restore it
-	</p>
-	<button id="restore_button" mix-get="/profile_restore/{{user_pk}}">
-		Restore profile
-	</button>
+	<div id="message_content">
+		<p class="text-xl">
+			Click here if you wish to restore it
+		</p>
+		<button id="restore_button" mix-get="/profile_restore/{{user_pk}}">
+			Restore profile
+		</button>
+	</div>
 </main>
 % include('_footer.html')

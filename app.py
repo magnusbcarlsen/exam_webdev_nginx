@@ -63,7 +63,7 @@ def _(property_images):
 @get('/properties')
 def _():
     db = x.db()
-    q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 3")
+    q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 4")
     properties = q.fetchall()
     db.commit()
     return json.dumps(properties)
@@ -73,8 +73,7 @@ def _():
 def _():
     token = credentials.mapbox_token
     return json.dumps({'mapbox_token': token})
-
-
+    
 # Serve notfound GIF
 @get('/images/notfound.gif')
 def _():

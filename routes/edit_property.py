@@ -3,7 +3,6 @@ from icecream import ic
 import html
 import os
 import x
-# TODO: Make X button on images that "delete" them
 
 @put('/property/remove_picture/<deleted_image>/<property_pk>')
 def _(deleted_image, property_pk):
@@ -42,7 +41,6 @@ def _(property_pk):
         property_images = x.validate_property_images()
 
         db = x.db()
-        # 1. First see how many images the property already has
         images_q = db.execute('SELECT property_images FROM properties WHERE property_pk = ?', (property_pk,))
         old_property_images = images_q.fetchone()
 
@@ -50,8 +48,11 @@ def _(property_pk):
         for image in property_images:
             filename = image.filename
             filenames.append(filename)
-            file_path = os.path.join('images', filename)
-            image.save(file_path, overwrite=True)
+            file_path = os.path.join('./exam_webdev/images', filename)
+            if(filename == 'empty'):
+                pass
+            else:
+                image.save(file_path, overwrite=True)
             
         filenames_str = ",".join(filenames)
 

@@ -10,24 +10,25 @@ def _():
         
         if user_data is None:
             redirect('/login')
+            return
 
         db = x.db()
+        cursor = db.cursor()
 
-        user_q = db.execute('SELECT * FROM users WHERE user_pk = ? AND user_role_fk = ?', (user_data['user_pk'],user_data['user_role_fk']))
-        user = user_q.fetchone()
+        cursor.execute('SELECT * FROM users WHERE user_pk = %s AND user_role_fk = %s', (user_data['user_pk'], user_data['user_role_fk']))
+        user = cursor.fetchone()
 
         if user['user_role_fk'] == '2':
-            user_list_q = db.execute('SELECT * FROM users WHERE user_role_fk != 2')
-            user_list = user_list_q.fetchall()
-            properties_q = db.execute("SELECT * FROM properties ORDER BY property_created_at")
-            properties = properties_q.fetchall()
+            cursor.execute('SELECT * FROM users WHERE user_role_fk != %s', ('2',))  # Fix: compare user_role_fk as string
+            user_list = cursor.fetchall()
+            cursor.execute("SELECT * FROM properties ORDER BY property_created_at")
+            properties = cursor.fetchall()
             db.commit()
 
             return template('profile_admin.html', user_list=user_list, is_logged=True, is_admin=True, properties=properties)
-            
-    
-        property_q = db.execute('SELECT * FROM properties WHERE property_user_fk = ?', (user_data['user_pk'],))
-        users_properties = property_q.fetchall()
+
+        cursor.execute('SELECT * FROM properties WHERE property_user_fk = %s', (user_data['user_pk'],))
+        users_properties = cursor.fetchall()
 
         return template('profile.html', user=user, users_properties=users_properties, is_logged=True, is_admin=False, in_profile=True)
     except HTTPResponse:
@@ -35,8 +36,9 @@ def _():
     except Exception as ex:
         ic(ex)
     finally:
-        if "db" in locals(): 
+        if "db" in locals():
             db.close()
+
 
 @get('/profile/delete-pop-up')
 def _():
@@ -86,7 +88,8 @@ def _():
 
         if user_data['user_email'] == x.validate_user_email():
             db = x.db()
-            q = db.execute('UPDATE users SET user_deleted_at = CURRENT_TIMESTAMP WHERE user_pk = ?', (user_data['user_pk'],))
+            cursor = db.cursor()
+            cursor.execute('UPDATE users SET user_deleted_at = CURRENT_TIMESTAMP WHERE user_pk = %s', (user_data['user_pk'],))
             x.delete_cookie('user')
             x.send_mail(user_data['user_email'], 'admin@bottleBnB.com', "Profile has been deleted", template('email_profile_restore', user_pk=user_data['user_pk']))
             db.commit()

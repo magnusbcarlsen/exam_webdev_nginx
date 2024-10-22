@@ -7,9 +7,9 @@ import x
 def _(property_pk):
     try:
         db = x.db()
-        q = db.execute("UPDATE properties SET property_is_blocked = '1' WHERE property_pk = ?", (property_pk,))
+        q = db.cursor().execute("UPDATE properties SET property_is_blocked = '1' WHERE property_pk = %s", (property_pk,))
 
-        q_email = db.execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = ?", (property_pk,))
+        q_email = db.cursor().execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = %s", (property_pk,))
 
         user_email = q_email.fetchone()['user_email']
         ic(user_email)
@@ -42,8 +42,8 @@ def _(property_pk):
 def _(property_pk):
     try:
         db = x.db()
-        q = db.execute("UPDATE properties SET property_is_blocked = '0' WHERE property_pk = ?", (property_pk,))
-        q_email = db.execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = ?", (property_pk,))
+        q = db.cursor().execute("UPDATE properties SET property_is_blocked = '0' WHERE property_pk = %s", (property_pk,))
+        q_email = db.execute("SELECT users.user_email FROM properties JOIN users ON properties.property_user_fk = users.user_pk WHERE properties.property_pk = %s", (property_pk,))
 
         user_email = q_email.fetchone()['user_email']
         ic(user_email)

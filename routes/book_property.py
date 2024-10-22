@@ -12,7 +12,7 @@ def _(property_pk):
             user_pk = x.get_cookie_data()['user_pk']
             random_id = uuid.uuid4().hex
             booking_pk = random_id
-            q = db.execute("INSERT INTO bookings (booking_pk, booking_user_fk, booking_property_fk) VALUES (?, ?, ?)", (booking_pk, user_pk, property_pk))
+            q = db.cursor().execute("INSERT INTO bookings (booking_pk, booking_user_fk, booking_property_fk) VALUES (%s, %s, %s)", (booking_pk, user_pk, property_pk))
             db.commit()
             return f"""
                 <template mix-target="[id='{property_pk}']" mix-replace>
@@ -43,8 +43,8 @@ def _(property_pk):
 def _(property_pk):
     try:
         db = x.db()
-        db.execute("UPDATE bookings SET booking_deleted_at = CURRENT_TIMESTAMP WHERE booking_property_fk = ?", (property_pk,))
-        db.execute("UPDATE properties SET property_booking_fk = 0 WHERE property_pk = ?", (property_pk,))
+        db.cursor().execute("UPDATE bookings SET booking_deleted_at = CURRENT_TIMESTAMP WHERE booking_property_fk = %s", (property_pk,))
+        db.cursor().execute("UPDATE properties SET property_booking_fk = 0 WHERE property_pk = %s", (property_pk,))
         db.commit()
         return f"""
             <template mix-target="[id='{property_pk}']" mix-replace>

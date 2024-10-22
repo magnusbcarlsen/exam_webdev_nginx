@@ -11,7 +11,7 @@ def _(key):
         ic(user_password)
 
         salt = bcrypt.gensalt()
-        user_password_hashed = bcrypt.hashpw(user_password, salt)
+        user_password_hashed = bcrypt.hashpw(user_password, salt).decode('utf-8')
         ic(user_password_hashed)
 
         db = x.db()

@@ -7,6 +7,7 @@ import git
 import os
 import x
 import credentials
+import psycopg2
 
 import routes.login
 import routes.logout
@@ -63,10 +64,11 @@ def _(property_images):
 @get('/properties')
 def _():
     db = x.db()
-    q = db.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 0, 4")
-    properties = q.fetchall()
+    cursor = db.cursor()
+    q = cursor.execute("SELECT * FROM properties ORDER BY property_created_at LIMIT 4")
+    properties = cursor.fetchall()
     db.commit()
-    return json.dumps(properties)
+    return json.dumps(properties, default=x.datetime_converter)
 ##############################
 # get mapbox token
 @get('/mapbox_token')
@@ -84,6 +86,9 @@ def _():
 def _():
     try:
         db = x.db()
+        if not isinstance(db, psycopg2.extensions.connection):
+            raise psycopg2.OperationalError("Failed to connect to the database")
+        cursor = db.cursor()
         is_logged = False
         is_admin = False
         is_customer = False
@@ -99,30 +104,30 @@ def _():
             is_customer = user_role == '0'
             is_partner = user_role == '1'
             is_admin = user_role == '2'
-
-            # is_customer_partner = x.get_cookie_data()['user_role_fk'] == ['0', '1']
-            # is_admin = x.get_cookie_data()['user_role_fk'] == '2'
         except Exception as ex:
             ic(ex)
-        query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 0, 4"
         
-        q = db.execute(query)
-        properties = q.fetchall()
+        query = "SELECT * FROM properties WHERE property_is_blocked != '1' ORDER BY property_created_at LIMIT 4"
+        cursor.execute(query)
+        properties = cursor.fetchall()
+        
         if is_admin:
-            user_list_q = db.execute('SELECT * FROM users WHERE user_role_fk != 2')
-            user_list = user_list_q.fetchall()
-            properties_q = db.execute("SELECT * FROM properties ORDER BY property_created_at")
-            properties = properties_q.fetchall()
+            user_list_q = cursor.execute('SELECT * FROM users WHERE user_role_fk != 2')
+            user_list = cursor.fetchall()
+            properties_q = cursor.execute("SELECT * FROM properties ORDER BY property_created_at")
+            properties = cursor.fetchall()
             db.commit()
 
             return template('profile_admin.html', user_list=user_list, is_logged=True, properties=properties)
         else: 
-            return template('index.html', properties=properties, is_logged=is_logged,   is_admin=is_admin, mapbox_token= credentials.mapbox_token)
+            return template('index.html', properties=properties, is_logged=is_logged, is_admin=is_admin, mapbox_token=credentials.mapbox_token)
     except Exception as ex:
         ic(ex)
-        return "No no noo, more lemon pledge"
+        return f"No no noo, more lemon pledge {str(ex)}"
     finally: 
-        if "db" in locals(): db.close()
+        if "db" in locals() and isinstance(db, psycopg2.extensions.connection):
+            db.close()
+
 ##############################
 @get("/login")
 def _():

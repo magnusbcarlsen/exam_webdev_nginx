@@ -7,10 +7,10 @@ from icecream import ic
 def _(user_pk): 
     try:
         db = x.db()
-        q = db.execute("UPDATE users SET user_is_blocked = '1' WHERE user_pk = ?", (user_pk,))
+        q = cursor.execute("UPDATE users SET user_is_blocked = '1' WHERE user_pk = %s", (user_pk,))
         db.commit()
-        email_q = db.execute("SELECT user_email FROM users WHERE user_pk = ?", (user_pk,))
-        user_email = email_q.fetchone()
+        email_q = db.execute("SELECT user_email FROM users WHERE user_pk = %s", (user_pk,))
+        user_email = cursor.fetchone()
         x.send_mail(user_email, user_email, "Your profile has been blocked", 
         """<p>Your profile has been blocked</p>""")
         
@@ -21,7 +21,7 @@ def _(user_pk):
                         mix-data="[id='{user_pk}'"
                         mix-put="/unblock_user/{user_pk}"
                         >
-                        Block user?
+                        Block user%s
                     </button>
                 </form>
             </template>
@@ -37,7 +37,7 @@ def _(user_pk):
 def _(user_pk): 
     try:
         db = x.db()
-        q = db.execute("UPDATE users SET user_is_blocked = '0' WHERE user_pk = ?", (user_pk,))
+        q = cursor.execute("UPDATE users SET user_is_blocked = '0' WHERE user_pk = %s", (user_pk,))
         db.commit()
         return f"""
             <template mix-target="[id='{user_pk}']" mix-replace>

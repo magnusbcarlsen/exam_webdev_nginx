@@ -11,21 +11,42 @@ import random
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import glob
+from datetime import datetime
+
+import psycopg2
+from psycopg2.extras import RealDictCursor
+
 
 ##############################
 def dict_factory(cursor, row):
     col_names = [col[0] for col in cursor.description]
     return {key: value for key, value in zip(col_names, row)}
 
+
+def datetime_converter(o):
+    if isinstance(o, datetime):
+        return o.isoformat()
+    return o
+
+
 ##############################
 
 def db():
     try:
-        db = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve())+"/database/company.db")  
-        db.row_factory = dict_factory
+        db = psycopg2.connect(
+            dbname=os.getenv('POSTGRES_DB'),
+            user=os.getenv('POSTGRES_USER'),
+            password=os.getenv('POSTGRES_PASSWORD'),
+            host=os.getenv('POSTGRES_HOST', 'postgres'),  # default to 'postgres' if not set
+            port='5432',
+            cursor_factory=RealDictCursor
+        )
         return db
+    
+        # db = sqlite3.connect(str(pathlib.Path(__file__).parent.resolve())+"/database/company.db")  
+        # db.row_factory = dict_factory
     except Exception as ex:
-        return 'server under maintenance'
+        raise psycopg2.OperationalError(f"Failed to connect to PostgreSQL: {ex}")
 
 ##############################
 
@@ -118,7 +139,7 @@ def seed_db():
         database = db()
         salt = bcrypt.gensalt()
         password = '12345678'.encode()
-        user_password_hashed = bcrypt.hashpw(password, salt)
+        user_password_hashed = bcrypt.hashpw(user_password, salt).decode('utf-8')
 
         # Prepare the SQL statements
         insert_roles = "INSERT INTO roles VALUES(?, ?);"

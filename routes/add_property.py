@@ -147,7 +147,7 @@ def _():
                 </template>
             """
         
-        if not isinstance(property_images, list) or len(property_images) > 6:
+        if len(property_images) > 6:
             return f"""
                 <template mix-target='#property_error_message' mix-replace>
                     <div id="property_error_message" class="w-full p-2 border border-red-500 bg-pink-100">
@@ -156,26 +156,36 @@ def _():
                 </template>
             """
 
-        # Add Property_Pk to the filename
+        # Create directory if it doesn't exist
+        directory_path = 'exam_webdev/images/' if x.is_on_production() else 'images'
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
+
+        # Save images
         filenames = []
         for image in property_images:
             filename = property_pk + image.filename
             filenames.append(filename)
-            directory_path = 'exam_webdev/images/' if x.is_on_production() else 'images'
             file_path = os.path.join(directory_path, filename)
-            if(filename == 'empty'):
-                    pass
-            else:
-                image.save(file_path)
+            image.save(file_path)
 
         filenames_str = ",".join(filenames)
 
+        # Insert property data into the database
         db = x.db()
-        q = db.execute("""
+        cursor = db.cursor()
+        cursor.execute("""
             INSERT INTO properties(property_pk, property_user_fk, property_booking_fk, property_name,
             property_description, property_price_pr_night, property_images, property_rating,
             property_address, property_country, property_postal_code, property_lat, 
-            property_lon, property_is_blocked) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)""", (property_pk, user_data['user_pk'], '0', property_name, property_description, property_price_pr_night, filenames_str, 4.5, property_address, property_country, property_postal_code, property_lon, property_lat, "0"))
+            property_lon, property_is_blocked) 
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        """, (
+            property_pk, user_data['user_pk'], '0', property_name, 
+            property_description, property_price_pr_night, filenames_str, 
+            4.5, property_address, property_country, property_postal_code, 
+            property_lat, property_lon, "0"
+        ))
         db.commit()
         
         return """
@@ -184,6 +194,13 @@ def _():
         """
     except Exception as ex:
         ic('- - - - - AN ERROR HAPPENED: ', ex)
+        return f"""
+            <template mix-target='#property_error_message' mix-replace>
+                <div id="property_error_message" class="w-full p-2 border border-red-500 bg-pink-100">
+                    <p class="text-red-500">An error occurred: {html.escape(str(ex))}</p>
+                </div>
+            </template>
+        """
     finally:
         if "db" in locals():
             db.close()
